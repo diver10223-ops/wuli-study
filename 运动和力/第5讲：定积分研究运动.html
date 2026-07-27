@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第5讲：定积分研究运动</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e6e9ef; display: flex; flex-direction: column; align-items: center; padding: 20px 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .page { width: 210mm; min-height: 297mm; background: white; padding: 18mm 15mm 15mm 15mm; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 4px; position: relative; background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px); background-size: 100% 100%; background-repeat: no-repeat; background-position: 0 0; }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; margin: 0 auto; padding: 18mm 15mm 15mm 15mm; width: 100%; min-height: 100vh; background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px); } .page:last-child { margin-bottom: 0; } }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #1a3c6e; padding-bottom: 6px; margin-bottom: 14px; }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+        .row-dual { display: flex; gap: 18px; margin-bottom: 16px; }
+        .col-left { flex: 0 0 38%; background: #f8faff; padding: 10px 12px; border-left: 4px solid #e74c3c; border-radius: 0 6px 6px 0; }
+        .col-right { flex: 1; background: #fcfcfc; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; }
+        .row-full { margin-top: 12px; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; background: #fcfcfc; }
+        .row-full.alt { background: #f8faff; border-color: #b0c4de; }
+        .row-full.warning { background: #fffbf0; border-left: 6px solid #f39c12; }
+        .row-full.bridge { background: #e8f0fe; border: 2px solid #2980b9; }
+        .row-full.exam { background: #f0f7f0; border-left: 6px solid #27ae60; }
+        .sec-title { font-weight: 700; font-size: 15px; color: #1a3c6e; border-bottom: 2px dashed #b0c4de; padding-bottom: 4px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sec-title .badge { font-size: 12px; background: #1a3c6e; color: white; padding: 0 8px; border-radius: 12px; }
+        ul, .item-list { list-style: none; padding-left: 4px; }
+        ul li, .item-list li { margin-bottom: 6px; font-size: 13.5px; line-height: 1.6; padding-left: 18px; position: relative; }
+        ul li::before { content: "▸"; position: absolute; left: 0; color: #2980b9; font-weight: bold; }
+        .highlight-red { color: #c0392b; font-weight: 600; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .warn { color: #e67e22; font-weight: bold; }
+        .fire { color: #e74c3c; font-weight: bold; }
+        .formula { background: #eef3f7; padding: 6px 12px; border-radius: 6px; font-family: 'Times New Roman', Times, serif; font-size: 16px; font-weight: 500; margin: 8px 0; border-left: 3px solid #2980b9; letter-spacing: 0.5px; }
+        .formula small { font-family: 'Segoe UI', sans-serif; font-weight: 400; font-size: 12px; color: #555; display: block; margin-top: 2px; }
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 4px; }
+        .compare-table th { background: #1a3c6e; color: white; padding: 6px 4px; border: 1px solid #2c3e50; text-align: center; }
+        .compare-table td { border: 1px solid #bdc3c7; padding: 6px 4px; vertical-align: top; background: white; }
+        .compare-table .highlight-cell { background: #fdedec; }
+        .page-break { page-break-before: always; }
+        .tip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 6px 0; }
+        .tip-list .item { font-size: 13px; padding: 4px 0; border-bottom: 1px dotted #ecf0f1; }
+        .error-box { background:#fdedec; padding:6px 10px; border-radius:4px; border-left:4px solid #e74c3c; font-size:13px; margin-top:4px; }
+        .cross-box { background:#f4f8fc; padding:6px 10px; border-radius:4px; border-left:4px solid #8e44ad; font-size:13px; margin-top:4px; }
+        @media print and (max-width: 800px) { .tip-list { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <div class="header">
+        <h1>📖 第5讲：定积分研究运动</h1>
+        <span class="date">整理日期：2026.07.16</span>
+    </div>
+
+    <!-- 核心链条横幅 -->
+    <div class="row-full bridge" style="margin-bottom:12px;">
+        <div style="display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap; font-size:18px; font-weight:700; color:#1a3c6e;">
+            <span>a(t)</span>
+            <span style="color:#e74c3c;">—<b>积分</b>→</span>
+            <span>v(t) = ∫a·dt</span>
+            <span style="color:#e74c3c;">—<b>积分</b>→</span>
+            <span>x(t) = ∫v·dt</span>
+        </div>
+        <div style="text-align:center; font-size:13px; color:#555; margin-top:4px;">
+            ⭐ 积分求的是 <span class="highlight-red">累积量</span> — 对应物理中的“速度变化量”和“位移”
+        </div>
+    </div>
+
+    <div class="row-dual">
+        <div class="col-left">
+            <div class="sec-title">📐 定积分的物理含义</div>
+            <ul>
+                <li><span class="highlight-red">∫a·dt</span> = 速度变化量 Δv（a-t 图面积）</li>
+                <li><span class="highlight-blue">∫v·dt</span> = 位移 Δx（v-t 图面积）</li>
+                <li style="margin-top:8px;"><b>几何意义</b>：积分 = 曲线与坐标轴围成的 <b>面积</b></li>
+                <li style="margin-top:8px;"><span class="warn">⚠️ 定积分给的是“变化量”，不是“末状态值”</span></li>
+            </ul>
+            <div style="margin-top:10px; background:#fef9e7; padding:6px 10px; border-radius:4px; font-size:13px; border:1px solid #f1c40f;">
+                <b>💡 常用积分</b><br>
+                ∫tⁿdt = tⁿ⁺¹/(n+1) + C<br>
+                ∫sin t dt = −cos t + C<br>
+                ∫cos t dt = sin t + C
+            </div>
+        </div>
+        <div class="col-right">
+            <div class="sec-title">📌 定积分在运动学中的应用</div>
+            <ul>
+                <li><span class="highlight-blue">① 已知 a(t)</span> → 求 v(t) 和 x(t)</li>
+                <li><span class="highlight-blue">② 变加速运动</span>：a = f(t)，只能用积分求 v 和 x</li>
+                <li><span class="highlight-blue">③ 平均速度</span>：\bar{v} = (1/Δt)·∫v·dt</li>
+            </ul>
+            <div style="margin-top:10px; background:#fdedec; padding:6px 10px; border-radius:4px; font-size:13px;">
+                <span class="fire">🔥 典型模型</span><br>
+                a = kt（加速度随时间线性变化）<br>
+                a = kv（加速度与速度相关，需分离变量再积分）
+            </div>
+        </div>
+    </div>
+
+    <!-- 常见题型 -->
+    <div class="row-full exam">
+        <div class="sec-title">📝 常见题型</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 16px; font-size:13px;">
+            <div><span class="fire">题型1</span> 已知 a-t 图，求 v-t 图或 x-t 图（面积法）</div>
+            <div><span class="fire">题型2</span> 已知 a(t) 表达式，积分求 v(t) 和 x(t)</div>
+            <div><span class="fire">题型3</span> 变加速运动中，求某段时间内的位移</div>
+            <div><span class="fire">题型4</span> 用定积分求平均速度或平均加速度</div>
+        </div>
+    </div>
+
+    <!-- 易混淆点 -->
+    <div class="row-full">
+        <div class="sec-title">🧩 易混淆点</div>
+        <table class="compare-table">
+            <thead>
+                <tr><th style="width:20%;">概念</th><th style="width:30%;">含义</th><th style="width:30%;">与导数的关系</th><th style="width:20%;">易错</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><b>∫a·dt</b></td><td>速度变化量 Δv</td><td>导数的逆运算</td><td class="highlight-cell">忘记加初速度 v₀</td></tr>
+                <tr><td><b>∫v·dt</b></td><td>位移 Δx</td><td>导数的逆运算</td><td class="highlight-cell">忘记加初始位置 x₀</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 常错题 -->
+    <div class="row-full alt">
+        <div class="sec-title">❌ 常错题（易掉坑）</div>
+        <div class="error-box"><span class="fire">错题1</span> 已知 a=2t，v₀=0，求 t=3s 时的速度。<br><b>错误做法</b>：v = a·t = 2×3×3 = 18 m/s ❌<br><b>正确做法</b>：v = ∫a·dt = ∫2t·dt = t²，t=3时 v=9 m/s ✅</div>
+        <div class="error-box" style="margin-top:4px;"><span class="fire">错题2</span> v-t 图中面积求的是路程还是位移？<br><b>错误</b>：一律当成路程 ❌<br><b>正确</b>：轴上方为正位移，轴下方为负位移，<b>面积代数和=位移</b>；取绝对值之和=路程 ✅</div>
+        <div class="error-box" style="margin-top:4px;"><span class="fire">错题3</span> 定积分 ∫v·dt 从 t₁ 到 t₂ 得到的是什么？<br><b>错误</b>：得到末位置 x(t₂) ❌<br><b>正确</b>：得到 <b>位移变化量</b> x(t₂)−x(t₁) ✅</div>
+    </div>
+
+    <!-- 交叉题型 -->
+    <div class="row-full warning">
+        <div class="sec-title">🔗 交叉题型（与其它章节结合）</div>
+        <div class="cross-box"><span class="highlight-blue">① 导数+积分混合</span>：已知 x(t) 求 v(t)，再积分求总路程（求导→积分）</div>
+        <div class="cross-box" style="margin-top:4px;"><span class="highlight-blue">② 微元法+定积分</span>：非匀变速中，先取微元列式，再积分求和</div>
+        <div class="cross-box" style="margin-top:4px;"><span class="highlight-blue">③ 第2讲+第5讲</span>：v-t 图面积求位移（图像法本质就是定积分）</div>
+    </div>
+</div>
+</body>
+</html>

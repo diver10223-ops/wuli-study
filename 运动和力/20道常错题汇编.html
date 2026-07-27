@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20道常错题汇编</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e6e9ef; display: flex; justify-content: center; padding: 20px; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            padding: 16mm 14mm 14mm 14mm;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            border-radius: 6px;
+            position: relative;
+        }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; margin: 0 auto; width: 100%; min-height: 100vh; } }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #1a3c6e; padding-bottom: 8px; margin-bottom: 16px; }
+        .header h1 { font-size: 22px; color: #1a3c6e; }
+        .header .date { font-size: 13px; color: #555; align-self: flex-end; }
+        .section-title { font-weight: 700; font-size: 16px; color: #1a3c6e; margin: 16px 0 8px 0; padding-left: 8px; border-left: 4px solid #e74c3c; }
+        .section-title .count { font-size: 13px; font-weight: 400; color: #555; }
+        .error-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; }
+        .error-item {
+            background: #fcfcfc;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 12px;
+            line-height: 1.5;
+            display: flex;
+            gap: 6px;
+            align-items: flex-start;
+        }
+        .error-item .num {
+            font-weight: 700;
+            color: #e74c3c;
+            min-width: 22px;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+        .error-item .q { color: #1a3c6e; }
+        .error-item .wrong { color: #e74c3c; font-size: 11px; display: block; }
+        .error-item .right { color: #27ae60; font-size: 11px; display: block; }
+        .error-item .ch { font-weight: 700; font-size: 11px; color: #8e44ad; display: block; margin-top: 1px; }
+        .legend-bar {
+            margin-top: 12px;
+            padding: 6px 12px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-size: 11px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            border: 1px solid #dee2e6;
+        }
+        .legend-bar span { display: flex; align-items: center; gap: 4px; }
+        .dot-red { color: #e74c3c; font-weight: 700; }
+        .dot-green { color: #27ae60; font-weight: 700; }
+        .dot-purple { color: #8e44ad; font-weight: 700; }
+        @media print and (max-width: 800px) {
+            .error-grid { grid-template-columns: 1fr; }
+            .page { padding: 10mm 8mm; }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="header">
+        <h1>📖 20道常错题汇编</h1>
+        <span class="date">第1章 物体的运动 · 按章节分类</span>
+    </div>
+
+    <div style="font-size:13px; color:#555; margin-bottom:12px;">
+        共20题 · 涵盖第1~7讲 · 每题标注 <span style="color:#e74c3c;font-weight:700;">易错点</span> → <span style="color:#27ae60;font-weight:700;">正确答案</span>
+    </div>
+
+    <!-- 第1讲 -->
+    <div class="section-title">第1讲 · 相对运动 <span class="count">（2题）</span></div>
+    <div class="error-grid">
+        <div class="error-item"><span class="num">1</span><div><span class="q">船过河，船头应朝哪个方向才能<b>时间最短</b>？</span><span class="wrong">❌ 误以为“最短路径”的方向</span><span class="right">✅ 船头<b>垂直</b>河岸</span></div></div>
+        <div class="error-item"><span class="num">2</span><div><span class="q">雨滴问题：人看到的雨滴方向等于雨滴实际下落方向吗？</span><span class="wrong">❌ 忘记考虑人的速度</span><span class="right">✅ 不同，需用 v<sub>雨对人</sub> = v<sub>雨对地</sub> − v<sub>人对地</sub></span></div></div>
+    </div>
+
+    <!-- 第2讲 -->
+    <div class="section-title">第2讲 · 代数与图像 <span class="count">（6题）</span></div>
+    <div class="error-grid">
+        <div class="error-item"><span class="num">3</span><div><span class="q">200m短跑（有弯道），200m是<b>位移</b>还是<b>路程</b>？</span><span class="wrong">❌ 混淆位移与路程</span><span class="right">✅ 是<b>路程</b>（弯道跑道的位移≠路程）</span></div></div>
+        <div class="error-item"><span class="num">4</span><div><span class="q">v-t图中，图线与t轴围成的面积求的是<b>路程</b>还是<b>位移</b>？</span><span class="wrong">❌ 忽视轴下方面积为负</span><span class="right">✅ <b>位移</b>（轴下方为负位移）</span></div></div>
+        <div class="error-item"><span class="num">5</span><div><span class="q">平均速度公式 \bar{v}=(v₀+v)/2 能否用于所有运动？</span><span class="wrong">❌ 错误推广到非匀变速</span><span class="right">✅ <b>不能</b>，只适用于<b>匀变速</b></span></div></div>
+        <div class="error-item"><span class="num">6</span><div><span class="q">x-t图中，切线斜率代表什么？</span><span class="wrong">❌ 误以为代表平均速度</span><span class="right">✅ <b>瞬时速度</b></span></div></div>
+        <div class="error-item"><span class="num">7</span><div><span class="q">刹车问题：题目给t=5s，实际车3s停，位移用哪个时间算？</span><span class="wrong">❌ 直接用5s代入公式</span><span class="right">✅ t<sub>实</sub> = <b>min</b>(t<sub>给</sub>, t<sub>停</sub>)</span></div></div>
+        <div class="error-item"><span class="num">8</span><div><span class="q">速度为零时，加速度是否一定为零？</span><span class="wrong">❌ 误以为速度为零→加速度为零</span><span class="right">✅ <b>不一定</b>（如竖直上抛最高点）</span></div></div>
+    </div>
+
+    <!-- 第3讲 -->
+    <div class="section-title">第3讲 · 微元法 <span class="count">（2题）</span></div>
+    <div class="error-grid">
+        <div class="error-item"><span class="num">9</span><div><span class="q">微元法中，取Δt后直接求和，不取极限，结果是否精确？</span><span class="wrong">❌ 只取有限项求和</span><span class="right">✅ 必须 <b>Δt→0 取极限</b> 才精确</span></div></div>
+        <div class="error-item"><span class="num">10</span><div><span class="q">非匀变速运动中，v-t图面积求位移是否仍适用？</span><span class="wrong">❌ 误以为“非匀变速不能用面积法”</span><span class="right">✅ <b>适用</b>（面积法本质=积分，不限匀变速）</span></div></div>
+    </div>
+
+    <!-- 第4讲 -->
+    <div class="section-title">第4讲 · 导数研究运动 <span class="count">（3题）</span></div>
+    <div class="error-grid">
+        <div class="error-item"><span class="num">11</span><div><span class="q">位置 x(t) 对时间求导得到什么？</span><span class="wrong">❌ 误以为得到速率（忘记方向）</span><span class="right">✅ <b>速度 v</b>（矢量）</span></div></div>
+        <div class="error-item"><span class="num">12</span><div><span class="q">令 v=0 求出的一定是位移最大值吗？</span><span class="wrong">❌ 忽视验证 v 是否变号</span><span class="right">✅ <b>不一定</b>，还需验证 v 是否变号</span></div></div>
+        <div class="error-item"><span class="num">13</span><div><span class="q">已知 x(t)=sin(ωt)，求 v(t) 时容易漏什么？</span><span class="wrong">❌ 忘记链式法则</span><span class="right">✅ v = <b>ω·cos(ωt)</b></span></div></div>
+    </div>
+
+    <!-- 第5讲 -->
+    <div class="section-title">第5讲 · 定积分 <span class="count">（2题）</span></div>
+    <div class="error-grid">
+        <div class="error-item"><span class="num">14</span><div><span class="q">已知 a=2t，v₀=0，求 t=3s 时的速度。</span><span class="wrong">❌ 直接套 v=at（用瞬时a代入）</span><span class="right">✅ v = ∫2t·dt = <b>t² = 9</b> m/s</span></div></div>
+        <div class="error-item"><span class="num">15</span><div><span class="q">∫v·dt 从 t₁ 到 t₂ 得到的是什么？</span><span class="wrong">❌ 误以为得到末位置</span><span class="right">✅ <b>位移变化量</b> x(t₂)−x(t₁)</span></div></div>
+    </div>
+
+    <!-- 第6讲 -->
+    <div class="section-title">第6讲 · 平抛与斜抛 <span class="count">（3题）</span></div>
+    <div class="error-grid">
+        <div class="error-item"><span class="num">16</span><div><span class="q">平抛运动落地时间由什么决定？</span><span class="wrong">❌ 误以为 v₀ 越大时间越长</span><span class="right">✅ 只由 <b>高度 h</b> 决定，t=√(2h/g)</span></div></div>
+        <div class="error-item"><span class="num">17</span><div><span class="q">斜抛最高点的速度是多少？</span><span class="wrong">❌ 误以为 v=0</span><span class="right">✅ v = <b>v₀·cosθ</b>（竖直分量为0）</span></div></div>
+        <div class="error-item"><span class="num">18</span><div><span class="q">平抛运动中，速度偏转角 α 与位移偏转角 θ 有何关系？</span><span class="wrong">❌ 混淆两个角的正切关系</span><span class="right">✅ <b>tanα = 2·tanθ</b></span></div></div>
+    </div>
+
+    <!-- 第7讲 -->
+    <div class="section-title">第7讲 · 圆周运动 <span class="count">（2题）</span></div>
+    <div class="error-grid">
+        <div class="error-item"><span class="num">19</span><div><span class="q">匀速圆周运动是匀变速运动吗？</span><span class="wrong">❌ 误以为“匀速”=“匀变速”</span><span class="right">✅ <b>不是</b>（加速度方向时刻改变）</span></div></div>
+        <div class="error-item"><span class="num">20</span><div><span class="q">竖直面绳模型最高点最小速度是多少？</span><span class="wrong">❌ 误以为 v_min=0</span><span class="right">✅ v_min = <b>√(gr)</b>（否则绳松弛）</span></div></div>
+    </div>
+
+    <!-- 图例 -->
+    <div class="legend-bar">
+        <span><span class="dot-red">❌</span> 常见错误</span>
+        <span><span class="dot-green">✅</span> 正确答案</span>
+        <span><span class="dot-purple">📌</span> 易错点提示</span>
+        <span style="color:#555;">💡 建议：先自己做，再对照“正确答案”反思错因</span>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>整章综合：物体的运动（框架总览）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e6e9ef; display: flex; flex-direction: column; align-items: center; padding: 20px 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .page { width: 210mm; min-height: 297mm; background: white; padding: 18mm 15mm 15mm 15mm; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 4px; position: relative; background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px); background-size: 100% 100%; background-repeat: no-repeat; background-position: 0 0; }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; margin: 0 auto; padding: 18mm 15mm 15mm 15mm; width: 100%; min-height: 100vh; background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px); } .page:last-child { margin-bottom: 0; } }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #1a3c6e; padding-bottom: 6px; margin-bottom: 14px; }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+        .row-dual { display: flex; gap: 18px; margin-bottom: 16px; }
+        .col-left { flex: 0 0 38%; background: #f8faff; padding: 10px 12px; border-left: 4px solid #e74c3c; border-radius: 0 6px 6px 0; }
+        .col-right { flex: 1; background: #fcfcfc; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; }
+        .row-full { margin-top: 12px; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; background: #fcfcfc; }
+        .row-full.alt { background: #f8faff; border-color: #b0c4de; }
+        .row-full.warning { background: #fffbf0; border-left: 6px solid #f39c12; }
+        .row-full.bridge { background: #e8f0fe; border: 2px solid #2980b9; }
+        .sec-title { font-weight: 700; font-size: 15px; color: #1a3c6e; border-bottom: 2px dashed #b0c4de; padding-bottom: 4px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sec-title .badge { font-size: 12px; background: #1a3c6e; color: white; padding: 0 8px; border-radius: 12px; }
+        ul, .item-list { list-style: none; padding-left: 4px; }
+        ul li, .item-list li { margin-bottom: 6px; font-size: 13.5px; line-height: 1.6; padding-left: 18px; position: relative; }
+        ul li::before { content: "▸"; position: absolute; left: 0; color: #2980b9; font-weight: bold; }
+        .highlight-red { color: #c0392b; font-weight: 600; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .warn { color: #e67e22; font-weight: bold; }
+        .fire { color: #e74c3c; font-weight: bold; }
+        .formula { background: #eef3f7; padding: 6px 12px; border-radius: 6px; font-family: 'Times New Roman', Times, serif; font-size: 16px; font-weight: 500; margin: 8px 0; border-left: 3px solid #2980b9; letter-spacing: 0.5px; }
+        .formula small { font-family: 'Segoe UI', sans-serif; font-weight: 400; font-size: 12px; color: #555; display: block; margin-top: 2px; }
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 4px; }
+        .compare-table th { background: #1a3c6e; color: white; padding: 6px 4px; border: 1px solid #2c3e50; text-align: center; }
+        .compare-table td { border: 1px solid #bdc3c7; padding: 6px 4px; vertical-align: top; background: white; }
+        .compare-table .highlight-cell { background: #fdedec; }
+        .page-break { page-break-before: always; }
+        .tip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 6px 0; }
+        .tip-list .item { font-size: 13px; padding: 4px 0; border-bottom: 1px dotted #ecf0f1; }
+        .module-map { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; font-size: 12px; }
+        .module-map .mod { background: #eef3f7; padding: 6px 8px; border-radius: 4px; text-align: center; border-left: 3px solid #2980b9; }
+        @media print and (max-width: 800px) { .tip-list { grid-template-columns: 1fr; } .module-map { grid-template-columns: 1fr 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <div class="header">
+        <h1>📖 第1章 物体的运动 · 综合框架</h1>
+        <span class="date">整理日期：2026.07.16</span>
+    </div>
+
+    <!-- 知识模块地图 -->
+    <div class="row-full bridge" style="margin-bottom:12px;">
+        <div class="sec-title" style="border-bottom-color:#2980b9;">🗺️ 本章知识模块地图</div>
+        <div class="module-map">
+            <div class="mod" style="border-left-color:#e74c3c;"><b>第1讲</b><br>相对运动</div>
+            <div class="mod" style="border-left-color:#e67e22;"><b>第2讲</b><br>代数与图像</div>
+            <div class="mod" style="border-left-color:#2980b9;"><b>第3讲</b><br>微元法</div>
+            <div class="mod" style="border-left-color:#8e44ad;"><b>第4讲</b><br>导数研究运动</div>
+            <div class="mod" style="border-left-color:#27ae60;"><b>第5讲</b><br>定积分研究运动</div>
+            <div class="mod" style="border-left-color:#f39c12;"><b>第6讲</b><br>平抛与斜抛</div>
+            <div class="mod" style="border-left-color:#c0392b;"><b>第7讲</b><br>圆周运动</div>
+            <div class="mod" style="border-left-color:#1a3c6e;"><b>第8讲</b><br>关联运动</div>
+        </div>
+        <div style="text-align:center; font-size:14px; margin-top:6px; color:#555;">
+            🔗 数学工具（微元/导数/积分）→ 一维运动 → 二维运动 → 关联运动
+        </div>
+    </div>
+
+    <!-- 双栏：核心数学工具 -->
+    <div class="row-dual">
+        <div class="col-left" style="border-left-color:#8e44ad;">
+            <div class="sec-title">📐 核心数学工具 <span class="badge">本章基石</span></div>
+            <ul>
+                <li><span class="highlight-red">微元法</span>：将过程分割为无数小段，每段近似处理</li>
+                <li><span class="highlight-blue">导数</span>：v = dx/dt，a = dv/dt = d²x/dt²</li>
+                <li><span class="highlight-red">定积分</span>：x = ∫v·dt，v = ∫a·dt</li>
+                <li style="margin-top:6px;"><span class="warn">⚠️ 导数看“瞬时”，积分看“累积”</span></li>
+            </ul>
+            <div style="margin-top:10px; background:#fef9e7; padding:6px 10px; border-radius:4px; font-size:13px; border:1px solid #f1c40f;">
+                <b>💡 核心逻辑</b><br>
+                位置 x(t) <span style="font-size:18px;">→</span> 速度 v(t) <span style="font-size:18px;">→</span> 加速度 a(t)<br>
+                （求导：降维；积分：升维）
+            </div>
+        </div>
+        <div class="col-right">
+            <div class="sec-title">🎯 运动分类 <span class="badge">按维度</span></div>
+            <ul>
+                <li><span class="highlight-blue">一维运动</span>：直线运动（第1~5讲）<br>——用标量+正负号即可描述</li>
+                <li style="margin-top:8px;"><span class="highlight-red">二维运动</span>：抛体、圆周（第6~7讲）<br>——需矢量分解（x、y分量独立）</li>
+                <li style="margin-top:8px;"><span class="highlight-red">关联运动</span>：多个物体/多个坐标的约束（第8讲）<br>——核心：找位移/速度/加速度的<b>几何约束关系</b></li>
+            </ul>
+            <div style="margin-top:10px; background:#fdedec; padding:6px 10px; border-radius:4px; font-size:13px;">
+                <span class="fire">🔥 本章最大挑战</span><br>
+                从“背公式”转向“用微积分推导公式”——理解 <b>v-t 图的斜率=导数，面积=积分</b> 的本质。
+            </div>
+        </div>
+    </div>
+
+    <!-- 通栏：易混淆全局对比 -->
+    <div class="row-full">
+        <div class="sec-title">📊 全章易混淆概念对比</div>
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th style="width:16%;">对比维度</th>
+                    <th style="width:28%;">导数 vs 积分</th>
+                    <th style="width:28%;">一维 vs 二维</th>
+                    <th style="width:28%;">平抛 vs 斜抛</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>核心操作</b></td>
+                    <td>导数：<b>微分</b>（求瞬时）<br>积分：<b>累积</b>（求总量）</td>
+                    <td>一维：<b>标量</b>运算<br>二维：<b>矢量</b>分解（独立分量）</td>
+                    <td>平抛：v₀ <b>水平</b><br>斜抛：v₀ 有 <b>水平和竖直</b> 分量</td>
+                </tr>
+                <tr>
+                    <td><b>典型公式</b></td>
+                    <td>v = dx/dt<br>Δx = ∫v·dt</td>
+                    <td>一维：x = x₀ + v₀t + ½at²<br>二维：x(t)和y(t)分别列式</td>
+                    <td>平抛：t = √(2h/g)<br>斜抛：t<sub>总</sub> = 2v₀sinθ/g</td>
+                </tr>
+                <tr>
+                    <td><b>易错陷阱</b></td>
+                    <td>混淆“导数=斜率”和“积分=面积”的物理含义</td>
+                    <td>二维中<b>时间 t 是共通的</b>（联立桥梁）</td>
+                    <td>斜抛最高点 v<sub>y</sub>=0，但 <b>v≠0</b>（有水平分量）</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 考察要点 -->
+    <div class="row-full alt" style="margin-top:10px;">
+        <div class="sec-title">🎯 全章考察要点 <span class="badge">综合</span></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px 20px; font-size:13px;">
+            <div><span class="fire">①</span> 从 x(t) 求 v(t)、a(t)（求导运算）</div>
+            <div><span class="fire">②</span> 从 a(t) 求 v(t)、x(t)（积分运算）</div>
+            <div><span class="fire">③</span> v-t 图：斜率=a，面积=Δx（数形结合）</div>
+            <div><span class="fire">④</span> 抛体运动的“时间 t”是连接 x 和 y 的桥梁</div>
+            <div><span class="fire">⑤</span> 圆周运动的向心加速度 a = v²/r = ω²r</div>
+            <div><span class="fire">⑥</span> 关联运动：用“绳长不变/接触点速度投影相等”列约束</div>
+        </div>
+    </div>
+
+    <!-- 避坑 -->
+    <div class="row-full warning" style="margin-top:10px;">
+        <div class="sec-title">🚨 全章终极避坑</div>
+        <div class="tip-list">
+            <div class="item"><span class="warn">1.</span> <b>导数 ≠ 平均变化率</b>：导数是 Δt→0 的极限（瞬时量）。</div>
+            <div class="item"><span class="warn">2.</span> <span class="fire">🔥 积分要加 C</span>：不定积分要加常数，定积分才得确定值。</div>
+            <div class="item"><span class="warn">3.</span> 二维运动：x、y 方向 <b>独立</b>，通过 t 关联。</div>
+            <div class="item"><span class="warn">4.</span> <span class="fire">🔥 圆周运动</span>：匀速圆周是“速度大小不变”但“加速度不为0”。</div>
+            <div class="item"><span class="warn">5.</span> 关联运动：<b>速度投影相等</b>（沿绳/杆方向的分量相等）。</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

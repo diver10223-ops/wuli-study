@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>物理笔记：运动的描述（活页布局）</title>
+    <style>
+        /* ===== 全局样式（与之前保持一致，复用以节省篇幅） ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e6e9ef; display: flex; flex-direction: column; align-items: center; padding: 20px 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .page { width: 210mm; min-height: 297mm; background: white; padding: 18mm 15mm 15mm 15mm; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 4px; position: relative; background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px); background-size: 100% 100%; background-repeat: no-repeat; background-position: 0 0; }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; margin: 0 auto; padding: 18mm 15mm 15mm 15mm; width: 100%; min-height: 100vh; background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px); } .page:last-child { margin-bottom: 0; } }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #1a3c6e; padding-bottom: 6px; margin-bottom: 14px; }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+        .row-dual { display: flex; gap: 18px; margin-bottom: 16px; }
+        .col-left { flex: 0 0 35%; background: #f8faff; padding: 10px 12px; border-left: 4px solid #e74c3c; border-radius: 0 6px 6px 0; }
+        .col-right { flex: 1; background: #fcfcfc; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; }
+        .row-full { margin-top: 12px; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; background: #fcfcfc; }
+        .row-full.alt { background: #f8faff; border-color: #b0c4de; }
+        .row-full.warning { background: #fffbf0; border-left: 6px solid #f39c12; }
+        .sec-title { font-weight: 700; font-size: 15px; color: #1a3c6e; border-bottom: 2px dashed #b0c4de; padding-bottom: 4px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sec-title .badge { font-size: 12px; background: #1a3c6e; color: white; padding: 0 8px; border-radius: 12px; }
+        ul, .item-list { list-style: none; padding-left: 4px; }
+        ul li, .item-list li { margin-bottom: 6px; font-size: 13.5px; line-height: 1.6; padding-left: 18px; position: relative; }
+        ul li::before { content: "▸"; position: absolute; left: 0; color: #2980b9; font-weight: bold; }
+        .highlight-red { color: #c0392b; font-weight: 600; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .warn { color: #e67e22; font-weight: bold; }
+        .fire { color: #e74c3c; font-weight: bold; }
+        .formula { background: #eef3f7; padding: 6px 12px; border-radius: 6px; font-family: 'Times New Roman', Times, serif; font-size: 16px; font-weight: 500; margin: 8px 0; border-left: 3px solid #2980b9; letter-spacing: 0.5px; }
+        .formula small { font-family: 'Segoe UI', sans-serif; font-weight: 400; font-size: 12px; color: #555; display: block; margin-top: 2px; }
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 4px; }
+        .compare-table th { background: #1a3c6e; color: white; padding: 6px 4px; border: 1px solid #2c3e50; text-align: center; }
+        .compare-table td { border: 1px solid #bdc3c7; padding: 6px 4px; vertical-align: top; background: white; }
+        .compare-table .highlight-cell { background: #fdedec; }
+        .page-break { page-break-before: always; }
+        .image-box { display: flex; justify-content: space-around; align-items: center; padding: 15px 0; background: #f4f8fc; border-radius: 8px; margin: 8px 0; }
+        .image-item { text-align: center; font-size: 13px; }
+        .image-item .graph { background: white; padding: 10px 20px; border: 1px dashed #7f8c8d; border-radius: 8px; font-family: monospace; font-size: 20px; letter-spacing: 2px; margin-bottom: 4px; }
+        .tip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 6px 0; }
+        .tip-list .item { font-size: 13px; padding: 4px 0; border-bottom: 1px dotted #ecf0f1; }
+        @media print and (max-width: 800px) { .tip-list { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<!-- ===================== 第 1 页 ===================== -->
+<div class="page">
+    <!-- 页眉 -->
+    <div class="header">
+        <h1>📖 运动的描述（概念篇）</h1>
+        <span class="date">整理日期：2026.07.15</span>
+    </div>
+
+    <!-- 双栏区域 -->
+    <div class="row-dual">
+        <!-- 左栏 35%：条件与模型 -->
+        <div class="col-left">
+            <div class="sec-title">⚙️ 核心概念 <span class="badge">定义</span></div>
+            <ul>
+                <li><span class="highlight-red">质点</span>：有质量的点（理想模型）。<br><span class="warn">条件</span>：形状大小对研究问题影响可忽略。</li>
+                <li style="margin-top:8px;"><span class="highlight-blue">参考系</span>：描述运动时选作参考的物体。<br><span class="warn">⚠️ 任意性</span>，选法不同，运动描述可能不同。</li>
+                <li style="margin-top:8px;"><span class="highlight-red">时刻 vs 时间</span><br>时刻：某瞬间（点）；<br>时间：两时刻间隔（段）。</li>
+                <li style="margin-top:8px;"><span class="highlight-blue">位移 vs 路程</span><br>位移：矢量，初→末有向线段；<br>路程：标量，实际轨迹长度。</li>
+            </ul>
+            <div style="margin-top:12px; background:#e8f0fe; padding:6px 10px; border-radius:4px; font-size:13px;">
+                <b>💡 逻辑起点</b>：<br>描述运动需要 <b>参考系</b> 和 <b>坐标系</b>（定量）。
+            </div>
+        </div>
+
+        <!-- 右栏 65%：公式与关联性 -->
+        <div class="col-right">
+            <div class="sec-title">📐 公式与定义式 <span class="badge">核心</span></div>
+            <div class="formula">
+                <b>速度 v</b> = Δx / Δt <small>（描述运动快慢和方向，矢量）</small>
+            </div>
+            <div class="formula" style="border-left-color:#e67e22;">
+                <b>平均速度</b> = 总位移 / 总时间 <small style="color:#c0392b;">⭐ 对应“时间”段，非“时刻”</small>
+            </div>
+            <div class="formula" style="border-left-color:#8e44ad;">
+                <b>瞬时速度</b> = lim(Δt→0) Δx/Δt <small><span class="warn">⚠️ 对应某时刻（位置），即“速度”</span></small>
+            </div>
+            <div class="formula" style="border-left-color:#c0392b;">
+                <b>加速度 a</b> = Δv / Δt <small>（描述速度变化快慢，矢量，方向同 Δv）</small>
+            </div>
+
+            <div style="margin-top:10px; background:#f0f5fa; padding:8px 10px; border-radius:6px;">
+                <b>🔗 关联逻辑（承上启下）</b>
+                <ul style="margin-top:4px;">
+                    <li><b>位置→位移</b>：位置变化量 Δx = x₂ - x₁</li>
+                    <li><b>速度→加速度</b>：速度变化量 Δv = v₂ - v₁</li>
+                    <li><span class="fire">🔥 核心句</span>：a 与 v <b>同向</b>→加速；a 与 v <b>反向</b>→减速（a大小无关，仅看方向！）</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通栏：差异性对比表 -->
+    <div class="row-full">
+        <div class="sec-title">📊 差异性 & 易混淆对比 <span class="badge">选择题必杀</span></div>
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th style="width:16%;">对比维度</th>
+                    <th style="width:28%;">时间 vs 时刻</th>
+                    <th style="width:28%;">位移 vs 路程</th>
+                    <th style="width:28%;">速度 vs 速率</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>核心定义</b></td>
+                    <td>时间：<b>段</b>（第1秒内）<br>时刻：<b>点</b>（第1秒末）</td>
+                    <td>位移：<b>矢量</b>（初末位置）<br>路程：<b>标量</b>（实际路径）</td>
+                    <td>速度：<b>矢量</b>（含方向）<br>速率：<b>标量</b>（速度大小）</td>
+                </tr>
+                <tr>
+                    <td><b>关联/大小</b></td>
+                    <td>时间 = 两时刻之差</td>
+                    <td><span class="warn">单向直行：相等</span><br>曲线/往返：位移＜路程</td>
+                    <td>瞬时速度大小 = 瞬时速率</td>
+                </tr>
+                <tr>
+                    <td><b>易错陷阱</b></td>
+                    <td class="highlight-cell">“前3秒”是时间；<br>“3秒末”是时刻</td>
+                    <td class="highlight-cell">竖直上抛回落：<br>位移=0，路程≠0</td>
+                    <td class="highlight-cell">平均速度≠平均速率<br>（除非单向直线）</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 下通栏：考察要点 -->
+    <div class="row-full alt" style="margin-top:10px;">
+        <div class="sec-title">🎯 考察要点 <span class="badge">应试</span></div>
+        <div style="display:flex; flex-wrap:wrap; gap:6px 20px; font-size:13px;">
+            <span><b>① 概念判断</b>：区分“时间/时刻”、“位移/路程”（必考单选）</span>
+            <span><b>② 平均速度</b>：必须用 <b>总位移/总时间</b>，不可乱套公式</span>
+            <span><b>③ 加速度方向</b>：a 与 Δv 同向，与 v 无关 <span class="fire">🔥</span></span>
+            <span><b>④ 极限思想</b>：Δt→0 求瞬时速度（实验原理）</span>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== 第 2 页 ===================== -->
+<div class="page page-break">
+    <div class="header">
+        <h1>📖 运动的描述 · 加速度辨析与实验</h1>
+        <span class="date">整理日期：2026.07.15</span>
+    </div>
+
+    <!-- 第2页 上：加速度专题 -->
+    <div class="row-full">
+        <div class="sec-title">🚀 加速度 a 的深度辨析 <span class="badge">重中之重</span></div>
+        <div style="background:#fef9e7; padding:10px; border-radius:6px; border:1px solid #f1c40f; margin-bottom:10px;">
+            <b>定义式</b>：a = Δv / Δt（<b>比值定义</b>，a 由合外力决定，不由 v 决定）
+        </div>
+        <div class="image-box" style="justify-content:flex-start; gap:30px; flex-wrap:wrap;">
+            <div style="font-size:13px;">
+                <span class="highlight-red">❌ 常见错误观念：</span><br>
+                · 速度大 → 加速度大（错！匀速飞行的飞机 a=0）<br>
+                · 加速度大 → 速度大（错！瞬间启动时 a 大但 v 还小）
+            </div>
+            <div style="font-size:13px; background:#e8f0fe; padding:8px 12px; border-radius:6px;">
+                <span class="highlight-blue">✅ 正确逻辑：</span><br>
+                加速度描述的是 <b>速度变化的快慢</b>，<br>不是速度本身的大小。
+            </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:13px; margin-top:6px;">
+            <div><span class="fire">🔥 加速</span>：a 与 v 同向（v 增大）</div>
+            <div><span class="fire">🔥 减速</span>：a 与 v 反向（v 减小）</div>
+            <div><span class="warn">⚠️ 判断依据</span>：只看 a 与 v 方向关系，不看正负（正负取决于坐标选取）</div>
+        </div>
+    </div>
+
+    <!-- 第2页 中：实验原理 -->
+    <div class="row-full" style="margin-top:12px;">
+        <div class="sec-title">🔬 实验：用打点计时器测速度 <span class="badge">基础</span></div>
+        <ul>
+            <li><b>原理</b>：用 <b>平均速度</b> 近似代替 <b>瞬时速度</b>（Δt 越小越精确）。</li>
+            <li><b>计算</b>：测出计数点间位移 Δx，除以时间 Δt（如 0.1s）。</li>
+            <li><span class="highlight-blue">关键点</span>：选取计数点（如每5个点取一个，T=0.1s）。</li>
+        </ul>
+        <div style="background:#e8f0fe; padding:6px 12px; border-radius:4px; margin-top:6px; font-size:13px;">
+            <b>📌 与下一章的衔接</b>：求出各点瞬时速度后，绘制 v-t 图，斜率即 <span class="highlight-red">加速度 a</span>（为匀变速直线运动做铺垫）。
+        </div>
+    </div>
+
+    <!-- 第2页 下：终极避坑指南 -->
+    <div class="row-full warning" style="margin-top:12px;">
+        <div class="sec-title">🚨 考前终极避坑指南 <span class="badge">只看这一栏</span></div>
+        <div class="tip-list">
+            <div class="item"><span class="warn">1.</span> <b>质点</b>不是“小物体”，是理想模型（看研究问题）。</div>
+            <div class="item"><span class="warn">2.</span> 参考系不同，运动状态可能不同（<b>相对性</b>）。</div>
+            <div class="item"><span class="warn">3.</span> “位移大小” ≤ “路程”（仅单向直行取等号）。</div>
+            <div class="item"><span class="warn">4.</span> <span class="fire">🔥 平均速度 ≠ 速度的平均值</span>（两者数学意义不同）。</div>
+            <div class="item"><span class="warn">5.</span> 加速度 <b>减小</b> 时，速度可能 <b>仍在增大</b>（只要 a 与 v 同向）。</div>
+            <div class="item"><span class="warn">6.</span> 速度为零时，加速度 <b>不一定</b> 为零（如竖直上抛最高点）。</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

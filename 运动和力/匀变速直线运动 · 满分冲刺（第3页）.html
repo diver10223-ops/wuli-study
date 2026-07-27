@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>匀变速直线运动 · 满分冲刺（第3页）</title>
+    <style>
+        /* 复用您原有的风格，仅做增量调整 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #e6e9ef;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            padding: 18mm 15mm 15mm 15mm;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            position: relative;
+            background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px),
+                              radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px),
+                              radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px),
+                              radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px),
+                              radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px),
+                              radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: 0 0;
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .page { 
+                box-shadow: none; 
+                border-radius: 0; 
+                margin: 0 auto; 
+                padding: 18mm 15mm 15mm 15mm;
+                width: 100%;
+                min-height: 100vh;
+                background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px),
+                                  radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px),
+                                  radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px),
+                                  radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px),
+                                  radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px),
+                                  radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px);
+            }
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 3px solid #1a3c6e;
+            padding-bottom: 6px;
+            margin-bottom: 14px;
+        }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+
+        .sec-title {
+            font-weight: 700;
+            font-size: 15px;
+            color: #1a3c6e;
+            border-bottom: 2px dashed #b0c4de;
+            padding-bottom: 4px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sec-title .badge {
+            font-size: 12px;
+            background: #1a3c6e;
+            color: white;
+            padding: 0 8px;
+            border-radius: 12px;
+        }
+
+        .row-full {
+            margin-top: 12px;
+            padding: 10px 12px;
+            border: 1px solid #dce1e8;
+            border-radius: 6px;
+            background: #fcfcfc;
+        }
+        .row-full.alt {
+            background: #f8faff;
+            border-color: #b0c4de;
+        }
+        .row-full.highlight {
+            background: #f0f7ff;
+            border-left: 6px solid #2980b9;
+        }
+        .row-full.warning {
+            background: #fffbf0;
+            border-left: 6px solid #f39c12;
+        }
+
+        .formula {
+            background: #eef3f7;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 8px 0;
+            border-left: 3px solid #2980b9;
+            letter-spacing: 0.5px;
+        }
+        .formula small {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 400;
+            font-size: 12px;
+            color: #555;
+            display: block;
+            margin-top: 2px;
+        }
+        .formula.orange { border-left-color: #e67e22; }
+        .formula.purple { border-left-color: #8e44ad; }
+        .formula.red { border-left-color: #c0392b; }
+
+        ul, .item-list {
+            list-style: none;
+            padding-left: 4px;
+        }
+        ul li, .item-list li {
+            margin-bottom: 6px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            padding-left: 18px;
+            position: relative;
+        }
+        ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #2980b9;
+            font-weight: bold;
+        }
+        .highlight-red { color: #c0392b; font-weight: 600; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .warn { color: #e67e22; font-weight: bold; }
+        .fire { color: #e74c3c; font-weight: bold; }
+
+        .two-col-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px 20px;
+            margin: 6px 0;
+        }
+        .two-col-grid .col {
+            background: #fafcff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+        .two-col-grid .col h4 {
+            font-size: 13px;
+            color: #1a3c6e;
+            border-bottom: 1px dotted #b0c4de;
+            padding-bottom: 3px;
+            margin-bottom: 6px;
+        }
+        .tag {
+            display: inline-block;
+            background: #eaeef2;
+            padding: 0 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 4px;
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+            margin-top: 4px;
+        }
+        .compare-table th {
+            background: #1a3c6e;
+            color: white;
+            padding: 6px 4px;
+            border: 1px solid #2c3e50;
+            text-align: center;
+        }
+        .compare-table td {
+            border: 1px solid #bdc3c7;
+            padding: 6px 4px;
+            vertical-align: top;
+            background: white;
+        }
+        .compare-table .highlight-cell {
+            background: #fdedec;
+        }
+        .highlight-cell { background: #fdedec; }
+
+        .tip-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 16px;
+            padding: 6px 0;
+        }
+        .tip-list .item {
+            font-size: 13px;
+            padding: 4px 0;
+            border-bottom: 1px dotted #ecf0f1;
+        }
+
+        .example-box {
+            background: #f4f8fc;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin: 6px 0;
+            border-left: 4px solid #2980b9;
+            font-size: 13px;
+        }
+        .example-box strong {
+            color: #1a3c6e;
+        }
+        .example-box .ans {
+            color: #c0392b;
+            font-weight: 600;
+        }
+
+        @media print and (max-width: 800px) {
+            .tip-list { grid-template-columns: 1fr; }
+            .two-col-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===================== 第 3 页 · 满分冲刺 ===================== -->
+<div class="page">
+    <div class="header">
+        <h1>🚀 满分冲刺 · 匀变速直线运动</h1>
+        <span class="date">进阶补充 · 2026.07.16</span>
+    </div>
+
+    <!-- 模块一：矢量性与逆向思维 -->
+    <div class="row-full highlight">
+        <div class="sec-title">🧭 矢量处理 · 逆向匀加速 <span class="badge">根治粗心</span></div>
+        <div class="two-col-grid">
+            <div class="col">
+                <h4>📐 标准矢量流程</h4>
+                <ul>
+                    <li><span class="highlight-red">① 规定正方向</span>（通常取初速度方向）</li>
+                    <li>② 确定 v₀, v, a, x 的 <span class="highlight-blue">符号</span></li>
+                    <li>③ 代入公式（如 v = v₀ + at）</li>
+                    <li>④ 结果 <span class="warn">带方向解释</span>（“与正方向相同/相反”）</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4>🔄 逆向匀加速（秒杀技巧）</h4>
+                <ul>
+                    <li><span class="fire">适用</span>：匀减速（刹车、上抛）</li>
+                    <li><span class="highlight-blue">核心</span>：将末速度为零的过程 <b>反向</b> 看成初速为零的匀加速</li>
+                    <li>👉 例：刹车距离 x = v₀²/(2a) → 逆向：x = ½a t²</li>
+                    <li>避开了负号，计算更直观</li>
+                </ul>
+            </div>
+        </div>
+        <div class="example-box">
+            <strong>📌 实战示例</strong>：汽车以 20 m/s 刹车，加速度大小 5 m/s²，求刹车位移。<br>
+            <span class="highlight-blue">正向</span>：0² − 20² = 2·(−5)·x → x = 40 m。<br>
+            <span class="highlight-red">逆向</span>：看成初速 0，加速度 5 m/s² 的匀加速，x = ½·5·(20/5)² = 40 m。 <span class="ans">✓ 更快</span>
+        </div>
+    </div>
+
+    <!-- 模块二：非常规图像 + 多过程模型 -->
+    <div class="row-full alt" style="margin-top:12px;">
+        <div class="sec-title">📊 图像升级 · 多过程模型 <span class="badge">压轴必备</span></div>
+        <div style="display:flex; flex-wrap:wrap; gap:12px;">
+            <div style="flex:1; min-width:180px;">
+                <h4 style="font-size:13px; color:#1a3c6e; margin-bottom:4px;">🔹 非常规图像</h4>
+                <ul>
+                    <li><b>a−t 图</b>：面积 = Δv</li>
+                    <li><b>x/t − t 图</b>：斜率 = a/2，截距 = v₀</li>
+                    <li><b>v²−x 图</b>：斜率 = 2a</li>
+                </ul>
+            </div>
+            <div style="flex:1; min-width:180px;">
+                <h4 style="font-size:13px; color:#1a3c6e; margin-bottom:4px;">🔸 多过程模型</h4>
+                <ul>
+                    <li><b>先加后减</b>（电梯）：v−t 图折线，位移 = 面积</li>
+                    <li><b>竖直上抛全程</b>：a = −g，对称性（等时等速）</li>
+                    <li><b>折返运动</b>：先减速至零，再反向加速</li>
+                </ul>
+            </div>
+        </div>
+        <div class="example-box" style="margin-top:6px;">
+            <strong>🔥 高频考点</strong>：竖直上抛物体，上升时间 t₁ = v₀/g，下落时间 t₂ = t₁，全程位移 0（回到原点），路程 2·(v₀²/2g)。
+        </div>
+    </div>
+
+    <!-- 模块三：追及相遇 · 速度相等临界 -->
+    <div class="row-full" style="margin-top:12px;">
+        <div class="sec-title">🚦 追及相遇 · 临界条件 <span class="badge">灵魂</span></div>
+        <div style="display:flex; flex-wrap:wrap; gap:10px;">
+            <div style="flex:1; min-width:200px;">
+                <ul>
+                    <li><span class="highlight-red">核心临界</span>：<b>速度相等</b>时，距离有最值（最大或最小）</li>
+                    <li>① 若追者速度 < 被追者，距离 <span class="warn">增大</span></li>
+                    <li>② 若追者速度 > 被追者，距离 <span class="highlight-blue">减小</span></li>
+                    <li>③ 恰好不相撞 ⇔ 速度相等时，位移差 ≤ 初始距离</li>
+                </ul>
+            </div>
+            <div style="flex:1; min-width:200px; background:#f4f8fc; padding:8px 12px; border-radius:6px;">
+                <b>📐 解题模板</b><br>
+                1. 设时间 t，写出 x₁, x₂ 表达式<br>
+                2. 令 Δx = x₁ − x₂ (或 x₂ − x₁)<br>
+                3. 速度相等：v₁ = v₂ 求临界 t<br>
+                4. 判断 Δx 与初始距离关系
+            </div>
+        </div>
+    </div>
+
+    <!-- 模块四：实验创新 · 光电门 & 误差 -->
+    <div class="row-full warning" style="margin-top:12px;">
+        <div class="sec-title">🔬 实验创新 · 光电门 & 误差 <span class="badge">新高考</span></div>
+        <div class="two-col-grid">
+            <div class="col">
+                <h4>💡 光电门测速</h4>
+                <ul>
+                    <li>瞬时速度 v = d / Δt （d 为遮光片宽度）</li>
+                    <li>加速度：a = (v₂² − v₁²) / 2x</li>
+                    <li><span class="warn">注意</span>：d 越小，测量越接近瞬时速度</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4>📉 误差分析</h4>
+                <ul>
+                    <li><b>系统误差</b>：摩擦阻力、纸带振动的滞后</li>
+                    <li><b>偶然误差</b>：读数、计数点选取</li>
+                    <li><span class="highlight-blue">逐差法</span> 可有效减小偶然误差</li>
+                </ul>
+            </div>
+        </div>
+        <div style="font-size:13px; margin-top:4px; background:#fff; padding:4px 10px; border-radius:4px;">
+            <span class="fire">🔥 常考变形</span>：若只给 4 段数据 (x₁~x₄)，a = (x₃+x₄ − x₁−x₂) / (2T)²
+        </div>
+    </div>
+
+    <!-- 模块五：高考母题 · 规范表达 -->
+    <div class="row-full" style="margin-top:12px; background:#fafcff;">
+        <div class="sec-title">📝 高考母题 · 规范表达 <span class="badge">步骤分</span></div>
+        <div style="display:flex; flex-wrap:wrap; gap:16px;">
+            <!-- 母题1 -->
+            <div style="flex:1; min-width:200px; background:#f4f8fc; padding:8px 12px; border-radius:6px;">
+                <div style="font-weight:bold; color:#1a3c6e;">【2023 全国甲卷·改编】</div>
+                <p style="font-size:13px; margin:4px 0;">汽车以 72 km/h 行驶，刹车加速度大小 4 m/s²，求 5 s 内位移。</p>
+                <div style="font-size:12px; background:#fff; padding:4px 8px; border-radius:4px; margin-top:4px;">
+                    <span class="highlight-red">✅ 规范解答</span><br>
+                    ① 规定初速度方向为正，v₀=20 m/s，a=−4 m/s²<br>
+                    ② 刹车时间 t<sub>停</sub> = v₀/|a| = 5 s<br>
+                    ③ 因 t<sub>给</sub>=5 s = t<sub>停</sub>，车刚好停下<br>
+                    ④ x = v₀t + ½at² = 20×5 + ½·(−4)·25 = <span class="ans">50 m</span>
+                </div>
+            </div>
+            <!-- 母题2 -->
+            <div style="flex:1; min-width:200px; background:#f4f8fc; padding:8px 12px; border-radius:6px;">
+                <div style="font-weight:bold; color:#1a3c6e;">【2022 广东卷·改编】</div>
+                <p style="font-size:13px; margin:4px 0;">一小球从离地 45 m 高处自由下落，g=10 m/s²，求落地前最后 1 s 的位移。</p>
+                <div style="font-size:12px; background:#fff; padding:4px 8px; border-radius:4px; margin-top:4px;">
+                    <span class="highlight-red">✅ 规范解答</span><br>
+                    ① 落地总时间 t = √(2h/g) = 3 s<br>
+                    ② 前 2 s 位移 x₂ = ½·10·4 = 20 m<br>
+                    ③ 最后 1 s 位移 = 45 − 20 = <span class="ans">25 m</span><br>
+                    <span class="warn">💡 也可用比例：1:3:5 → 第3s位移 = 5×5 = 25 m</span>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:8px; background:#fef9e7; padding:6px 12px; border-radius:4px; font-size:13px; border-left:4px solid #f39c12;">
+            <span class="fire">📌 规范表达黄金法则</span>：① 写原始公式（如 v = v₀+at） → ② 代入数据（带单位） → ③ 计算结果（注明方向）
+        </div>
+    </div>
+
+    <!-- 模块六：比例法速算 -->
+    <div class="row-full alt" style="margin-top:12px;">
+        <div class="sec-title">⚡ 比例法速算（v₀=0 匀加速） <span class="badge">秒杀</span></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div style="background:#f0f5fa; padding:6px 10px; border-radius:6px;">
+                <b>等时位移比</b> (1s, 2s, 3s…)<br>
+                x₁ : x₂ : x₃ : … = <span class="highlight-red">1 : 4 : 9 : …</span>
+            </div>
+            <div style="background:#f0f5fa; padding:6px 10px; border-radius:6px;">
+                <b>连续相等时间位移比</b><br>
+                Δx₁ : Δx₂ : Δx₃ : … = <span class="highlight-red">1 : 3 : 5 : …</span>
+            </div>
+            <div style="background:#f0f5fa; padding:6px 10px; border-radius:6px;">
+                <b>等位移时间比</b> (x, 2x, 3x…)<br>
+                t₁ : t₂ : t₃ : … = <span class="highlight-red">1 : √2 : √3 : …</span>
+            </div>
+            <div style="background:#f0f5fa; padding:6px 10px; border-radius:6px;">
+                <b>连续等位移时间比</b><br>
+                Δt₁ : Δt₂ : Δt₃ : … = <span class="highlight-red">1 : (√2−1) : (√3−√2) : …</span>
+            </div>
+        </div>
+        <div style="font-size:13px; margin-top:6px; background:#fff; padding:4px 10px; border-radius:4px;">
+            <span class="fire">🔥 注意</span>：以上比例 <b>仅适用于 v₀=0 的匀加速</b>，选择题直接秒杀！
+        </div>
+    </div>
+
+    <!-- 底部提醒 -->
+    <div style="margin-top:16px; text-align:center; font-size:14px; color:#1a3c6e; border-top:2px solid #b0c4de; padding-top:10px;">
+        ⭐ 满分 = 扎实基础 + 进阶技巧 + 规范表达 · 愿你合上笔的那一刻，有战士收刀入鞘的骄傲 ⭐
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第1讲·题型易错补充</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e6e9ef; display: flex; flex-direction: column; align-items: center; padding: 20px 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .page { width: 210mm; min-height: 297mm; background: white; padding: 18mm 15mm 15mm 15mm; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 4px; position: relative; background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px); background-size: 100% 100%; background-repeat: no-repeat; background-position: 0 0; }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; margin: 0 auto; padding: 18mm 15mm 15mm 15mm; width: 100%; min-height: 100vh; background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px); } .page:last-child { margin-bottom: 0; } }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #1a3c6e; padding-bottom: 6px; margin-bottom: 14px; }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+        .row-full { margin-top: 12px; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; background: #fcfcfc; }
+        .row-full.alt { background: #f8faff; border-color: #b0c4de; }
+        .row-full.warning { background: #fffbf0; border-left: 6px solid #f39c12; }
+        .row-full.exam { background: #f0f7f0; border-left: 6px solid #27ae60; }
+        .sec-title { font-weight: 700; font-size: 15px; color: #1a3c6e; border-bottom: 2px dashed #b0c4de; padding-bottom: 4px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sec-title .badge { font-size: 12px; background: #1a3c6e; color: white; padding: 0 8px; border-radius: 12px; }
+        .fire { color: #e74c3c; font-weight: bold; }
+        .warn { color: #e67e22; font-weight: bold; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .error-box { background:#fdedec; padding:6px 10px; border-radius:4px; border-left:4px solid #e74c3c; font-size:13px; margin-top:4px; }
+        .cross-box { background:#f4f8fc; padding:6px 10px; border-radius:4px; border-left:4px solid #8e44ad; font-size:13px; margin-top:4px; }
+        .tip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 6px 0; }
+        .tip-list .item { font-size: 13px; padding: 4px 0; border-bottom: 1px dotted #ecf0f1; }
+        @media print and (max-width: 800px) { .tip-list { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="header"><h1>📖 第1讲：相对运动 · 题型与易错补充</h1><span class="date">2026.07.16</span></div>
+    <div class="row-full exam">
+        <div class="sec-title">📝 常见题型</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 16px; font-size:13px;">
+            <div><span class="fire">题型1</span> 两车追及相遇（相对速度法）</div>
+            <div><span class="fire">题型2</span> 船过河：最短时间、最短位移</div>
+            <div><span class="fire">题型3</span> 雨滴倾斜问题（实际情景）</div>
+            <div><span class="fire">题型4</span> 风中飞机飞行（空速+风速）</div>
+            <div><span class="fire">题型5</span> 电梯/传送带上的相对运动</div>
+            <div><span class="fire">题型6</span> 多物体相对运动的矢量合成</div>
+        </div>
+    </div>
+    <div class="row-full alt">
+        <div class="sec-title">❌ 常错题</div>
+        <div class="error-box"><span class="fire">错题1</span> 船过河最短时间：船头垂直河岸。但很多人误以为“船头指向对岸”就是最短路径。</div>
+        <div class="error-box"><span class="fire">错题2</span> 相对速度公式 v<sub>A/B</sub> = v<sub>A</sub> − v<sub>B</sub>，是<b>矢量差</b>，不是代数差（方向不同时不能直接加减）。</div>
+        <div class="error-box"><span class="fire">错题3</span> 雨滴问题中，人看到的雨滴方向 = v<sub>雨对地</sub> − v<sub>人对地</sub>，容易把“减号”搞反。</div>
+    </div>
+    <div class="row-full warning">
+        <div class="sec-title">🔗 交叉题型</div>
+        <div class="cross-box"><span class="highlight-blue">① 第8讲+第1讲</span>：关联运动中的相对速度（如绳连接的两个物体在不同参考系中的速度）</div>
+        <div class="cross-box"><span class="highlight-blue">② 第6讲+第1讲</span>：在运动参考系中观察抛体运动（如船上抛球）</div>
+    </div>
+</div>
+</body>
+</html>

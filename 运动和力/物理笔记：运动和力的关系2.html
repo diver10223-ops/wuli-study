@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>物理笔记：运动和力的关系（完整版）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e6e9ef; display: flex; flex-direction: column; align-items: center; padding: 20px 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .page { width: 210mm; min-height: 297mm; background: white; padding: 18mm 15mm 15mm 15mm; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 4px; position: relative; background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px); background-size: 100% 100%; background-repeat: no-repeat; background-position: 0 0; }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; margin: 0 auto; padding: 18mm 15mm 15mm 15mm; width: 100%; min-height: 100vh; background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px); } .page:last-child { margin-bottom: 0; } }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #1a3c6e; padding-bottom: 6px; margin-bottom: 14px; }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+        .row-dual { display: flex; gap: 18px; margin-bottom: 16px; }
+        .col-left { flex: 0 0 38%; background: #f8faff; padding: 10px 12px; border-left: 4px solid #e74c3c; border-radius: 0 6px 6px 0; }
+        .col-right { flex: 1; background: #fcfcfc; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; }
+        .row-full { margin-top: 12px; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; background: #fcfcfc; }
+        .row-full.alt { background: #f8faff; border-color: #b0c4de; }
+        .row-full.warning { background: #fffbf0; border-left: 6px solid #f39c12; }
+        .row-full.experiment { background: #f0f7f0; border-left: 6px solid #27ae60; }
+        .row-full.bridge { background: #e8f0fe; border: 2px solid #2980b9; }
+        .sec-title { font-weight: 700; font-size: 15px; color: #1a3c6e; border-bottom: 2px dashed #b0c4de; padding-bottom: 4px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sec-title .badge { font-size: 12px; background: #1a3c6e; color: white; padding: 0 8px; border-radius: 12px; }
+        ul, .item-list { list-style: none; padding-left: 4px; }
+        ul li, .item-list li { margin-bottom: 6px; font-size: 13.5px; line-height: 1.6; padding-left: 18px; position: relative; }
+        ul li::before { content: "▸"; position: absolute; left: 0; color: #2980b9; font-weight: bold; }
+        .highlight-red { color: #c0392b; font-weight: 600; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .warn { color: #e67e22; font-weight: bold; }
+        .fire { color: #e74c3c; font-weight: bold; }
+        .formula { background: #eef3f7; padding: 6px 12px; border-radius: 6px; font-family: 'Times New Roman', Times, serif; font-size: 16px; font-weight: 500; margin: 8px 0; border-left: 3px solid #2980b9; letter-spacing: 0.5px; }
+        .formula small { font-family: 'Segoe UI', sans-serif; font-weight: 400; font-size: 12px; color: #555; display: block; margin-top: 2px; }
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 4px; }
+        .compare-table th { background: #1a3c6e; color: white; padding: 6px 4px; border: 1px solid #2c3e50; text-align: center; }
+        .compare-table td { border: 1px solid #bdc3c7; padding: 6px 4px; vertical-align: top; background: white; }
+        .compare-table .highlight-cell { background: #fdedec; }
+        .page-break { page-break-before: always; }
+        .tip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 6px 0; }
+        .tip-list .item { font-size: 13px; padding: 4px 0; border-bottom: 1px dotted #ecf0f1; }
+        @media print and (max-width: 800px) { .tip-list { grid-template-columns: 1fr; } }
+        .force-box { background: #eaf4ea; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #27ae60; margin-top: 6px; font-size: 13px; }
+        .step-box { background: #f4f8fc; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #2980b9; margin-top: 6px; font-size: 13px; }
+        .experiment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; font-size: 13px; }
+        .experiment-grid .item { padding: 4px 0; border-bottom: 1px dotted #d5e8d5; }
+        .experiment-detail { background: white; padding: 8px 12px; border-radius: 6px; border: 1px solid #dce1e8; margin-top: 6px; font-size: 13px; }
+        .experiment-detail .label { font-weight: 700; color: #1a3c6e; }
+        .topic-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; font-size: 12.5px; }
+        .topic-grid .topic-item { background: white; padding: 8px 10px; border-radius: 6px; border: 1px solid #dce1e8; }
+        @media print and (max-width: 800px) { .topic-grid { grid-template-columns: 1fr; } }
+        @media print and (max-width: 800px) { .experiment-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<!-- ===================== 第 1 页 ===================== -->
+<div class="page">
+    <div class="header">
+        <h1>📖 第4章 运动和力的关系（上）</h1>
+        <span class="date">整理日期：2026.07.16</span>
+    </div>
+
+    <!-- ★★★ 核心逻辑横幅 ★★★ -->
+    <div class="row-full bridge" style="margin-bottom:12px;">
+        <div style="display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; font-size:16px; font-weight:700; color:#1a3c6e;">
+            <span>⚡ 受力分析</span>
+            <span style="font-size:24px; color:#e74c3c;">→</span>
+            <span style="background:#e74c3c; color:white; padding:4px 16px; border-radius:20px; font-size:18px;">F<sub>合</sub> = ma</span>
+            <span style="font-size:24px; color:#e74c3c;">→</span>
+            <span style="background:#2980b9; color:white; padding:4px 16px; border-radius:20px; font-size:18px;">a</span>
+            <span style="font-size:24px; color:#e74c3c;">→</span>
+            <span>📐 运动学公式</span>
+        </div>
+        <div style="text-align:center; font-size:18px; font-weight:700; color:#c0392b; margin-top:4px;">
+            ⭐ a 是连接运动和力的桥梁 ⭐
+        </div>
+    </div>
+
+    <!-- 双栏区域 -->
+    <div class="row-dual">
+        <div class="col-left">
+            <div class="sec-title">⚖️ 牛顿第一定律 <span class="badge">基石</span></div>
+            <ul>
+                <li><b>内容</b>：一切物体总保持匀速直线运动或静止状态，除非外力迫使它改变。</li>
+                <li><span class="highlight-red">惯性</span>：物体保持原来运动状态的性质（<b>质量</b>是唯一量度）</li>
+                <li><span class="warn">⚠️ 惯性不是力</span>，是属性（质量大→惯性大）</li>
+                <li><span class="highlight-blue">伽利略理想实验</span>：力不是维持运动的原因，而是改变运动状态的原因</li>
+            </ul>
+            <div style="margin-top:10px; background:#fef9e7; padding:6px 10px; border-radius:4px; font-size:13px; border:1px solid #f1c40f;">
+                <span class="fire">🔥 常考陷阱</span>：<br>
+                “速度越大惯性越大” ❌<br>
+                “质量越大惯性越大” ✅
+            </div>
+
+            <div class="sec-title" style="margin-top:16px;">📐 力学单位制 <span class="badge">常识</span></div>
+            <ul>
+                <li><b>基本单位</b>：m（米）、kg（千克）、s（秒）</li>
+                <li><b>导出单位</b>：N（牛顿）= kg·m/s²</li>
+                <li><span class="highlight-blue">检验方法</span>：单位制可检验公式是否正确</li>
+            </ul>
+        </div>
+        <div class="col-right">
+            <div class="sec-title">⚡ 牛顿第二定律 <span class="badge">核心</span></div>
+            <div class="formula" style="font-size:20px; text-align:center; border-left-color:#e74c3c;">
+                <b>F<sub>合</sub> = ma</b>
+                <small>矢量式，方向：a 与 F<sub>合</sub> 方向相同</small>
+            </div>
+            <ul>
+                <li><b>瞬时性</b>：力与加速度 <span class="highlight-red">同时产生、同时变化、同时消失</span></li>
+                <li><b>独立性</b>：每个力独立产生加速度，合加速度 = 分加速度的矢量和</li>
+                <li><b>因果性</b>：力是产生加速度的原因（<b>不是维持速度</b>）</li>
+            </ul>
+            <div class="step-box">
+                <b>📌 牛顿第二定律的“三性”</b><br>
+                <span class="highlight-blue">瞬时性</span>、<span class="highlight-blue">独立性</span>、<span class="highlight-blue">因果性</span>（选择题常考）
+            </div>
+
+            <div style="margin-top:10px; background:#fdedec; padding:8px 12px; border-radius:6px; font-size:13px;">
+                <span class="fire">🔥 核心公式链</span><br>
+                <b>受力分析</b> → F<sub>合</sub> = ma → <b>加速度 a</b> → <b>运动学</b>（x, v, t）<br>
+                或 <b>运动学</b> → a → F<sub>合</sub> → <b>受力分析</b>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通栏：牛顿第二定律的应用题型 -->
+    <div class="row-full">
+        <div class="sec-title">🚀 牛顿运动定律的应用 <span class="badge">两大题型</span></div>
+        <div style="display:flex; flex-wrap:wrap; gap:16px;">
+            <div style="flex:1; min-width:200px; background:#eef3f7; padding:10px 14px; border-radius:6px; border-left:4px solid #2980b9;">
+                <b>📌 题型一：已知力求运动</b>
+                <ul style="margin-top:4px;">
+                    <li>受力分析 → 求 F<sub>合</sub></li>
+                    <li>F<sub>合</sub> = ma → 求 a</li>
+                    <li>运动学公式 → 求 x, v, t</li>
+                </ul>
+            </div>
+            <div style="flex:1; min-width:200px; background:#fef9e7; padding:10px 14px; border-radius:6px; border-left:4px solid #e67e22;">
+                <b>📌 题型二：已知运动求力</b>
+                <ul style="margin-top:4px;">
+                    <li>运动学公式 → 求 a</li>
+                    <li>F<sub>合</sub> = ma → 求合力</li>
+                    <li>受力分析 → 求某个未知力</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 超重与失重 -->
+    <div class="row-full alt" style="margin-top:10px;">
+        <div class="sec-title">⬆️ 超重与失重 <span class="badge">加速度方向决定</span></div>
+        <div style="display:flex; flex-wrap:wrap; gap:12px 30px; font-size:13.5px;">
+            <div><b>🔹 超重</b>：a 方向 <span class="highlight-red">向上</span>（F<sub>示</sub> > mg）</div>
+            <div><b>🔹 失重</b>：a 方向 <span class="highlight-red">向下</span>（F<sub>示</sub> < mg）</div>
+            <div><b>🔹 完全失重</b>：a = g 向下（F<sub>示</sub> = 0）</div>
+        </div>
+        <div style="margin-top:6px; background:#fdedec; padding:6px 12px; border-radius:4px; font-size:13px;">
+            <span class="fire">🔥 超重失重看的是 <b>加速度方向</b>，不是速度方向！</span><br>
+            <span class="warn">⚠️ 加速上升</span>（超重）vs <span class="warn">减速下降</span>（超重）——加速度都向上<br>
+            <span class="warn">⚠️ 视重 F<sub>示</sub> = m(g + a)</span>（向上为正方向）
+        </div>
+    </div>
+</div>
+
+<!-- ===================== 第 2 页 ===================== -->
+<div class="page page-break">
+    <div class="header">
+        <h1>📖 第4章 易混淆对比 · 考察要点 · 实验专题</h1>
+        <span class="date">整理日期：2026.07.16</span>
+    </div>
+
+    <!-- 差异性对比表 -->
+    <div class="row-full">
+        <div class="sec-title">📊 差异性 & 易混淆对比 <span class="badge">选择题必杀</span></div>
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th style="width:18%;">对比维度</th>
+                    <th style="width:27%;">超重 vs 失重</th>
+                    <th style="width:27%;">惯性 vs 力</th>
+                    <th style="width:28%;">瞬时性 vs 时间积累</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>核心区别</b></td>
+                    <td>超重：a 向上<br>失重：a 向下</td>
+                    <td>惯性：<b>属性</b>（质量量度）<br>力：<b>作用</b>（改变运动状态）</td>
+                    <td>瞬时性：F→a <b>同时</b><br>时间积累：F·t → Δv（冲量）</td>
+                </tr>
+                <tr>
+                    <td><b>常见误区</b></td>
+                    <td>❌ 速度向上→超重<br>✅ 加速度向上→超重</td>
+                    <td>❌ 速度大→惯性大<br>✅ 质量大→惯性大</td>
+                    <td>❌ 力消失后速度立即为0<br>✅ 力消失后a=0，速度保持不变</td>
+                </tr>
+                <tr>
+                    <td><b>公式/表现</b></td>
+                    <td>F<sub>示</sub> = m(g ± a)<br>超重取+，失重取−</td>
+                    <td>惯性不是力，<b>不能说“受到惯性力”</b></td>
+                    <td>牛顿第二定律是 <b>瞬时</b> 关系<br>（求某时刻a只看该时刻合力）</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 考察要点（细化） -->
+    <div class="row-full alt" style="margin-top:10px;">
+        <div class="sec-title">🎯 考察要点（题型方向） <span class="badge">应试</span></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 20px; font-size:13px;">
+            <div><span class="fire">①</span> <b>惯性判断</b>：质量决定惯性，与速度无关（单选必考）</div>
+            <div><span class="fire">②</span> <b>F=ma矢量性</b>：合力方向=加速度方向（受力图判定）</div>
+            <div><span class="fire">③</span> <b>瞬时加速度</b>：某时刻撤去某力，求该时刻a（弹簧vs绳子）</div>
+            <div><span class="fire">④</span> <b>超重失重计算</b>：F<sub>示</sub> = m(g±a)，分清加速度方向</div>
+            <div><span class="fire">⑤</span> <b>连接体问题</b>：整体法求a，隔离法求内力</div>
+            <div><span class="fire">⑥</span> <b>临界问题</b>：弹力=0、摩擦力=最大静摩擦（最大值/最小值）</div>
+            <div><span class="fire">⑦</span> <b>实验图像分析</b>：a-F图截距成因（未平衡摩擦/平衡过度）</div>
+            <div><span class="fire">⑧</span> <b>单位制判断</b>：公式等号两边单位必须一致</div>
+        </div>
+    </div>
+
+    <!-- ========== 实验专题（完整展开） ========== -->
+    <div class="row-full experiment" style="margin-top:10px;">
+        <div class="sec-title">🔬 实验：探究 a 与 F、m 的关系 <span class="badge">完整版</span></div>
+
+        <!-- 实验内容 -->
+        <div class="experiment-detail">
+            <div><span class="label">📌 实验内容</span>：探究加速度 a 与合外力 F、质量 m 的定量关系</div>
+            <div style="margin-top:4px;"><span class="label">📐 对应公式</span>：F<sub>合</sub> = ma → a = F<sub>合</sub>/m</div>
+            <div style="margin-top:4px;"><span class="label">🎯 实验目标</span>：① 保持m不变，验证a∝F；② 保持F不变，验证a∝1/m</div>
+        </div>
+
+        <!-- 实验步骤与关键细节 -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px;">
+            <div class="experiment-detail" style="border-left:4px solid #2980b9;">
+                <span class="label">🔧 核心步骤</span>
+                <ul style="margin-top:4px; font-size:13px;">
+                    <li>① 平衡摩擦力（垫高木板，不挂重物）</li>
+                    <li>② 挂重物（m<sub>盘</sub> ≪ m<sub>车</sub>）</li>
+                    <li>③ 先接通电源，再释放小车</li>
+                    <li>④ 纸带 → 逐差法求 a</li>
+                    <li>⑤ 改变 F 或 m，重复实验</li>
+                </ul>
+            </div>
+            <div class="experiment-detail" style="border-left:4px solid #e67e22;">
+                <span class="label">⚠️ 关键细节</span>
+                <ul style="margin-top:4px; font-size:13px;">
+                    <li><span class="fire">① 平衡摩擦</span>：小车匀速（纸带点距均匀）</li>
+                    <li><span class="fire">② 质量条件</span>：m<sub>盘</sub> ≪ m<sub>车</sub>（使F≈mg）</li>
+                    <li><span class="fire">③ 先通电后放车</span>（记反了扣分！）</li>
+                    <li><span class="fire">④ 改变m时</span>：要重新平衡摩擦力吗？<span class="highlight-blue">不需要</span>（因为已平衡了车与板的摩擦）</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 图像分析 -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px;">
+            <div class="experiment-detail" style="border-left:4px solid #27ae60;">
+                <span class="label">📈 a-F 图</span>
+                <ul style="margin-top:4px; font-size:13px;">
+                    <li>过原点直线 → 验证 a∝F</li>
+                    <li>斜率 = 1/m（可求质量）</li>
+                    <li><span class="warn">不过原点</span>：正截距（平衡过度）或负截距（未平衡摩擦）</li>
+                </ul>
+            </div>
+            <div class="experiment-detail" style="border-left:4px solid #8e44ad;">
+                <span class="label">📈 a-1/m 图</span>
+                <ul style="margin-top:4px; font-size:13px;">
+                    <li>过原点直线 → 验证 a∝1/m</li>
+                    <li>斜率 = F（可求合外力）</li>
+                    <li><span class="warn">弯曲</span>：未满足 m<sub>盘</sub> ≪ m<sub>车</sub>（F不再≈mg）</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 常考变形 -->
+        <div class="experiment-detail" style="border-left:4px solid #e74c3c; margin-top:6px;">
+            <span class="label">🔥 常考变形</span>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-top:4px; font-size:12.5px;">
+                <div>① 气垫导轨替代木板（无需平衡摩擦）</div>
+                <div>② 光电门测速（v=Δx/Δt）→ 算a</div>
+                <div>③ 力传感器直接测F（无需质量条件）</div>
+                <div>④ 悬挂物质量不可忽略 → 系统牛顿第二定律</div>
+                <div>⑤ 改变斜面倾角 → a=gsinθ（研究a与sinθ关系）</div>
+                <div>⑥ 用位移传感器（频闪照相）求a</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== 第 3 页 ===================== -->
+<div class="page page-break">
+    <div class="header">
+        <h1>📖 第4章 课题研究 · 实验清单 · 避坑</h1>
+        <span class="date">整理日期：2026.07.16</span>
+    </div>
+
+    <!-- 课题研究（完整展开） -->
+    <div class="row-full alt">
+        <div class="sec-title">🧪 课题研究 <span class="badge">研究思路 + 报告结构</span></div>
+
+        <!-- 研究思路 -->
+        <div class="experiment-detail" style="border-left:4px solid #2980b9;">
+            <span class="label">📌 研究思路（通用路径）</span>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr; gap:4px; margin-top:4px; font-size:12px; text-align:center;">
+                <div style="background:#eef3f7; padding:4px; border-radius:4px;">① 提出问题</div>
+                <div style="background:#eef3f7; padding:4px; border-radius:4px;">② 猜想假设</div>
+                <div style="background:#eef3f7; padding:4px; border-radius:4px;">③ 设计实验</div>
+                <div style="background:#eef3f7; padding:4px; border-radius:4px;">④ 数据采集</div>
+                <div style="background:#eef3f7; padding:4px; border-radius:4px;">⑤ 分析结论</div>
+            </div>
+        </div>
+
+        <!-- 报告结构 -->
+        <div class="experiment-detail" style="border-left:4px solid #e67e22; margin-top:6px;">
+            <span class="label">📋 实验报告结构（必写项）</span>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px 16px; margin-top:4px; font-size:12.5px;">
+                <div>① 实验名称</div>
+                <div>② 实验目的</div>
+                <div>③ 实验原理（公式）</div>
+                <div>④ 实验器材（写全）</div>
+                <div>⑤ 实验步骤（关键操作）</div>
+                <div>⑥ 数据记录（表格）</div>
+                <div>⑦ 数据处理（图像/计算）</div>
+                <div>⑧ 实验结论</div>
+                <div>⑨ 误差分析</div>
+            </div>
+        </div>
+
+        <!-- 课题方向（6个） -->
+        <div style="margin-top:8px;">
+            <span class="label">🔬 课题方向推荐（6个）</span>
+            <div class="topic-grid" style="margin-top:4px;">
+                <div class="topic-item"><b>①</b> 加速度与合外力的定量关系（教材基础）</div>
+                <div class="topic-item"><b>②</b> 加速度与物体质量的定量关系（教材基础）</div>
+                <div class="topic-item"><b>③</b> 斜面倾角对加速度的影响（a=gsinθ验证）</div>
+                <div class="topic-item"><b>④</b> 摩擦力对加速度的影响（不同接触面材料）</div>
+                <div class="topic-item"><b>⑤</b> 空气阻力对下落加速度的影响（纸片vs铁球）</div>
+                <div class="topic-item"><b>⑥</b> 连接体系统的加速度与质量比的关系</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 学生实验完整清单 -->
+    <div class="row-full experiment" style="margin-top:12px;">
+        <div class="sec-title">📋 学生实验必会清单 <span class="badge">全学期覆盖</span></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 16px; font-size:13px;">
+            <div style="background:white; padding:6px 10px; border-radius:4px; border-left:4px solid #e74c3c;">
+                <b>实验1</b> 探究 a 与 F、m 的关系（第4章核心）
+            </div>
+            <div style="background:white; padding:6px 10px; border-radius:4px; border-left:4px solid #2980b9;">
+                <b>实验2</b> 测量匀变速直线运动的加速度（第2章）
+            </div>
+            <div style="background:white; padding:6px 10px; border-radius:4px; border-left:4px solid #8e44ad;">
+                <b>实验3</b> 验证力的平行四边形定则（第3章）
+            </div>
+            <div style="background:white; padding:6px 10px; border-radius:4px; border-left:4px solid #27ae60;">
+                <b>实验4</b> 探究弹簧弹力与形变量的关系（第3章胡克定律）
+            </div>
+        </div>
+        <div style="margin-top:6px; background:#f4f8fc; padding:6px 12px; border-radius:4px; font-size:13px; border-left:4px solid #2980b9;">
+            <b>💡 实验题答题模板</b>：原理 → 器材 → 步骤（关键操作）→ 数据处理（图像/逐差法）→ 结论 → 误差分析
+        </div>
+    </div>
+
+    <!-- 终极避坑指南 -->
+    <div class="row-full warning" style="margin-top:12px;">
+        <div class="sec-title">🚨 第四章考前终极避坑指南 <span class="badge">只看这一栏</span></div>
+        <div class="tip-list">
+            <div class="item"><span class="warn">1.</span> <b>惯性是属性，不是力</b>。不能说“受到惯性力”。</div>
+            <div class="item"><span class="warn">2.</span> <span class="fire">🔥 F=ma 中 F 是 <b>合外力</b></span>，不是某一个力！</div>
+            <div class="item"><span class="warn">3.</span> 超重/失重看 <b>加速度方向</b>，不是看速度方向。</div>
+            <div class="item"><span class="warn">4.</span> <span class="fire">🔥 实验：必须 <b>先通电后放小车</b></span>（记反了扣分）。</div>
+            <div class="item"><span class="warn">5.</span> 平衡摩擦力时，<b>不能挂重物</b>（让小车独自做匀速直线运动）。</div>
+            <div class="item"><span class="warn">6.</span> <span class="fire">🔥 瞬时加速度</span>：某时刻受的合外力决定该时刻的 a（瞬时性）。</div>
+            <div class="item"><span class="warn">7.</span> a-F 图不过原点：<span class="highlight-red">正截距</span>→平衡过度；<span class="highlight-red">负截距</span>→未平衡摩擦。</div>
+            <div class="item"><span class="warn">8.</span> <span class="fire">🔥 连接体</span>：整体法求 a，隔离法求内力（内力不画在整体受力图上）。</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

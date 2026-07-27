@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第4讲：导数研究运动</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e6e9ef; display: flex; flex-direction: column; align-items: center; padding: 20px 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .page { width: 210mm; min-height: 297mm; background: white; padding: 18mm 15mm 15mm 15mm; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 4px; position: relative; background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px); background-size: 100% 100%; background-repeat: no-repeat; background-position: 0 0; }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; margin: 0 auto; padding: 18mm 15mm 15mm 15mm; width: 100%; min-height: 100vh; background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px); } .page:last-child { margin-bottom: 0; } }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #1a3c6e; padding-bottom: 6px; margin-bottom: 14px; }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+        .row-dual { display: flex; gap: 18px; margin-bottom: 16px; }
+        .col-left { flex: 0 0 38%; background: #f8faff; padding: 10px 12px; border-left: 4px solid #e74c3c; border-radius: 0 6px 6px 0; }
+        .col-right { flex: 1; background: #fcfcfc; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; }
+        .row-full { margin-top: 12px; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; background: #fcfcfc; }
+        .row-full.alt { background: #f8faff; border-color: #b0c4de; }
+        .row-full.warning { background: #fffbf0; border-left: 6px solid #f39c12; }
+        .sec-title { font-weight: 700; font-size: 15px; color: #1a3c6e; border-bottom: 2px dashed #b0c4de; padding-bottom: 4px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sec-title .badge { font-size: 12px; background: #1a3c6e; color: white; padding: 0 8px; border-radius: 12px; }
+        ul, .item-list { list-style: none; padding-left: 4px; }
+        ul li, .item-list li { margin-bottom: 6px; font-size: 13.5px; line-height: 1.6; padding-left: 18px; position: relative; }
+        ul li::before { content: "▸"; position: absolute; left: 0; color: #2980b9; font-weight: bold; }
+        .highlight-red { color: #c0392b; font-weight: 600; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .warn { color: #e67e22; font-weight: bold; }
+        .fire { color: #e74c3c; font-weight: bold; }
+        .formula { background: #eef3f7; padding: 6px 12px; border-radius: 6px; font-family: 'Times New Roman', Times, serif; font-size: 16px; font-weight: 500; margin: 8px 0; border-left: 3px solid #2980b9; letter-spacing: 0.5px; }
+        .formula small { font-family: 'Segoe UI', sans-serif; font-weight: 400; font-size: 12px; color: #555; display: block; margin-top: 2px; }
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 4px; }
+        .compare-table th { background: #1a3c6e; color: white; padding: 6px 4px; border: 1px solid #2c3e50; text-align: center; }
+        .compare-table td { border: 1px solid #bdc3c7; padding: 6px 4px; vertical-align: top; background: white; }
+        .compare-table .highlight-cell { background: #fdedec; }
+        .page-break { page-break-before: always; }
+        .tip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 6px 0; }
+        .tip-list .item { font-size: 13px; padding: 4px 0; border-bottom: 1px dotted #ecf0f1; }
+        @media print and (max-width: 800px) { .tip-list { grid-template-columns: 1fr; } }
+        .derivative-chain { display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap; font-size:18px; font-weight:700; color:#1a3c6e; }
+        .derivative-chain .arrow { color:#e74c3c; }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <div class="header">
+        <h1>📖 第4讲：导数研究运动</h1>
+        <span class="date">整理日期：2026.07.16</span>
+    </div>
+
+    <!-- 核心链条横幅 -->
+    <div class="row-full" style="background:#e8f0fe; border:2px solid #2980b9; margin-bottom:12px;">
+        <div class="derivative-chain">
+            <span>x(t)</span>
+            <span class="arrow">—<b>求导</b>→</span>
+            <span>v(t) = dx/dt</span>
+            <span class="arrow">—<b>求导</b>→</span>
+            <span>a(t) = dv/dt = d²x/dt²</span>
+        </div>
+        <div style="text-align:center; font-size:13px; color:#555; margin-top:4px;">
+            ⭐ 导数求的是 <span class="highlight-red">瞬时变化率</span> — 对应物理中的“瞬时速度”和“瞬时加速度”
+        </div>
+    </div>
+
+    <div class="row-dual">
+        <div class="col-left">
+            <div class="sec-title">📐 导数的物理含义</div>
+            <ul>
+                <li><span class="highlight-red">一阶导数</span>：位置对时间 → 速度（变化率）</li>
+                <li><span class="highlight-blue">二阶导数</span>：速度对时间 → 加速度（变化率的变化率）</li>
+                <li style="margin-top:8px;"><b>几何意义</b>：导数 = 图像切线的 <b>斜率</b></li>
+                <li style="margin-top:8px;"><span class="warn">⚠️ 导数 = 平均变化率的极限（Δt→0）</span></li>
+            </ul>
+            <div style="margin-top:10px; background:#fef9e7; padding:6px 10px; border-radius:4px; font-size:13px; border:1px solid #f1c40f;">
+                <b>💡 常用导数</b><br>
+                d(tⁿ)/dt = n·tⁿ⁻¹<br>
+                d(sin t)/dt = cos t<br>
+                d(eᵗ)/dt = eᵗ
+            </div>
+        </div>
+        <div class="col-right">
+            <div class="sec-title">📌 导数在运动学中的应用</div>
+            <ul>
+                <li><span class="highlight-blue">① 已知 x(t)</span> → 求 v(t) 和 a(t)</li>
+                <li><span class="highlight-blue">② 已知 v(t)</span> → 求 a(t)（加速度为速度对时间的导数）</li>
+                <li><span class="highlight-blue">③ 求极值</span>：令 v(t)=0 求最大位移/最高点</li>
+                <li><span class="highlight-blue">④ 判断运动性质</span>：a(t)>0 加速，a(t)<0 减速</li>
+            </ul>
+            <div style="margin-top:10px; background:#fdedec; padding:6px 10px; border-radius:4px; font-size:13px;">
+                <span class="fire">🔥 常考模型</span><br>
+                ① 简谐运动：x = A·sin(ωt)，v = Aω·cos(ωt)，a = −Aω²·sin(ωt)<br>
+                ② 变加速直线：a = kv（需用导数分离变量）
+            </div>
+        </div>
+    </div>
+
+    <div class="row-full">
+        <div class="sec-title">📊 导数 vs 平均变化率</div>
+        <table class="compare-table">
+            <thead>
+                <tr><th style="width:25%;">对比项</th><th style="width:37%;">导数（瞬时）</th><th style="width:38%;">平均变化率</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><b>定义</b></td><td>lim(Δt→0) Δx/Δt</td><td>Δx/Δt（有限区间）</td></tr>
+                <tr><td><b>物理量</b></td><td>瞬时速度/加速度</td><td>平均速度/平均加速度</td></tr>
+                <tr><td><b>图像含义</b></td><td class="highlight-cell">切线斜率</td><td>割线斜率</td></tr>
+                <tr><td><b>精度</b></td><td>精确（瞬时值）</td><td>近似（区间平均值）</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row-full alt">
+        <div class="sec-title">🎯 考察要点</div>
+        <div style="display:flex; flex-wrap:wrap; gap:6px 20px; font-size:13px;">
+            <span><span class="fire">①</span> 从 x(t) 求 v(t)、a(t)（求导运算）</span>
+            <span><span class="fire">②</span> 判断 a 的正负 → 加速/减速</span>
+            <span><span class="fire">③</span> 令 v(t)=0 求速度极值/位移极值</span>
+            <span><span class="fire">④</span> 简谐运动中的导数关系</span>
+        </div>
+    </div>
+
+    <div class="row-full warning">
+        <div class="sec-title">🚨 避坑指南</div>
+        <div class="tip-list">
+            <div class="item"><span class="warn">1.</span> <b>求导时注意链式法则</b>：若 x = f(g(t))，dx/dt = f'(g)·g'(t)。</div>
+            <div class="item"><span class="warn">2.</span> <span class="fire">🔥 导数≠平均变化率</span>：求瞬时速度必须用导数，不能用 Δx/Δt。</div>
+            <div class="item"><span class="warn">3.</span> 二阶导数的符号：a>0 表示速度增加（不一定是加速运动，要看参考方向）。</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>物理笔记：匀变速直线运动（活页布局）</title>
+    <style>
+        /* 全局重置与打印样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #e6e9ef;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            padding: 18mm 15mm 15mm 15mm;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            position: relative;
+            /* 模拟活页孔 */
+            background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px),
+                              radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px),
+                              radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px),
+                              radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px),
+                              radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px),
+                              radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: 0 0;
+        }
+        /* 打印时隐藏背景、去掉阴影和圆角 */
+        @media print {
+            body { background: white; padding: 0; }
+            .page { 
+                box-shadow: none; 
+                border-radius: 0; 
+                margin: 0 auto; 
+                padding: 18mm 15mm 15mm 15mm;
+                width: 100%;
+                min-height: 100vh;
+                background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px),
+                                  radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px),
+                                  radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px),
+                                  radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px),
+                                  radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px),
+                                  radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px);
+            }
+            .page:last-child { margin-bottom: 0; }
+        }
+
+        /* ---- 布局组件 ---- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 3px solid #1a3c6e;
+            padding-bottom: 6px;
+            margin-bottom: 14px;
+        }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+
+        /* 双栏区域（上） */
+        .row-dual {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 16px;
+        }
+        .col-left {
+            flex: 0 0 35%;
+            background: #f8faff;
+            padding: 10px 12px;
+            border-left: 4px solid #e74c3c;
+            border-radius: 0 6px 6px 0;
+        }
+        .col-right {
+            flex: 1;
+            background: #fcfcfc;
+            padding: 10px 12px;
+            border: 1px solid #dce1e8;
+            border-radius: 6px;
+        }
+
+        /* 通栏区域（中、下） */
+        .row-full {
+            margin-top: 12px;
+            padding: 10px 12px;
+            border: 1px solid #dce1e8;
+            border-radius: 6px;
+            background: #fcfcfc;
+        }
+        .row-full.alt {
+            background: #f8faff;
+            border-color: #b0c4de;
+        }
+        .row-full.warning {
+            background: #fffbf0;
+            border-left: 6px solid #f39c12;
+        }
+
+        /* 标题样式 */
+        .sec-title {
+            font-weight: 700;
+            font-size: 15px;
+            color: #1a3c6e;
+            border-bottom: 2px dashed #b0c4de;
+            padding-bottom: 4px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sec-title .badge {
+            font-size: 12px;
+            background: #1a3c6e;
+            color: white;
+            padding: 0 8px;
+            border-radius: 12px;
+        }
+
+        /* 内容元素 */
+        ul, .item-list {
+            list-style: none;
+            padding-left: 4px;
+        }
+        ul li, .item-list li {
+            margin-bottom: 6px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            padding-left: 18px;
+            position: relative;
+        }
+        ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #2980b9;
+            font-weight: bold;
+        }
+        .highlight-red { color: #c0392b; font-weight: 600; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .tag { 
+            display: inline-block; 
+            background: #eaeef2; 
+            padding: 0 6px; 
+            border-radius: 4px; 
+            font-size: 12px; 
+            margin-right: 4px;
+        }
+        .warn { color: #e67e22; font-weight: bold; }
+        .fire { color: #e74c3c; font-weight: bold; }
+
+        /* 公式块 */
+        .formula {
+            background: #eef3f7;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 8px 0;
+            border-left: 3px solid #2980b9;
+            letter-spacing: 0.5px;
+        }
+        .formula small {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 400;
+            font-size: 12px;
+            color: #555;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* 对比表格（中栏） */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+            margin-top: 4px;
+        }
+        .compare-table th {
+            background: #1a3c6e;
+            color: white;
+            padding: 6px 4px;
+            border: 1px solid #2c3e50;
+            text-align: center;
+        }
+        .compare-table td {
+            border: 1px solid #bdc3c7;
+            padding: 6px 4px;
+            vertical-align: top;
+            background: white;
+        }
+        .compare-table .highlight-cell {
+            background: #fdedec;
+        }
+        .compare-table tr:last-child td {
+            border-bottom: 1px solid #bdc3c7;
+        }
+
+        /* 第二页专用 */
+        .page-break {
+            page-break-before: always;
+        }
+
+        .image-box {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px 0;
+            background: #f4f8fc;
+            border-radius: 8px;
+            margin: 8px 0;
+        }
+        .image-item {
+            text-align: center;
+            font-size: 13px;
+        }
+        .image-item .graph {
+            background: white;
+            padding: 10px 20px;
+            border: 1px dashed #7f8c8d;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 20px;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .tip-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 16px;
+            padding: 6px 0;
+        }
+        .tip-list .item {
+            font-size: 13px;
+            padding: 4px 0;
+            border-bottom: 1px dotted #ecf0f1;
+        }
+
+        @media print and (max-width: 800px) {
+            .tip-list { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===================== 第 1 页 ===================== -->
+<div class="page">
+    <!-- 页眉 -->
+    <div class="header">
+        <h1>📖 匀变速直线运动</h1>
+        <span class="date">整理日期：2026.07.15</span>
+    </div>
+
+    <!-- 双栏区域 -->
+    <div class="row-dual">
+        <!-- 左栏 35%：条件与模型 -->
+        <div class="col-left">
+            <div class="sec-title">⚙️ 条件与模型 <span class="badge">必看</span></div>
+            <ul>
+                <li><span class="highlight-red">核心条件</span>：加速度 <b>a</b> 恒定（大小、方向均不变）</li>
+                <li>合外力恒定，且与速度 <span class="highlight-blue">共线</span></li>
+                <li style="margin-top:12px;"><span class="highlight-blue">三大经典模型</span></li>
+                <li>🔹 <b>自由落体</b>：v₀=0，a=g</li>
+                <li>🔹 <b>竖直上抛</b>：a=-g，对称性（等时等速）</li>
+                <li>🔹 <b>刹车模型</b>：<span class="warn">⚠️ 先算 t<sub>停</sub> = v₀/|a|</span> <span class="fire">🔥 高频陷阱</span></li>
+            </ul>
+            <div style="margin-top:12px; background:#e8f0fe; padding:6px 10px; border-radius:4px; font-size:13px;">
+                <b>判断依据</b>：任意相等时间 Δt 内，Δv 相同。
+            </div>
+        </div>
+
+        <!-- 右栏 65%：公式与关联性 -->
+        <div class="col-right">
+            <div class="sec-title">📐 公式与关联性 <span class="badge">核心</span></div>
+            <div class="formula">
+                ① v = v₀ + at <small>（知 v₀,a,t 求 v）</small>
+            </div>
+            <div class="formula">
+                ② x = v₀t + ½at² <small>（知 v₀,a,t 求 x；减速时 a 代负值）</small>
+            </div>
+            <div class="formula" style="border-left-color:#e67e22;">
+                ③ v² − v₀² = 2ax <small style="color:#c0392b;">⭐ 不含时间 t，解题首选</small>
+            </div>
+            <div class="formula" style="border-left-color:#8e44ad;">
+                ④ \bar{v} = x/t = (v₀+v)/2 <small><span class="warn">⚠️ 仅适用于匀变速！</span> 非匀变速只能用 x/t</small>
+            </div>
+
+            <div style="margin-top:10px; background:#f0f5fa; padding:8px 10px; border-radius:6px;">
+                <b>🔗 二级结论（关联性）</b>
+                <ul style="margin-top:4px;">
+                    <li>中间时刻速度：v<sub>t/2</sub> = \bar{v} (等于平均速度)</li>
+                    <li>中间位移速度：v<sub>x/2</sub> = √[(v₀²+v²)/2] <span class="warn">(无论加减速，恒大于 v<sub>t/2</sub>)</span></li>
+                    <li>相邻等时位移差：Δx = aT² <span class="fire">(实验高频考点)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通栏：差异性对比表（中栏） -->
+    <div class="row-full">
+        <div class="sec-title">📊 差异性 & 易混淆对比 <span class="badge">必背</span></div>
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th style="width:18%;">对比维度</th>
+                    <th style="width:27%;">匀加速 vs 匀减速</th>
+                    <th style="width:27%;">位移 x vs 路程 s</th>
+                    <th style="width:28%;">平均速度 vs 平均速率</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>核心定义</b></td>
+                    <td>a与v同向→加速；<br>a与v反向→减速</td>
+                    <td>位移：矢量(初末位置直线距离)<br>路程：标量(实际轨迹长度)</td>
+                    <td>平均速度=位移/时间(矢量)<br>平均速率=路程/时间(标量)</td>
+                </tr>
+                <tr>
+                    <td><b>公式/计算</b></td>
+                    <td>匀减速代入公式时，<span class="highlight-red">a 带负号</span></td>
+                    <td>单向直线：相等；<br><span class="warn">有往返：位移＜路程</span></td>
+                    <td>匀变速中前者=(v₀+v)/2；<br>后者无此限制</td>
+                </tr>
+                <tr>
+                    <td><b>易错陷阱</b></td>
+                    <td class="highlight-cell"><b>🔥 刹车陷阱</b>：t<sub>实</sub> = min(t<sub>给</sub>, t<sub>停</sub>)</td>
+                    <td class="highlight-cell">竖直上抛回原点：<br>位移=0，路程≠0</td>
+                    <td class="highlight-cell">看到“平均速度”先想定义式，<br>别盲目套 (v₀+v)/2！</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 下通栏：考察要点（精简） -->
+    <div class="row-full alt" style="margin-top:10px;">
+        <div class="sec-title">🎯 考察要点（题型方向） <span class="badge">应试</span></div>
+        <div style="display:flex; flex-wrap:wrap; gap:6px 20px; font-size:13px;">
+            <span><b>① 公式选取</b>：看“不含哪个量”选公式（如不含t选③）</span>
+            <span><b>② 刹车</b>：必先算 t<sub>停</sub> <span class="fire">🔥</span></span>
+            <span><b>③ 追及相遇</b>：临界点 = 速度相等</span>
+            <span><b>④ v-t 图像</b>：斜率=a，面积=x</span>
+            <span><b>⑤ 逐差法</b>：a = (x₄+x₅+x₆ - x₁-x₂-x₃)/9T²</span>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== 第 2 页 ===================== -->
+<div class="page page-break">
+    <!-- 页眉 -->
+    <div class="header">
+        <h1>📖 匀变速直线运动 · 图像与实验</h1>
+        <span class="date">整理日期：2026.07.15</span>
+    </div>
+
+        <!-- 第2页 上：图像分析（字符画版） -->
+    <div class="row-full">
+        <div class="sec-title">📈 v-t 图像与 x-t 图像 <span class="badge">数形结合</span></div>
+        
+        <!-- v-t 图 -->
+        <div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin:10px 0;">
+            <div style="background:#fafcff; padding:12px 16px; border-radius:8px; border:1px solid #dce1e8; min-width:200px;">
+                <div style="text-align:center; font-weight:bold; font-size:14px; margin-bottom:6px;">📈 v-t 图</div>
+                <pre style="font-family: 'Courier New', monospace; font-size:13px; line-height:1.5; background:#f4f7fb; padding:8px 12px; border-radius:4px; margin:0; overflow-x:auto;">
+      v ↑
+        |     / 
+        |    /   ← 斜率 = a（加速度）
+        |   /    
+        |  /_____→ 面积 = 位移 x
+        | /      
+        |/________ t
+        0   (纵截距 = v₀)
+                </pre>
+                <div style="font-size:12px; color:#555; margin-top:4px;">
+                    • <b>斜率</b> = 加速度 a &nbsp;|&nbsp; <b>面积</b> = 位移 x &nbsp;|&nbsp; <b>纵截距</b> = v₀
+                </div>
+            </div>
+
+            <!-- x-t 图 -->
+            <div style="background:#fafcff; padding:12px 16px; border-radius:8px; border:1px solid #dce1e8; min-width:200px;">
+                <div style="text-align:center; font-weight:bold; font-size:14px; margin-bottom:6px;">📉 x-t 图</div>
+                <pre style="font-family: 'Courier New', monospace; font-size:13px; line-height:1.5; background:#f4f7fb; padding:8px 12px; border-radius:4px; margin:0; overflow-x:auto;">
+      x ↑
+        |    *    ← 切线斜率 = 瞬时速度
+        |   * *
+        |  *   *  弯曲程度 → 加速度变化
+        | *     *
+        |*_______*__ t
+        0        (割线斜率 = 平均速度)
+                </pre>
+                <div style="font-size:12px; color:#555; margin-top:4px;">
+                    • <b>切线斜率</b> = 瞬时速度 &nbsp;|&nbsp; <b>割线斜率</b> = 平均速度
+                </div>
+            </div>
+        </div>
+
+        <!-- 警告条 -->
+        <div style="background:#fef9e7; padding:6px 12px; border-radius:4px; font-size:13px; border:1px solid #f1c40f;">
+            <span class="warn">⚠️ v-t 图像中，面积在 t 轴上方为正位移，下方为负位移（反向运动）。</span>
+        </div>
+    </div>
+
+    <!-- 第2页 中：逐差法实验 -->
+    <div class="row-full" style="margin-top:12px;">
+        <div class="sec-title">🔬 实验：逐差法求加速度 <span class="badge">必考</span></div>
+        <div style="font-size:14px; padding:6px 0;">
+            <b>纸带数据</b>：x₁, x₂, x₃, x₄, x₅, x₆ (相邻计数点间距)
+        </div>
+        <div class="formula" style="font-size:18px; text-align:center;">
+            a = <span style="border-bottom:2px solid #c0392b;">(x₄ + x₅ + x₆) − (x₁ + x₂ + x₃)</span> / (3T)²
+        </div>
+        <ul>
+            <li><span class="highlight-blue">目的</span>：充分利用所有数据，减小偶然误差</li>
+            <li><span class="warn">⚠️ T</span> 为相邻计数点之间的 <b>时间间隔</b>（若打点周期0.02s，每5个点取一个计数点，则 T=0.1s）</li>
+            <li><span class="fire">🔥 常考变形</span>：若只给 4 段数据 (x₁~x₄)，则用 a = (x₃+x₄ - x₁-x₂) / (2T)²</li>
+        </ul>
+    </div>
+
+    <!-- 第2页 下：终极易混淆清单 -->
+    <div class="row-full warning" style="margin-top:12px;">
+        <div class="sec-title">🚨 考前终极避坑指南 <span class="badge">只看这一栏</span></div>
+        <div class="tip-list">
+            <div class="item"><span class="warn">1.</span> \bar{v} = (v₀+v)/2 <b>只适用于</b> 匀变速，非匀变速用总位移/总时间。</div>
+            <div class="item"><span class="warn">2.</span> 减速公式中 a 带负号；若已设正方向，则按坐标符号代入。</div>
+            <div class="item"><span class="warn">3.</span> 位移正负代表方向，路程 <b>永远非负</b>。</div>
+            <div class="item"><span class="warn">4.</span> 自由落体比例 (1:3:5…) 仅适用于 <b>v₀=0</b>。</div>
+            <div class="item"><span class="warn">5.</span> “速度变化量” Δv = at；“速度变化率” = a（加速度本身）。</div>
+            <div class="item"><span class="warn">6.</span> <span class="fire">🔥 刹车时间</span>：题目给 t=5s，实际车 3s 停，位移用 t=3s 算！</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>整章综合·题型易错补充</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e6e9ef; display: flex; flex-direction: column; align-items: center; padding: 20px 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .page { width: 210mm; min-height: 297mm; background: white; padding: 18mm 15mm 15mm 15mm; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 4px; position: relative; background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px); background-size: 100% 100%; background-repeat: no-repeat; background-position: 0 0; }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; margin: 0 auto; padding: 18mm 15mm 15mm 15mm; width: 100%; min-height: 100vh; background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px); } .page:last-child { margin-bottom: 0; } }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #1a3c6e; padding-bottom: 6px; margin-bottom: 14px; }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+        .row-full { margin-top: 12px; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; background: #fcfcfc; }
+        .row-full.alt { background: #f8faff; border-color: #b0c4de; }
+        .row-full.warning { background: #fffbf0; border-left: 6px solid #f39c12; }
+        .row-full.exam { background: #f0f7f0; border-left: 6px solid #27ae60; }
+        .sec-title { font-weight: 700; font-size: 15px; color: #1a3c6e; border-bottom: 2px dashed #b0c4de; padding-bottom: 4px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sec-title .badge { font-size: 12px; background: #1a3c6e; color: white; padding: 0 8px; border-radius: 12px; }
+        .fire { color: #e74c3c; font-weight: bold; }
+        .warn { color: #e67e22; font-weight: bold; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .error-box { background:#fdedec; padding:6px 10px; border-radius:4px; border-left:4px solid #e74c3c; font-size:13px; margin-top:4px; }
+        .cross-box { background:#f4f8fc; padding:6px 10px; border-radius:4px; border-left:4px solid #8e44ad; font-size:13px; margin-top:4px; }
+        .tip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 6px 0; }
+        .tip-list .item { font-size: 13px; padding: 4px 0; border-bottom: 1px dotted #ecf0f1; }
+        @media print and (max-width: 800px) { .tip-list { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="header"><h1>📖 整章综合 · 题型与易错补充</h1><span class="date">2026.07.16</span></div>
+    <div class="row-full exam">
+        <div class="sec-title">📝 全章常见题型</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 16px; font-size:13px;">
+            <div><span class="fire">题型1</span> 从 x(t) 求 v(t)、a(t)（求导）</div>
+            <div><span class="fire">题型2</span> 从 a(t) 求 v(t)、x(t)（积分）</div>
+            <div><span class="fire">题型3</span> 抛体运动的分解与合成</div>
+            <div><span class="fire">题型4</span> 圆周运动的向心力和临界条件</div>
+            <div><span class="fire">题型5</span> 关联运动的约束方程建立</div>
+            <div><span class="fire">题型6</span> 图像法求位移/加速度</div>
+            <div><span class="fire">题型7</span> 相对运动的矢量合成</div>
+            <div><span class="fire">题型8</span> 微元法在非匀变速中的应用</div>
+        </div>
+    </div>
+    <div class="row-full alt">
+        <div class="sec-title">❌ 全章常错题</div>
+        <div class="error-box"><span class="fire">错题1</span> 位移对时间求导得速度，速度对时间求导得加速度。但<b>路程</b>对时间求导得 <b>速率</b>（不是速度）。</div>
+        <div class="error-box"><span class="fire">错题2</span> 匀变速公式 v²−v₀²=2ax 对非匀变速不适用，需用积分：v²−v₀²=2∫a·dx。</div>
+        <div class="error-box"><span class="fire">错题3</span> v-t 图中“面积”求位移，但若图线在轴下方，面积为负（代表反向位移）。</div>
+        <div class="error-box"><span class="fire">错题4</span> 关联运动中，位移方程求导一次得速度关系，<b>再</b>求导一次才得加速度关系（不能跳步）。</div>
+    </div>
+    <div class="row-full warning">
+        <div class="sec-title">🔗 全章交叉题型</div>
+        <div class="cross-box"><span class="highlight-blue">① 导数+积分</span>：已知 x(t) 求 v(t) → 再积分求总位移（逆向验证）</div>
+        <div class="cross-box"><span class="highlight-blue">② 微元法+导数</span>：用微元法列式，再用导数求解极值</div>
+        <div class="cross-box"><span class="highlight-blue">③ 图像+关联运动</span>：用 v-t 图分析两个关联物体的速度变化关系</div>
+        <div class="cross-box"><span class="highlight-blue">④ 相对运动+抛体</span>：在运动参考系中观察抛体运动</div>
+    </div>
+</div>
+</body>
+</html>

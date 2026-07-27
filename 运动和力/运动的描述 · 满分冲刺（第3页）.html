@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>运动的描述 · 满分冲刺（第3页）</title>
+    <style>
+        /* ===== 全局样式（与您原有风格完全一致） ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e6e9ef; display: flex; flex-direction: column; align-items: center; padding: 20px 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .page { width: 210mm; min-height: 297mm; background: white; padding: 18mm 15mm 15mm 15mm; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 4px; position: relative; background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px); background-size: 100% 100%; background-repeat: no-repeat; background-position: 0 0; }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; margin: 0 auto; padding: 18mm 15mm 15mm 15mm; width: 100%; min-height: 100vh; background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px); } .page:last-child { margin-bottom: 0; } }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #1a3c6e; padding-bottom: 6px; margin-bottom: 14px; }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+        .row-dual { display: flex; gap: 18px; margin-bottom: 16px; }
+        .col-left { flex: 0 0 35%; background: #f8faff; padding: 10px 12px; border-left: 4px solid #e74c3c; border-radius: 0 6px 6px 0; }
+        .col-right { flex: 1; background: #fcfcfc; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; }
+        .row-full { margin-top: 12px; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; background: #fcfcfc; }
+        .row-full.alt { background: #f8faff; border-color: #b0c4de; }
+        .row-full.warning { background: #fffbf0; border-left: 6px solid #f39c12; }
+        .row-full.highlight { background: #f0f7ff; border-left: 6px solid #2980b9; }
+        .sec-title { font-weight: 700; font-size: 15px; color: #1a3c6e; border-bottom: 2px dashed #b0c4de; padding-bottom: 4px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sec-title .badge { font-size: 12px; background: #1a3c6e; color: white; padding: 0 8px; border-radius: 12px; }
+        ul, .item-list { list-style: none; padding-left: 4px; }
+        ul li, .item-list li { margin-bottom: 6px; font-size: 13.5px; line-height: 1.6; padding-left: 18px; position: relative; }
+        ul li::before { content: "▸"; position: absolute; left: 0; color: #2980b9; font-weight: bold; }
+        .highlight-red { color: #c0392b; font-weight: 600; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .warn { color: #e67e22; font-weight: bold; }
+        .fire { color: #e74c3c; font-weight: bold; }
+        .formula { background: #eef3f7; padding: 6px 12px; border-radius: 6px; font-family: 'Times New Roman', Times, serif; font-size: 16px; font-weight: 500; margin: 8px 0; border-left: 3px solid #2980b9; letter-spacing: 0.5px; }
+        .formula small { font-family: 'Segoe UI', sans-serif; font-weight: 400; font-size: 12px; color: #555; display: block; margin-top: 2px; }
+        .formula.orange { border-left-color: #e67e22; }
+        .formula.purple { border-left-color: #8e44ad; }
+        .formula.red { border-left-color: #c0392b; }
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 4px; }
+        .compare-table th { background: #1a3c6e; color: white; padding: 6px 4px; border: 1px solid #2c3e50; text-align: center; }
+        .compare-table td { border: 1px solid #bdc3c7; padding: 6px 4px; vertical-align: top; background: white; }
+        .compare-table .highlight-cell { background: #fdedec; }
+        .page-break { page-break-before: always; }
+        .image-box { display: flex; justify-content: space-around; align-items: center; padding: 15px 0; background: #f4f8fc; border-radius: 8px; margin: 8px 0; flex-wrap: wrap; gap: 10px; }
+        .image-item { text-align: center; font-size: 13px; }
+        .image-item .graph { background: white; padding: 10px 20px; border: 1px dashed #7f8c8d; border-radius: 8px; font-family: monospace; font-size: 20px; letter-spacing: 2px; margin-bottom: 4px; }
+        .tip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 6px 0; }
+        .tip-list .item { font-size: 13px; padding: 4px 0; border-bottom: 1px dotted #ecf0f1; }
+        .two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; margin: 6px 0; }
+        .two-col-grid .col { background: #fafcff; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; }
+        .two-col-grid .col h4 { font-size: 13px; color: #1a3c6e; border-bottom: 1px dotted #b0c4de; padding-bottom: 3px; margin-bottom: 6px; }
+        .example-box { background: #f4f8fc; border-radius: 6px; padding: 8px 12px; margin: 6px 0; border-left: 4px solid #2980b9; font-size: 13px; }
+        .example-box strong { color: #1a3c6e; }
+        .example-box .ans { color: #c0392b; font-weight: 600; }
+        .tag { display: inline-block; background: #eaeef2; padding: 0 6px; border-radius: 4px; font-size: 12px; margin-right: 4px; }
+        @media print and (max-width: 800px) { .tip-list { grid-template-columns: 1fr; } .two-col-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<!-- ===================== 第 3 页 · 满分冲刺 ===================== -->
+<div class="page">
+    <div class="header">
+        <h1>🚀 满分冲刺 · 运动的描述</h1>
+        <span class="date">进阶补充 · 2026.07.16</span>
+    </div>
+
+    <!-- 模块一：参考系与坐标系（相对性深度） -->
+    <div class="row-full highlight">
+        <div class="sec-title">🌐 参考系 · 坐标系 <span class="badge">相对性</span></div>
+        <div class="two-col-grid">
+            <div class="col">
+                <h4>📌 参考系变换</h4>
+                <ul>
+                    <li>同一运动，选不同参考系，描述可能 <span class="highlight-red">不同</span></li>
+                    <li>例：匀速行驶的车上的人看物体是<span class="highlight-blue">静止</span>，地面看是<span class="highlight-blue">运动</span></li>
+                    <li><span class="fire">🔥 解题关键</span>：审题看清“以谁为参考系”</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4>📐 坐标系定量化</h4>
+                <ul>
+                    <li>一维：直线坐标系（正方向，原点）</li>
+                    <li>位置 x 用坐标表示；位移 Δx = x₂ − x₁</li>
+                    <li><span class="warn">⚠️ 正方向选取</span>：任意但需统一，结果符号随方向改变</li>
+                </ul>
+            </div>
+        </div>
+        <div class="example-box">
+            <strong>📌 实战示例</strong>：甲乙同向运动，甲看乙以 5 m/s 远离，地面看乙以 3 m/s 运动。则甲的速度？<br>
+            <span class="highlight-blue">解</span>：设地面参考系，v<sub>乙</sub>=3，v<sub>甲</sub>= v<sub>乙</sub> − v<sub>相对</sub> = 3 − 5 = <span class="ans">−2 m/s</span>（即甲向反方向运动）
+        </div>
+    </div>
+
+    <!-- 模块二：x-t 图像深度（斜率与运动状态） -->
+    <div class="row-full alt" style="margin-top:12px;">
+        <div class="sec-title">📈 x−t 图像深度解读 <span class="badge">图像核心</span></div>
+        <div style="display:flex; flex-wrap:wrap; gap:12px;">
+            <div style="flex:1; min-width:180px;">
+                <ul>
+                    <li><b>斜率</b> = 速度 v（切线斜率 → 瞬时速度；割线 → 平均速度）</li>
+                    <li><b>斜率正负</b>：正→正方向运动；负→反方向运动</li>
+                    <li><span class="highlight-red">图像弯曲</span>：斜率变化 → 速度变化（加速/减速）</li>
+                    <li><span class="warn">⚠️ 图像交点</span>：表示 <b>相遇</b>（同一时刻同一位置）</li>
+                </ul>
+            </div>
+            <div style="flex:1; min-width:180px; background:#f4f8fc; padding:8px 12px; border-radius:6px;">
+                <h4 style="font-size:13px; color:#1a3c6e; margin-bottom:4px;">🔸 常见图像形态</h4>
+                <ul>
+                    <li>水平直线 → 静止（v=0）</li>
+                    <li>倾斜直线 → 匀速直线运动</li>
+                    <li>向上弯曲 → 加速（速度增大）</li>
+                    <li>向下弯曲 → 减速（速度减小）</li>
+                </ul>
+            </div>
+        </div>
+        <div style="background:#fef9e7; padding:6px 12px; border-radius:4px; font-size:13px; border:1px solid #f1c40f; margin-top:6px;">
+            <span class="fire">🔥 常考陷阱</span>：x−t 图像不是运动轨迹！它是“位置—时间”关系图，曲线不代表物体做曲线运动。
+        </div>
+    </div>
+
+    <!-- 模块三：加速度变化率（进阶概念） -->
+    <div class="row-full" style="margin-top:12px;">
+        <div class="sec-title">⚡ 加速度变化率 <span class="badge">拓展视野</span></div>
+        <div style="background:#e8f0fe; padding:8px 12px; border-radius:6px;">
+            <b>定义</b>：加速度的变化率 = Δa / Δt（描述加速度变化快慢）<br>
+            <span class="warn">⚠️ 高考不直接考，但理解后有助于区分“加速度大小”与“加速度变化”</span>
+        </div>
+        <ul style="margin-top:6px;">
+            <li><span class="highlight-blue">物理意义</span>：反映合外力变化的快慢（如变力作用）</li>
+            <li>若 a 均匀变化 → 加速度变化率恒定 → 非匀变速运动（属更高阶内容）</li>
+        </ul>
+    </div>
+
+    <!-- 模块四：实验创新 · 光电门 & 误差 -->
+    <div class="row-full warning" style="margin-top:12px;">
+        <div class="sec-title">🔬 实验进阶 · 光电门与误差 <span class="badge">新高考方向</span></div>
+        <div class="two-col-grid">
+            <div class="col">
+                <h4>💡 光电门测速</h4>
+                <ul>
+                    <li>瞬时速度 v = d / Δt （d 为遮光片宽度）</li>
+                    <li>测加速度：a = (v₂² − v₁²) / 2x</li>
+                    <li><span class="warn">注意</span>：d 越小，测量越接近瞬时速度</li>
+                    <li><span class="fire">🔥 常考</span>：若 d 不可忽略，需考虑遮光时间内的平均速度误差</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4>📉 误差分析</h4>
+                <ul>
+                    <li><b>系统误差</b>：摩擦力、纸带打点滞后、仪器精度</li>
+                    <li><b>偶然误差</b>：读数、计数点选取、时间测量</li>
+                    <li><span class="highlight-blue">减小方法</span>：多次测量取平均；逐差法</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模块五：高考母题 · 规范表达 -->
+    <div class="row-full" style="margin-top:12px; background:#fafcff;">
+        <div class="sec-title">📝 高考母题 · 规范表达 <span class="badge">步骤分</span></div>
+        <div style="display:flex; flex-wrap:wrap; gap:16px;">
+            <!-- 母题1 -->
+            <div style="flex:1; min-width:200px; background:#f4f8fc; padding:8px 12px; border-radius:6px;">
+                <div style="font-weight:bold; color:#1a3c6e;">【2023 全国乙卷·改编】</div>
+                <p style="font-size:13px; margin:4px 0;">某物体沿直线运动，x−t 图像为抛物线，t=2s 时位置为 8m，t=4s 时为 20m，求 t=3s 时瞬时速度。</p>
+                <div style="font-size:12px; background:#fff; padding:4px 8px; border-radius:4px; margin-top:4px;">
+                    <span class="highlight-red">✅ 规范解答</span><br>
+                    ① 由 x = v₀t + ½at²，代入 (2,8) 和 (4,20)<br>
+                    ② 解得 v₀=2 m/s，a=2 m/s²<br>
+                    ③ v(3) = v₀ + at = 2 + 2×3 = <span class="ans">8 m/s</span>
+                </div>
+            </div>
+            <!-- 母题2 -->
+            <div style="flex:1; min-width:200px; background:#f4f8fc; padding:8px 12px; border-radius:6px;">
+                <div style="font-weight:bold; color:#1a3c6e;">【2022 全国甲卷·改编】</div>
+                <p style="font-size:13px; margin:4px 0;">一质点做直线运动，某段时间内平均速度大小等于平均速率，则质点在这段时间内做何种运动？</p>
+                <div style="font-size:12px; background:#fff; padding:4px 8px; border-radius:4px; margin-top:4px;">
+                    <span class="highlight-red">✅ 规范解答</span><br>
+                    ① 平均速度大小 = 位移大小/时间<br>
+                    ② 平均速率 = 路程/时间<br>
+                    ③ 二者相等 ⇔ 位移大小 = 路程 ⇔ <span class="ans">单向直线运动</span>（或静止）
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:8px; background:#fef9e7; padding:6px 12px; border-radius:4px; font-size:13px; border-left:4px solid #f39c12;">
+            <span class="fire">📌 规范表达黄金法则</span>：① 写原始定义式（如 v = Δx/Δt） → ② 代入数据（带单位） → ③ 计算结果 + 方向说明（若矢量）
+        </div>
+    </div>
+
+    <!-- 模块六：极限思想与瞬时速度 -->
+    <div class="row-full alt" style="margin-top:12px;">
+        <div class="sec-title">🧠 极限思想 · 瞬时速度 <span class="badge">核心素养</span></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div style="background:#f0f5fa; padding:6px 10px; border-radius:6px;">
+                <b>定义式</b><br>
+                v = lim<sub>Δt→0</sub> Δx/Δt
+            </div>
+            <div style="background:#f0f5fa; padding:6px 10px; border-radius:6px;">
+                <b>几何意义</b><br>
+                就是 x−t 图像上某点的 <span class="highlight-red">切线斜率</span>
+            </div>
+            <div style="background:#f0f5fa; padding:6px 10px; border-radius:6px;">
+                <b>实验体现</b><br>
+                用很短时间内的平均速度近似瞬时速度
+            </div>
+            <div style="background:#f0f5fa; padding:6px 10px; border-radius:6px;">
+                <b>🔥 高考方向</b><br>
+                借助极限思想理解“瞬间”概念，常结合图像或实验出题
+            </div>
+        </div>
+        <div style="font-size:13px; margin-top:6px; background:#fff; padding:4px 10px; border-radius:4px;">
+            <span class="warn">💡 核心</span>：瞬时速度是“当时当地”的速度，是极限思想的产物。
+        </div>
+    </div>
+
+    <!-- 底部提醒 -->
+    <div style="margin-top:16px; text-align:center; font-size:14px; color:#1a3c6e; border-top:2px solid #b0c4de; padding-top:10px;">
+        ⭐ 满分 = 概念通透 + 图像熟练 + 实验严谨 + 表达规范 · 细节决定成败 ⭐
+    </div>
+</div>
+
+</body>
+</html>

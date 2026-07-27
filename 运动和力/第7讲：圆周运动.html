@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第7讲：圆周运动</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e6e9ef; display: flex; flex-direction: column; align-items: center; padding: 20px 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .page { width: 210mm; min-height: 297mm; background: white; padding: 18mm 15mm 15mm 15mm; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 4px; position: relative; background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px); background-size: 100% 100%; background-repeat: no-repeat; background-position: 0 0; }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; margin: 0 auto; padding: 18mm 15mm 15mm 15mm; width: 100%; min-height: 100vh; background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px); } .page:last-child { margin-bottom: 0; } }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #1a3c6e; padding-bottom: 6px; margin-bottom: 14px; }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+        .row-dual { display: flex; gap: 18px; margin-bottom: 16px; }
+        .col-left { flex: 0 0 38%; background: #f8faff; padding: 10px 12px; border-left: 4px solid #e74c3c; border-radius: 0 6px 6px 0; }
+        .col-right { flex: 1; background: #fcfcfc; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; }
+        .row-full { margin-top: 12px; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; background: #fcfcfc; }
+        .row-full.alt { background: #f8faff; border-color: #b0c4de; }
+        .row-full.warning { background: #fffbf0; border-left: 6px solid #f39c12; }
+        .row-full.exam { background: #f0f7f0; border-left: 6px solid #27ae60; }
+        .sec-title { font-weight: 700; font-size: 15px; color: #1a3c6e; border-bottom: 2px dashed #b0c4de; padding-bottom: 4px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sec-title .badge { font-size: 12px; background: #1a3c6e; color: white; padding: 0 8px; border-radius: 12px; }
+        ul, .item-list { list-style: none; padding-left: 4px; }
+        ul li, .item-list li { margin-bottom: 6px; font-size: 13.5px; line-height: 1.6; padding-left: 18px; position: relative; }
+        ul li::before { content: "▸"; position: absolute; left: 0; color: #2980b9; font-weight: bold; }
+        .highlight-red { color: #c0392b; font-weight: 600; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .warn { color: #e67e22; font-weight: bold; }
+        .fire { color: #e74c3c; font-weight: bold; }
+        .formula { background: #eef3f7; padding: 6px 12px; border-radius: 6px; font-family: 'Times New Roman', Times, serif; font-size: 16px; font-weight: 500; margin: 8px 0; border-left: 3px solid #2980b9; letter-spacing: 0.5px; }
+        .formula small { font-family: 'Segoe UI', sans-serif; font-weight: 400; font-size: 12px; color: #555; display: block; margin-top: 2px; }
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 4px; }
+        .compare-table th { background: #1a3c6e; color: white; padding: 6px 4px; border: 1px solid #2c3e50; text-align: center; }
+        .compare-table td { border: 1px solid #bdc3c7; padding: 6px 4px; vertical-align: top; background: white; }
+        .compare-table .highlight-cell { background: #fdedec; }
+        .page-break { page-break-before: always; }
+        .tip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 6px 0; }
+        .tip-list .item { font-size: 13px; padding: 4px 0; border-bottom: 1px dotted #ecf0f1; }
+        .error-box { background:#fdedec; padding:6px 10px; border-radius:4px; border-left:4px solid #e74c3c; font-size:13px; margin-top:4px; }
+        .cross-box { background:#f4f8fc; padding:6px 10px; border-radius:4px; border-left:4px solid #8e44ad; font-size:13px; margin-top:4px; }
+        @media print and (max-width: 800px) { .tip-list { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <div class="header">
+        <h1>📖 第7讲：圆周运动</h1>
+        <span class="date">整理日期：2026.07.16</span>
+    </div>
+
+    <!-- 核心横幅 -->
+    <div class="row-full bridge" style="margin-bottom:12px;">
+        <div style="text-align:center; font-size:14px; font-weight:700; color:#1a3c6e;">
+            ⭐ 圆周运动的核心特征：<span class="highlight-red">速度方向时刻改变</span> → 必有加速度（向心加速度）<br>
+            <span style="font-size:13px; font-weight:400; color:#555;">匀速圆周：速度大小不变，加速度方向时刻指向圆心</span>
+        </div>
+    </div>
+
+    <div class="row-dual">
+        <div class="col-left">
+            <div class="sec-title">📐 核心公式</div>
+            <ul>
+                <li><b>线速度</b>：v = Δs/Δt = ω·r</li>
+                <li><b>角速度</b>：ω = Δθ/Δt = 2π/T = 2π·f</li>
+                <li><b>周期</b>：T = 2πr/v = 2π/ω</li>
+                <li><b>频率</b>：f = 1/T</li>
+                <li style="margin-top:6px;"><span class="highlight-red">向心加速度</span>：a<sub>n</sub> = v²/r = ω²r</li>
+                <li><span class="highlight-red">向心力</span>：F<sub>n</sub> = ma<sub>n</sub> = mv²/r = mω²r</li>
+            </ul>
+        </div>
+        <div class="col-right">
+            <div class="sec-title">📌 关键概念辨析</div>
+            <ul>
+                <li><span class="highlight-blue">匀速圆周</span>：速度大小不变，方向时刻改变<br>→ a<sub>n</sub> ≠ 0，F<sub>合</sub> = 向心力</li>
+                <li style="margin-top:8px;"><span class="highlight-red">变速圆周</span>：速度大小和方向都在改变<br>→ 有切向加速度 a<sub>τ</sub> + 向心加速度 a<sub>n</sub></li>
+                <li style="margin-top:8px;"><span class="warn">⚠️ 向心力是“效果力”</span>，不是性质力（受力图中不能单独画“向心力”）</li>
+            </ul>
+            <div style="margin-top:10px; background:#fef9e7; padding:6px 10px; border-radius:4px; font-size:13px; border:1px solid #f1c40f;">
+                <b>💡 常见向心力来源</b><br>
+                绳拉力、重力、支持力、摩擦力、万有引力
+            </div>
+        </div>
+    </div>
+
+    <!-- 常见题型 -->
+    <div class="row-full exam">
+        <div class="sec-title">📝 常见题型</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 16px; font-size:13px;">
+            <div><span class="fire">题型1</span> 匀速圆周运动的基本参数计算（v、ω、T、a）</div>
+            <div><span class="fire">题型2</span> 传动问题（皮带、齿轮、共轴）</div>
+            <div><span class="fire">题型3</span> 竖直面内的圆周运动（绳模型、杆模型）</div>
+            <div><span class="fire">题型4</span> 水平面内的圆周运动（转盘、圆锥摆）</div>
+            <div><span class="fire">题型5</span> 圆周运动的临界问题（恰好通过最高点）</div>
+            <div><span class="fire">题型6</span> 向心力的来源分析（受力分析+牛顿第二定律）</div>
+        </div>
+    </div>
+
+    <!-- 易混淆点 -->
+    <div class="row-full">
+        <div class="sec-title">🧩 易混淆点</div>
+        <table class="compare-table">
+            <thead>
+                <tr><th style="width:20%;">对比项</th><th style="width:30%;">匀速圆周</th><th style="width:30%;">变速圆周</th><th style="width:20%;">易错</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><b>速度大小</b></td><td>不变</td><td>变化</td><td class="highlight-cell">匀速圆周≠匀速运动（有加速度）</td></tr>
+                <tr><td><b>合外力</b></td><td>等于向心力</td><td>向心力+切向力</td><td class="highlight-cell">变速圆周中合外力≠向心力</td></tr>
+                <tr><td><b>加速度</b></td><td>只有向心加速度</td><td>向心+切向加速度</td><td class="highlight-cell">只有匀速圆周才 a = v²/r</td></tr>
+            </tbody>
+        </table>
+        <div style="margin-top:6px; background:#fef9e7; padding:6px 10px; border-radius:4px; font-size:13px; border:1px solid #f1c40f;">
+            <span class="fire">🔥 绳模型 vs 杆模型</span><br>
+            绳模型（无支撑）：最高点 v<sub>min</sub> = √(gr)<br>
+            杆模型（有支撑）：最高点 v<sub>min</sub> = 0
+        </div>
+    </div>
+
+    <!-- 常错题 -->
+    <div class="row-full alt">
+        <div class="sec-title">❌ 常错题</div>
+        <div class="error-box"><span class="fire">错题1</span> 匀速圆周运动是匀变速运动。<br><b>错误</b>：是匀变速 ❌<br><b>正确</b>：不是！加速度方向时刻改变，<b>是非匀变速</b> ✅</div>
+        <div class="error-box"><span class="fire">错题2</span> 向心力是物体受到的“新力”。<br><b>错误</b>：向心力是性质力 ❌<br><b>正确</b>：向心力是 <b>效果力</b>，由其他力（或合力）提供 ✅</div>
+        <div class="error-box"><span class="fire">错题3</span> 竖直面绳模型最高点速度可以为零。<br><b>错误</b>：可以 v=0 ❌<br><b>正确</b>：v<sub>min</sub> = √(gr)（否则绳子会松）✅</div>
+    </div>
+
+    <!-- 交叉题型 -->
+    <div class="row-full warning">
+        <div class="sec-title">🔗 交叉题型</div>
+        <div class="cross-box"><span class="highlight-blue">① 第6讲+第7讲</span>：平抛运动与圆周运动的结合（平抛后进入圆弧轨道）</div>
+        <div class="cross-box"><span class="highlight-blue">② 第4讲+第7讲</span>：圆周运动的极值问题（用导数求最大/最小速度）</div>
+        <div class="cross-box"><span class="highlight-blue">③ 第2讲+第7讲</span>：圆周运动的 x-t / v-t 图（展开的圆周运动）</div>
+        <div class="cross-box"><span class="highlight-blue">④ 第1讲+第7讲</span>：相对运动中的圆周运动（相互转动的参考系）</div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>物理笔记：相互作用——力（活页布局）</title>
+    <style>
+        /* ===== 全局样式（与前两章保持一致） ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e6e9ef; display: flex; flex-direction: column; align-items: center; padding: 20px 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .page { width: 210mm; min-height: 297mm; background: white; padding: 18mm 15mm 15mm 15mm; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 4px; position: relative; background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px); background-size: 100% 100%; background-repeat: no-repeat; background-position: 0 0; }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; margin: 0 auto; padding: 18mm 15mm 15mm 15mm; width: 100%; min-height: 100vh; background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px); } .page:last-child { margin-bottom: 0; } }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #1a3c6e; padding-bottom: 6px; margin-bottom: 14px; }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+        .row-dual { display: flex; gap: 18px; margin-bottom: 16px; }
+        .col-left { flex: 0 0 38%; background: #f8faff; padding: 10px 12px; border-left: 4px solid #e74c3c; border-radius: 0 6px 6px 0; }
+        .col-right { flex: 1; background: #fcfcfc; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; }
+        .row-full { margin-top: 12px; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; background: #fcfcfc; }
+        .row-full.alt { background: #f8faff; border-color: #b0c4de; }
+        .row-full.warning { background: #fffbf0; border-left: 6px solid #f39c12; }
+        .sec-title { font-weight: 700; font-size: 15px; color: #1a3c6e; border-bottom: 2px dashed #b0c4de; padding-bottom: 4px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sec-title .badge { font-size: 12px; background: #1a3c6e; color: white; padding: 0 8px; border-radius: 12px; }
+        ul, .item-list { list-style: none; padding-left: 4px; }
+        ul li, .item-list li { margin-bottom: 6px; font-size: 13.5px; line-height: 1.6; padding-left: 18px; position: relative; }
+        ul li::before { content: "▸"; position: absolute; left: 0; color: #2980b9; font-weight: bold; }
+        .highlight-red { color: #c0392b; font-weight: 600; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .warn { color: #e67e22; font-weight: bold; }
+        .fire { color: #e74c3c; font-weight: bold; }
+        .formula { background: #eef3f7; padding: 6px 12px; border-radius: 6px; font-family: 'Times New Roman', Times, serif; font-size: 16px; font-weight: 500; margin: 8px 0; border-left: 3px solid #2980b9; letter-spacing: 0.5px; }
+        .formula small { font-family: 'Segoe UI', sans-serif; font-weight: 400; font-size: 12px; color: #555; display: block; margin-top: 2px; }
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 4px; }
+        .compare-table th { background: #1a3c6e; color: white; padding: 6px 4px; border: 1px solid #2c3e50; text-align: center; }
+        .compare-table td { border: 1px solid #bdc3c7; padding: 6px 4px; vertical-align: top; background: white; }
+        .compare-table .highlight-cell { background: #fdedec; }
+        .page-break { page-break-before: always; }
+        .tip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 6px 0; }
+        .tip-list .item { font-size: 13px; padding: 4px 0; border-bottom: 1px dotted #ecf0f1; }
+        @media print and (max-width: 800px) { .tip-list { grid-template-columns: 1fr; } }
+        .force-box { background: #eaf4ea; padding: 8px 12px; border-radius: 6px; border-left: 4px solid #27ae60; margin-top: 6px; font-size: 13px; }
+    </style>
+</head>
+<body>
+
+<!-- ===================== 第 1 页 ===================== -->
+<div class="page">
+    <div class="header">
+        <h1>📖 第3章 相互作用——力</h1>
+        <span class="date">整理日期：2026.07.16</span>
+    </div>
+
+    <!-- 双栏区域 -->
+    <div class="row-dual">
+        <!-- 左栏 38%：重力与弹力 + 摩擦力 -->
+        <div class="col-left">
+            <div class="sec-title">⚙️ 重力 & 弹力 <span class="badge">基础</span></div>
+            <ul>
+                <li><span class="highlight-red">重力 G</span> = mg（方向：<b>竖直向下</b>）<br>作用点：重心（与质量分布有关）</li>
+                <li style="margin-top:8px;"><span class="highlight-blue">弹力</span>：接触 + 形变<br>方向：<b>垂直接触面</b>，指向恢复原状方向</li>
+                <li style="margin-top:4px; font-size:13px;">🔹 绳子拉力：沿绳 <b>收缩</b> 方向<br>🔹 支持力/压力：垂直 <b>接触面</b></li>
+                <li style="margin-top:6px;"><span class="warn">⚠️ 弹簧弹力</span>：F = kx（胡克定律）<br>（x为形变量，k为劲度系数）</li>
+            </ul>
+            <div style="margin-top:12px; background:#e8f0fe; padding:6px 10px; border-radius:4px; font-size:13px;">
+                <b>💡 判断弹力有无</b>：<br>“假设法”或“状态法”（看撤去接触物后运动状态是否改变）。
+            </div>
+
+            <div class="sec-title" style="margin-top:16px;">⚙️ 摩擦力 <span class="badge">易错</span></div>
+            <ul>
+                <li><span class="highlight-red">静摩擦力</span>：<b>0 &lt; f ≤ f<sub>max</sub></b><br>大小：由平衡条件或牛顿定律 <b>被动</b> 决定<br>方向：与相对运动趋势 <b>相反</b></li>
+                <li style="margin-top:8px;"><span class="highlight-blue">滑动摩擦力</span>：<b>f = μN</b><br>方向：与相对运动方向 <b>相反</b><br><span class="warn">⚠️ N 是正压力，不一定等于 mg！</span></li>
+                <li style="margin-top:6px;"><span class="fire">🔥 最大静摩擦力</span>：略大于滑动摩擦力（近似相等）</li>
+            </ul>
+            <div style="margin-top:12px; background:#fef9e7; padding:6px 10px; border-radius:4px; font-size:13px; border:1px solid #f1c40f;">
+                <span class="warn">⚠️ 摩擦力的方向 ≠ 运动方向</span><br>摩擦力可与运动方向 <b>相同</b>（如传送带加速物体），也可 <b>垂直</b>（如随转盘一起转动）。
+            </div>
+        </div>
+
+        <!-- 右栏 62%：牛顿第三定律 + 受力分析 -->
+        <div class="col-right">
+            <div class="sec-title">⚖️ 牛顿第三定律 <span class="badge">作用力与反作用力</span></div>
+            <ul>
+                <li><b>内容</b>：F<sub>AB</sub> = − F<sub>BA</sub></li>
+                <li><span class="highlight-blue">四同</span>：<b>同</b>大小、<b>同</b>直线、<b>同</b>性质、<b>同</b>时产生/消失</li>
+                <li><span class="highlight-red">三异</span>：<b>异</b>方向、<b>异</b>物体、<b>异</b>效果（不能抵消）</li>
+            </ul>
+            <div class="force-box">
+                <b>🔥 与“平衡力”的本质区别</b><br>
+                平衡力：<b>同一物体</b>上，大小相等、方向相反（如G与支持力）。<br>
+                作用力与反作用力：<b>两个不同物体</b>上，永远不能相互抵消。
+            </div>
+
+            <div class="sec-title" style="margin-top:16px;">📐 受力分析的核心逻辑 <span class="badge">必会</span></div>
+            <div style="background:#eef3f7; padding:8px 12px; border-radius:6px; font-size:14px; line-height:1.8;">
+                <b>“一重二弹三摩擦，四看其他外力”</b>
+                <ul style="margin-top:4px;">
+                    <li><b>① 重力</b>：先画（方向竖直向下）</li>
+                    <li><b>② 弹力</b>：接触点/面，垂直接触面</li>
+                    <li><b>③ 摩擦力</b>：沿接触面，与相对运动（趋势）相反</li>
+                    <li><b>④ 其他外力</b>：拉力、推力、电场力等</li>
+                </ul>
+            </div>
+            <div style="margin-top:8px; background:#fdedec; padding:6px 10px; border-radius:4px; font-size:13px;">
+                <span class="fire">🔥 陷阱提醒</span>：<b>摩擦力方向</b> 要看“相对运动/趋势”，不是看“运动方向”！<br>
+                <span class="fire">🔥 受力分析只画“性质力”</span>，不画“效果力”（如向心力、回复力）。
+            </div>
+        </div>
+    </div>
+
+    <!-- 通栏：易混淆对比表 -->
+    <div class="row-full">
+        <div class="sec-title">📊 差异性 & 易混淆对比 <span class="badge">选择题必杀</span></div>
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th style="width:20%;">对比维度</th>
+                    <th style="width:26%;">静摩擦力 vs 滑动摩擦力</th>
+                    <th style="width:26%;">作用力与反作用力 vs 平衡力</th>
+                    <th style="width:28%;">重力 vs 弹力</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>产生条件</b></td>
+                    <td>静：有相对运动<b>趋势</b><br>滑：有相对运动</td>
+                    <td>作用力与反作用力：<b>两物体</b><br>平衡力：<b>同一物体</b></td>
+                    <td>重力：地球吸引（非接触）<br>弹力：接触+形变（接触力）</td>
+                </tr>
+                <tr>
+                    <td><b>大小/方向</b></td>
+                    <td>静：被动调节（≤f<sub>max</sub>）<br>滑：f = μN（方向与相对运动相反）</td>
+                    <td>两者都等大反向<br><span class="warn">关键区别：看研究对象是几个物体</span></td>
+                    <td>重力：G=mg，竖直向下<br>弹力：F=kx，垂直接触面</td>
+                </tr>
+                <tr>
+                    <td><b>易错陷阱</b></td>
+                    <td class="highlight-cell">静摩擦力大小<br><b>≠ μN</b>（μN只用于滑动）</td>
+                    <td class="highlight-cell">平衡力可以抵消（合力为0），<br>作用力与反作用力不能抵消</td>
+                    <td class="highlight-cell">弹力有无判断：<br>用“假设法”或“撤去法”</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 下通栏：考察要点 -->
+    <div class="row-full alt" style="margin-top:10px;">
+        <div class="sec-title">🎯 考察要点 <span class="badge">题型方向</span></div>
+        <div style="display:flex; flex-wrap:wrap; gap:6px 20px; font-size:13px;">
+            <span><b>① 弹力方向</b>：找接触面，画垂线（必考）</span>
+            <span><b>② 摩擦力方向</b>：判断“相对运动（趋势）” <span class="fire">🔥</span></span>
+            <span><b>③ 受力分析图</b>：按“一重二弹三摩擦”顺序画</span>
+            <span><b>④ 第三定律辨析</b>：与“平衡力”二选一必考</span>
+            <span><b>⑤ 胡克定律</b>：F=kx（注意 x 是形变量，不是总长）</span>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== 第 2 页 ===================== -->
+<div class="page page-break">
+    <div class="header">
+        <h1>📖 第3章 力的合成与分解</h1>
+        <span class="date">整理日期：2026.07.16</span>
+    </div>
+
+    <!-- 第2页 上：合成与分解 -->
+    <div class="row-dual">
+        <div class="col-left" style="border-left-color:#8e44ad;">
+            <div class="sec-title">➕ 力的合成 <span class="badge">矢量运算</span></div>
+            <ul>
+                <li><b>合力</b>：等效替代，效果相同</li>
+                <li><span class="highlight-blue">平行四边形定则</span>：两力为邻边，对角线为合力</li>
+                <li style="margin-top:6px;"><b>合力范围</b>：<br>|F₁ − F₂| ≤ F<sub>合</sub> ≤ F₁ + F₂</li>
+                <li style="margin-top:6px;"><b>合力方向</b>：<br>随两力夹角增大而 <span class="highlight-red">减小</span></li>
+            </ul>
+            <div style="margin-top:10px; background:#e8f0fe; padding:6px 10px; border-radius:4px; font-size:13px;">
+                <b>特殊夹角</b>：<br>θ=0° → F<sub>合</sub> = F₁+F₂（最大）<br>θ=180° → F<sub>合</sub> = |F₁−F₂|（最小）
+            </div>
+        </div>
+        <div class="col-right" style="border-color:#e67e22;">
+            <div class="sec-title">➖ 力的分解 <span class="badge">按需分解</span></div>
+            <ul>
+                <li><span class="highlight-blue">正交分解法</span>（最常用）：<br>沿 x、y 方向建系，将力分解到坐标轴上</li>
+                <li style="margin-top:8px;"><b>原则</b>：根据 <span class="highlight-red">研究问题</span> 确定分解方向（不一定非选水平和竖直）</li>
+                <li style="margin-top:8px;"><span class="warn">⚠️ 实际效果分解</span>：按力产生的两个实际效果方向分解（如斜面问题）</li>
+            </ul>
+            <div class="force-box" style="margin-top:8px;">
+                <b>🔥 正交分解步骤</b><br>
+                ① 建系（让尽可能多的力落在轴上）<br>
+                ② 分解不在轴上的力<br>
+                ③ 列平衡方程（ΣF<sub>x</sub>=0，ΣF<sub>y</sub>=0）
+            </div>
+        </div>
+    </div>
+
+    <!-- 第2页 中：经典模型与三角形定则 -->
+    <div class="row-full">
+        <div class="sec-title">🧩 经典模型 & 三角形定则 <span class="badge">提速利器</span></div>
+        <div style="display:flex; flex-wrap:wrap; gap:12px 30px; font-size:13.5px;">
+            <div style="flex:1; min-width:140px;">
+                <b>🔹 三力平衡</b><br>
+                任意两个力的合力与第三个力等大反向。
+            </div>
+            <div style="flex:1; min-width:140px;">
+                <b>🔹 三角形定则</b><br>
+                首尾相接，三边构成闭环 → 合力为0。
+            </div>
+            <div style="flex:1; min-width:140px;">
+                <b>🔹 动态平衡</b><br>
+                用“图解法”：一个力方向不变，另一个力方向变化 → 看长短变化。
+            </div>
+        </div>
+        <div style="margin-top:8px; background:#fef9e7; padding:6px 12px; border-radius:4px; font-size:13px; border:1px solid #f1c40f;">
+            <span class="fire">🔥 重点模型</span>：<b>斜面问题</b>（重力的两个分力：mg·sinθ 沿斜面向下，mg·cosθ 垂直斜面）、<b>滑轮模型</b>（同绳张力相等）
+        </div>
+    </div>
+
+    <!-- 第2页 下：终极避坑指南 -->
+    <div class="row-full warning" style="margin-top:12px;">
+        <div class="sec-title">🚨 考前终极避坑指南 <span class="badge">只看这一栏</span></div>
+        <div class="tip-list">
+            <div class="item"><span class="warn">1.</span> <b>重力方向</b>：竖直向下，不是“垂直向下”或“指向地心”。</div>
+            <div class="item"><span class="warn">2.</span> <span class="fire">🔥 弹力有无</span>：两物体接触 <b>不一定</b> 有弹力（还要有形变）。</div>
+            <div class="item"><span class="warn">3.</span> <b>摩擦力大小</b>：静摩擦力用平衡条件求，<b>不可用 f=μN</b>（那是滑动）。</div>
+            <div class="item"><span class="warn">4.</span> <span class="fire">🔥 受力分析</span>：只画 <b>性质力</b>（重力、弹力、摩擦力、电场力、磁场力），不画“向心力”“回复力”。</div>
+            <div class="item"><span class="warn">5.</span> <b>合力与分力</b>：等效替代关系，不是实际存在的力（受力图上不能同时画）。</div>
+            <div class="item"><span class="warn">6.</span> <span class="fire">🔥 正交分解</span>：建系原则是 <b>让更多力落在轴上</b>，不必固定水平竖直。</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

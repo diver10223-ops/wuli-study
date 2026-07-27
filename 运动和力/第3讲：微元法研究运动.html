@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第3讲：微元法研究运动</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e6e9ef; display: flex; flex-direction: column; align-items: center; padding: 20px 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .page { width: 210mm; min-height: 297mm; background: white; padding: 18mm 15mm 15mm 15mm; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 4px; position: relative; background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px); background-size: 100% 100%; background-repeat: no-repeat; background-position: 0 0; }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; margin: 0 auto; padding: 18mm 15mm 15mm 15mm; width: 100%; min-height: 100vh; background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px); } .page:last-child { margin-bottom: 0; } }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #1a3c6e; padding-bottom: 6px; margin-bottom: 14px; }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+        .row-dual { display: flex; gap: 18px; margin-bottom: 16px; }
+        .col-left { flex: 0 0 38%; background: #f8faff; padding: 10px 12px; border-left: 4px solid #e74c3c; border-radius: 0 6px 6px 0; }
+        .col-right { flex: 1; background: #fcfcfc; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; }
+        .row-full { margin-top: 12px; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; background: #fcfcfc; }
+        .row-full.alt { background: #f8faff; border-color: #b0c4de; }
+        .row-full.warning { background: #fffbf0; border-left: 6px solid #f39c12; }
+        .sec-title { font-weight: 700; font-size: 15px; color: #1a3c6e; border-bottom: 2px dashed #b0c4de; padding-bottom: 4px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sec-title .badge { font-size: 12px; background: #1a3c6e; color: white; padding: 0 8px; border-radius: 12px; }
+        ul, .item-list { list-style: none; padding-left: 4px; }
+        ul li, .item-list li { margin-bottom: 6px; font-size: 13.5px; line-height: 1.6; padding-left: 18px; position: relative; }
+        ul li::before { content: "▸"; position: absolute; left: 0; color: #2980b9; font-weight: bold; }
+        .highlight-red { color: #c0392b; font-weight: 600; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .warn { color: #e67e22; font-weight: bold; }
+        .fire { color: #e74c3c; font-weight: bold; }
+        .formula { background: #eef3f7; padding: 6px 12px; border-radius: 6px; font-family: 'Times New Roman', Times, serif; font-size: 16px; font-weight: 500; margin: 8px 0; border-left: 3px solid #2980b9; letter-spacing: 0.5px; }
+        .formula small { font-family: 'Segoe UI', sans-serif; font-weight: 400; font-size: 12px; color: #555; display: block; margin-top: 2px; }
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 4px; }
+        .compare-table th { background: #1a3c6e; color: white; padding: 6px 4px; border: 1px solid #2c3e50; text-align: center; }
+        .compare-table td { border: 1px solid #bdc3c7; padding: 6px 4px; vertical-align: top; background: white; }
+        .compare-table .highlight-cell { background: #fdedec; }
+        .page-break { page-break-before: always; }
+        .tip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 6px 0; }
+        .tip-list .item { font-size: 13px; padding: 4px 0; border-bottom: 1px dotted #ecf0f1; }
+        @media print and (max-width: 800px) { .tip-list { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <div class="header">
+        <h1>📖 第3讲：微元法研究运动</h1>
+        <span class="date">整理日期：2026.07.16</span>
+    </div>
+
+    <div class="row-dual">
+        <div class="col-left">
+            <div class="sec-title">🧩 微元法思想 <span class="badge">核心</span></div>
+            <ul>
+                <li><b>核心思想</b>：将连续的运动 <span class="highlight-red">分割</span> 为无数小段（微元），<br>每段内近似为 <span class="highlight-blue">匀速</span> 或 <span class="highlight-blue">匀变速</span></li>
+                <li style="margin-top:8px;"><b>适用场景</b>：非匀变速、变力做功、流体问题</li>
+                <li style="margin-top:8px;"><span class="warn">⚠️ 微元法的本质</span>：以“直”代“曲”，以“匀”代“变”</li>
+            </ul>
+            <div style="margin-top:10px; background:#fef9e7; padding:6px 10px; border-radius:4px; font-size:13px; border:1px solid #f1c40f;">
+                <b>💡 操作四步</b><br>
+                ① 取微元 Δt → ② 近似（匀速/匀变）→ ③ 列式求和 → ④ 取极限（Δ→0）
+            </div>
+        </div>
+        <div class="col-right">
+            <div class="sec-title">📐 微元法在运动学中的应用</div>
+            <ul>
+                <li><span class="highlight-blue">① 求位移</span>：v(t) 曲线下面积 = ∫v·dt</li>
+                <li><span class="highlight-blue">② 求速度</span>：a(t) 曲线下面积 = ∫a·dt</li>
+                <li><span class="highlight-blue">③ 变加速运动</span>：a = f(t)，无法用匀变速公式</li>
+            </ul>
+            <div style="margin-top:10px; background:#fdedec; padding:6px 10px; border-radius:4px; font-size:13px;">
+                <span class="fire">🔥 典型应用</span><br>
+                ① v 随 x 变化（a = v·dv/dx）<br>
+                ② a 随 t 变化（需积分求 v 和 x）<br>
+                ③ 变力冲量（I = ∫F·dt）
+            </div>
+        </div>
+    </div>
+
+    <div class="row-full">
+        <div class="sec-title">📊 微元法 vs 代数法</div>
+        <table class="compare-table">
+            <thead>
+                <tr><th style="width:20%;">方法</th><th style="width:30%;">适用条件</th><th style="width:30%;">精度</th><th style="width:20%;">复杂度</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><b>代数法</b></td><td>匀变速</td><td>精确</td><td>低</td></tr>
+                <tr><td><b>微元法</b></td><td class="highlight-cell"><span class="fire">任意运动</span></td><td>极限下精确</td><td>较高</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row-full alt">
+        <div class="sec-title">🎯 考察要点</div>
+        <div style="display:flex; flex-wrap:wrap; gap:6px 20px; font-size:13px;">
+            <span><span class="fire">①</span> v-t 图的“面积”求位移（微元思想）</span>
+            <span><span class="fire">②</span> 非匀变速运动中用微元法列方程</span>
+            <span><span class="fire">③</span> a-t 图面积求速度变化量</span>
+            <span><span class="fire">④</span> 微元法与极限思想的结合</span>
+        </div>
+    </div>
+
+    <div class="row-full warning">
+        <div class="sec-title">🚨 避坑指南</div>
+        <div class="tip-list">
+            <div class="item"><span class="warn">1.</span> 微元法的核心是 <b>“先分后合”</b>——分得越细越精确。</div>
+            <div class="item"><span class="warn">2.</span> <span class="fire">🔥 区分“微元”和“微分”</span>：微元是物理思想，微分是数学工具。</div>
+            <div class="item"><span class="warn">3.</span> 用微元法求出的结果是一个 <b>表达式</b>，需代入上下界得具体值。</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

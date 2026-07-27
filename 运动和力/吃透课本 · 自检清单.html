@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吃透课本 · 自检清单</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #e6e9ef;
+            display: flex;
+            justify-content: center;
+            padding: 24px 16px;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            padding: 14mm 16mm 14mm 16mm;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            border-radius: 6px;
+            position: relative;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #1e2a3a;
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .page { box-shadow: none; border-radius: 0; margin: 0 auto; width: 100%; min-height: 100vh; }
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 4px solid #1a3c6e;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+        .header h1 { font-size: 22px; color: #1a3c6e; }
+        .header .date { font-size: 13px; color: #555; align-self: flex-end; }
+
+        .section-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: #1a3c6e;
+            margin: 16px 0 8px 0;
+            padding: 4px 12px;
+            background: #eef3f7;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .section-title .badge {
+            font-size: 11px;
+            font-weight: 400;
+            color: #555;
+            margin-left: 6px;
+        }
+        .checklist {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 16px;
+            margin: 4px 0;
+        }
+        .check-item {
+            padding: 6px 10px 6px 16px;
+            border-left: 3px solid #2980b9;
+            background: #fafcff;
+            border-radius: 0 4px 4px 0;
+            font-size: 12.5px;
+        }
+        .check-item .q { font-weight: 600; color: #1a3c6e; display: block; }
+        .check-item .a { color: #555; font-size: 12px; display: block; padding-left: 4px; }
+        .check-item .pass { color: #27ae60; font-weight: 600; font-size: 11px; display: block; }
+        .check-item .fail { color: #c0392b; font-weight: 600; font-size: 11px; display: block; }
+
+        .level-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin: 6px 0;
+        }
+        .level-table th {
+            background: #1a3c6e;
+            color: white;
+            padding: 4px 8px;
+            border: 1px solid #2c3e50;
+            text-align: center;
+        }
+        .level-table td {
+            border: 1px solid #bdc3c7;
+            padding: 4px 8px;
+            vertical-align: top;
+        }
+        .level-table .highlight-cell { background: #fdedec; }
+        .level-table .pass-cell { background: #f0f7f0; }
+
+        .three-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin: 6px 0;
+        }
+        .three-col .col {
+            background: #fcfcfc;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+            font-size: 12.5px;
+        }
+        .three-col .col .label { font-weight: 700; color: #1a3c6e; }
+
+        .highlight-box {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 4px solid #2980b9;
+            background: #f8faff;
+            margin: 6px 0;
+            font-size: 12.5px;
+        }
+        .highlight-box.orange { border-left-color: #e67e22; background: #fffbf0; }
+        .highlight-box.red { border-left-color: #c0392b; background: #fdedec; }
+        .highlight-box.green { border-left-color: #27ae60; background: #f0f7f0; }
+
+        .fire { color: #c0392b; font-weight: 700; }
+        .checkmark { color: #27ae60; font-weight: 700; }
+
+        @media print and (max-width: 800px) {
+            .checklist, .three-col { grid-template-columns: 1fr; }
+            .page { padding: 10mm 10mm; }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <div class="header">
+        <h1>📖 吃透课本 · 四维自检清单</h1>
+        <span class="date">2026.07.16</span>
+    </div>
+
+    <div style="font-size:13px; color:#555; margin-bottom:12px; background:#f4f8fc; padding:6px 12px; border-radius:4px; border:1px solid #dce1e8;">
+        ⭐ 用这套清单检查每一章（运动学 / 力学 / 动力学 / 实验）。<br>
+        能答出 ✅ 才算“吃透”，答不出 ❌ 说明需要回头补。
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 一、吃透的6个层次                                               -->
+    <!-- ============================================================ -->
+    <div style="margin-bottom:6px;">
+        <div class="section-title">一、吃透的6个层次 <span class="badge">—— 你在哪一层？</span></div>
+        <table class="level-table">
+            <thead>
+                <tr><th style="width:15%;">层次</th><th style="width:35%;">表现</th><th style="width:25%;">算不算吃透？</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><b>1. 认读层</b></td><td>能念出公式和概念的名称，知道在哪一页</td><td class="highlight-cell">❌ 不算</td></tr>
+                <tr><td><b>2. 记忆层</b></td><td>能背出公式、默写定义</td><td class="highlight-cell">⚠️ 只算“背过”</td></tr>
+                <tr><td><b>3. 理解层</b></td><td>能用自己的话解释“为什么”</td><td>✅ 接近</td></tr>
+                <tr><td><b>4. 关联层</b></td><td>能说出这个知识和前后章节的关系</td><td class="pass-cell">✅ 算吃透</td></tr>
+                <tr><td><b>5. 应用层</b></td><td>能判断什么时候用、什么时候不能用</td><td class="pass-cell">✅ 算吃透</td></tr>
+                <tr><td><b>6. 输出层</b></td><td>能给别人讲明白，能举出反例</td><td class="pass-cell">✅ 彻底吃透</td></tr>
+            </tbody>
+        </table>
+        <div class="highlight-box orange" style="margin-top:4px;">
+            💡 <b>核心判断标准</b>：如果只能“认读”和“记忆” → 你只是在 <b>“背”</b>，不是“吃透”。<br>
+            如果能做到“关联”和“应用” → 才叫 <b>“吃透”</b>。
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 二、四维自检清单                                               -->
+    <!-- ============================================================ -->
+    <div style="margin-bottom:6px;">
+        <div class="section-title">二、四维自检清单 <span class="badge">—— 逐章检查</span></div>
+
+        <!-- 维度1：概念 -->
+        <div style="background:#f8faff; padding:8px 12px; border-radius:6px; border-left:4px solid #2980b9; margin-bottom:6px;">
+            <div style="font-weight:700; color:#1a3c6e; font-size:14px;">维度1：概念 —— 能不能“用自己的话”说清楚？</div>
+            <div class="checklist">
+                <div class="check-item">
+                    <span class="q">加速度是什么？</span>
+                    <span class="a">能说出：“加速度是速度变化的快慢，不是速度本身的大小”</span>
+                    <span class="pass">✅ 通过标志：能用一句话、一个例子说明</span>
+                </div>
+                <div class="check-item">
+                    <span class="q">能区分“速度大”和“加速度大”吗？</span>
+                    <span class="a">能举出反例：“飞机匀速飞得快但a=0；火箭刚点火速度小但a很大”</span>
+                    <span class="pass">✅ 能自己举出2个反例</span>
+                </div>
+                <div class="check-item">
+                    <span class="q">“位移”和“路程”的区别？</span>
+                    <span class="a">能说清：“位移是矢量（初末位置），路程是标量（实际轨迹）”</span>
+                    <span class="pass">✅ 能画出往返运动的对比图</span>
+                </div>
+                <div class="check-item">
+                    <span class="q">“超重”和“失重”的本质？</span>
+                    <span class="a">能说出：“由加速度方向决定，不是由速度方向决定”</span>
+                    <span class="pass">✅ 能举出“加速上升”和“减速下降”都是超重</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 维度2：公式 -->
+        <div style="background:#fef9e7; padding:8px 12px; border-radius:6px; border-left:4px solid #e67e22; margin-bottom:6px;">
+            <div style="font-weight:700; color:#b9770e; font-size:14px;">维度2：公式 —— 能不能说出“适用条件”？</div>
+            <div class="three-col">
+                <div class="col">
+                    <span class="label">📌 \bar{v} = (v₀+v)/2</span>
+                    <div style="font-size:12px; color:#555;">✅ 适用：<b>匀变速直线运动</b></div>
+                    <div style="font-size:12px; color:#c0392b;">❌ 不适用：非匀变速（只能用 \bar{v}=x/t）</div>
+                </div>
+                <div class="col">
+                    <span class="label">📌 v²−v₀²=2ax</span>
+                    <div style="font-size:12px; color:#555;">✅ 适用：<b>匀变速直线运动，不含t</b></div>
+                    <div style="font-size:12px; color:#c0392b;">❌ 不适用：非匀变速；有往返时要小心正负号</div>
+                </div>
+                <div class="col">
+                    <span class="label">📌 F=ma</span>
+                    <div style="font-size:12px; color:#555;">✅ 适用：<b>宏观低速，惯性系</b></div>
+                    <div style="font-size:12px; color:#c0392b;">❌ 不适用：微观（量子）不适用；非惯性系需加惯性力</div>
+                </div>
+            </div>
+            <div style="font-size:12px; color:#555; margin-top:4px; background:white; padding:4px 10px; border-radius:4px;">
+                🔥 自检标准：对每个公式，能 <b>不给提示</b> 直接说出适用条件 → 才算通过
+            </div>
+        </div>
+
+        <!-- 维度3：图像 -->
+        <div style="background:#f0f7f0; padding:8px 12px; border-radius:6px; border-left:4px solid #27ae60; margin-bottom:6px;">
+            <div style="font-weight:700; color:#1e8449; font-size:14px;">维度3：图像 —— 能不能“看图说话”？</div>
+            <div class="checklist">
+                <div class="check-item">
+                    <span class="q">x-t 图的切线斜率代表什么？</span>
+                    <span class="a">能说出：“切线斜率 = 瞬时速度”</span>
+                    <span class="pass">✅ 能在图上标出哪段速度快、哪段慢</span>
+                </div>
+                <div class="check-item">
+                    <span class="q">v-t 图的斜率和面积代表什么？</span>
+                    <span class="a">能说出：“斜率 = a，面积 = 位移”</span>
+                    <span class="pass">✅ 能判断轴上方/下方的正负号含义</span>
+                </div>
+                <div class="check-item">
+                    <span class="q">能区分 v-t 图和 x-t 图吗？</span>
+                    <span class="a">不混淆两者的斜率含义</span>
+                    <span class="pass">✅ 能画出匀加速的两种图</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 维度4：实验 -->
+        <div style="background:#f4f0fc; padding:8px 12px; border-radius:6px; border-left:4px solid #8e44ad;">
+            <div style="font-weight:700; color:#6c3483; font-size:14px;">维度4：实验 —— 能不能“说出每一步为什么这样做”？</div>
+            <div class="checklist">
+                <div class="check-item">
+                    <span class="q">为什么要平衡摩擦力？</span>
+                    <span class="a">“为了抵消阻力，让合力约等于重物的重力”</span>
+                    <span class="pass">✅ 能说出不做的后果（a-F图不过原点）</span>
+                </div>
+                <div class="check-item">
+                    <span class="q">为什么要先通电再放小车？</span>
+                    <span class="a">“为了在纸带上打下完整的点迹”</span>
+                    <span class="pass">✅ 能说出搞反的后果（打点不全）</span>
+                </div>
+                <div class="check-item">
+                    <span class="q">为什么 m<sub>盘</sub> ≪ m<sub>车</sub>？</span>
+                    <span class="a">“使绳拉力≈重物重力，减小系统误差”</span>
+                    <span class="pass">✅ 能说出不满足的后果（a-F图弯曲）</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 三、终极自检：“三问法” + “假设法”                            -->
+    <!-- ============================================================ -->
+    <div style="margin-bottom:6px;">
+        <div class="section-title">三、终极自检 <span class="badge">—— 每节必问</span></div>
+
+        <div class="three-col">
+            <div class="col" style="border-left:4px solid #2980b9;">
+                <span class="label">❓ 问题1：这一节在解决什么问题？</span>
+                <div style="font-size:12px; color:#555;">例如：加速度 → “怎么描述速度变化的快慢”</div>
+            </div>
+            <div class="col" style="border-left:4px solid #2980b9;">
+                <span class="label">❓ 问题2：核心结论是什么？一句话说清</span>
+                <div style="font-size:12px; color:#555;">例如：牛顿第二定律 → “合外力=质量×加速度，方向相同”</div>
+            </div>
+            <div class="col" style="border-left:4px solid #2980b9;">
+                <span class="label">❓ 问题3：和上节/下节有什么关系？</span>
+                <div style="font-size:12px; color:#555;">例如：加速度 → 上接“速度”，下接“匀变速运动”</div>
+            </div>
+        </div>
+
+        <div class="highlight-box green" style="margin-top:4px;">
+            <span class="checkmark">✅ 三问都能答出来 → 这一节吃透了</span><br>
+            <span class="fire">❌ 有一问答不出来 → 这一节还没吃透，回去重看</span>
+        </div>
+
+        <div class="highlight-box orange" style="margin-top:4px;">
+            <b>🧪 进阶“假设法”检验真理解：</b><br>
+            ① 假设加速度消失（a=0），运动会变成什么样？ → 匀速直线运动（牛顿第一定律）<br>
+            ② 假设没有摩擦力，受力分析会怎么变？ → 少了一个约束力，但“判断有无”的难度还在<br>
+            ③ 假设 g 变成 2g，抛体运动会怎么变？ → 飞行时间变短，射程变短<br>
+            <span style="font-size:12px; color:#555;">如果能推理出变化 → 真理解了。只能“背”原结论 → 没吃透。</span>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 四、实用操作流程                                               -->
+    <!-- ============================================================ -->
+    <div>
+        <div class="section-title">四、如何实践“吃透课本”？</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 12px; font-size:12.5px; background:#f8f9fa; padding:8px 14px; border-radius:6px; border:1px solid #dee2e6;">
+            <div><span class="fire">①</span> <b>通读</b>：把一节从头到尾看一遍（5分钟）</div>
+            <div><span class="fire">②</span> <b>合上书</b>：用“三问法”问自己（3分钟）</div>
+            <div><span class="fire">③</span> <b>画图</b>：在草稿纸上画出本节的知识结构图（5分钟）</div>
+            <div><span class="fire">④</span> <b>做题验证</b>：做教材上的例题和课后习题（10分钟）</div>
+            <div><span class="fire">⑤</span> <b>错因归库</b>：做错的题记录“错因”和“正解”（3分钟）</div>
+            <div><span class="fire">⑥</span> <b>讲出来</b>：把本节内容口头讲一遍（5分钟）——<span class="checkmark">输出倒逼输入</span></div>
+        </div>
+        <div class="highlight-box" style="margin-top:4px; border-left-color:#1a3c6e; background:#f0f2f5;">
+            📌 <b>每天30分钟</b>，按这个流程吃透1节。<br>
+            坚持3周，必修一所有章节全部“吃透”，你就不再是“背物理”，而是“理解物理”。
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

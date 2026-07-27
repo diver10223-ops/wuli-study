@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第6讲：平抛与斜抛</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e6e9ef; display: flex; flex-direction: column; align-items: center; padding: 20px 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .page { width: 210mm; min-height: 297mm; background: white; padding: 18mm 15mm 15mm 15mm; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 4px; position: relative; background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px); background-size: 100% 100%; background-repeat: no-repeat; background-position: 0 0; }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; margin: 0 auto; padding: 18mm 15mm 15mm 15mm; width: 100%; min-height: 100vh; background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px); } .page:last-child { margin-bottom: 0; } }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #1a3c6e; padding-bottom: 6px; margin-bottom: 14px; }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+        .row-dual { display: flex; gap: 18px; margin-bottom: 16px; }
+        .col-left { flex: 0 0 38%; background: #f8faff; padding: 10px 12px; border-left: 4px solid #e74c3c; border-radius: 0 6px 6px 0; }
+        .col-right { flex: 1; background: #fcfcfc; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; }
+        .row-full { margin-top: 12px; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; background: #fcfcfc; }
+        .row-full.alt { background: #f8faff; border-color: #b0c4de; }
+        .row-full.warning { background: #fffbf0; border-left: 6px solid #f39c12; }
+        .row-full.exam { background: #f0f7f0; border-left: 6px solid #27ae60; }
+        .sec-title { font-weight: 700; font-size: 15px; color: #1a3c6e; border-bottom: 2px dashed #b0c4de; padding-bottom: 4px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sec-title .badge { font-size: 12px; background: #1a3c6e; color: white; padding: 0 8px; border-radius: 12px; }
+        ul, .item-list { list-style: none; padding-left: 4px; }
+        ul li, .item-list li { margin-bottom: 6px; font-size: 13.5px; line-height: 1.6; padding-left: 18px; position: relative; }
+        ul li::before { content: "▸"; position: absolute; left: 0; color: #2980b9; font-weight: bold; }
+        .highlight-red { color: #c0392b; font-weight: 600; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .warn { color: #e67e22; font-weight: bold; }
+        .fire { color: #e74c3c; font-weight: bold; }
+        .formula { background: #eef3f7; padding: 6px 12px; border-radius: 6px; font-family: 'Times New Roman', Times, serif; font-size: 16px; font-weight: 500; margin: 8px 0; border-left: 3px solid #2980b9; letter-spacing: 0.5px; }
+        .formula small { font-family: 'Segoe UI', sans-serif; font-weight: 400; font-size: 12px; color: #555; display: block; margin-top: 2px; }
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 4px; }
+        .compare-table th { background: #1a3c6e; color: white; padding: 6px 4px; border: 1px solid #2c3e50; text-align: center; }
+        .compare-table td { border: 1px solid #bdc3c7; padding: 6px 4px; vertical-align: top; background: white; }
+        .compare-table .highlight-cell { background: #fdedec; }
+        .page-break { page-break-before: always; }
+        .tip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 6px 0; }
+        .tip-list .item { font-size: 13px; padding: 4px 0; border-bottom: 1px dotted #ecf0f1; }
+        .error-box { background:#fdedec; padding:6px 10px; border-radius:4px; border-left:4px solid #e74c3c; font-size:13px; margin-top:4px; }
+        .cross-box { background:#f4f8fc; padding:6px 10px; border-radius:4px; border-left:4px solid #8e44ad; font-size:13px; margin-top:4px; }
+        @media print and (max-width: 800px) { .tip-list { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <div class="header">
+        <h1>📖 第6讲：平抛与斜抛</h1>
+        <span class="date">整理日期：2026.07.16</span>
+    </div>
+
+    <!-- 核心横幅 -->
+    <div class="row-full bridge" style="margin-bottom:12px;">
+        <div style="text-align:center; font-size:14px; font-weight:700; color:#1a3c6e;">
+            ⭐ 二维运动的黄金法则：<span class="highlight-red">水平匀速</span> + <span class="highlight-blue">竖直匀加速</span>（自由落体）<br>
+            <span style="font-size:13px; font-weight:400; color:#555;">时间 t 是连接 x 和 y 的唯一桥梁</span>
+        </div>
+    </div>
+
+    <div class="row-dual">
+        <div class="col-left">
+            <div class="sec-title">🎯 平抛运动</div>
+            <ul>
+                <li><b>水平</b>：v<sub>x</sub> = v₀，x = v₀·t</li>
+                <li><b>竖直</b>：v<sub>y</sub> = gt，y = ½gt²</li>
+                <li style="margin-top:6px;"><b>合速度</b>：v = √(v₀² + (gt)²)</li>
+                <li><b>合位移</b>：s = √(x² + y²)</li>
+                <li><b>飞行时间</b>：t = √(2h/g)（仅由高度决定）</li>
+                <li><b>水平射程</b>：x = v₀·√(2h/g)</li>
+            </ul>
+        </div>
+        <div class="col-right">
+            <div class="sec-title">🎯 斜抛运动</div>
+            <ul>
+                <li><b>水平</b>：v<sub>x</sub> = v₀·cosθ，x = v₀·cosθ·t</li>
+                <li><b>竖直</b>：v<sub>y</sub> = v₀·sinθ − gt，y = v₀·sinθ·t − ½gt²</li>
+                <li style="margin-top:6px;"><b>上升时间</b>：t<sub>上</sub> = v₀·sinθ/g</li>
+                <li><b>总时间</b>：t<sub>总</sub> = 2v₀·sinθ/g</li>
+                <li><b>最大高度</b>：H<sub>max</sub> = (v₀·sinθ)²/(2g)</li>
+                <li><b>水平射程</b>：R = v₀²·sin2θ/g</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 常见题型 -->
+    <div class="row-full exam">
+        <div class="sec-title">📝 常见题型</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 16px; font-size:13px;">
+            <div><span class="fire">题型1</span> 平抛运动的时间、射程、落地速度（基础计算）</div>
+            <div><span class="fire">题型2</span> 斜抛运动的射程、最大高度、飞行时间</div>
+            <div><span class="fire">题型3</span> 抛体运动中“速度偏转角”与“位移偏转角”的关系</div>
+            <div><span class="fire">题型4</span> 平抛运动与斜面结合（落到斜面上）</div>
+            <div><span class="fire">题型5</span> 抛体运动的极值问题（最大射程、最大高度）</div>
+            <div><span class="fire">题型6</span> 平抛运动与圆周运动的组合（临界条件）</div>
+        </div>
+    </div>
+
+    <!-- 易混淆点 -->
+    <div class="row-full">
+        <div class="sec-title">🧩 易混淆点</div>
+        <table class="compare-table">
+            <thead>
+                <tr><th style="width:16%;">对比项</th><th style="width:28%;">平抛</th><th style="width:28%;">斜抛</th><th style="width:28%;">易错点</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><b>初速度</b></td><td>完全水平</td><td>有水平和竖直分量</td><td class="highlight-cell">斜抛分解时把 cos/sin 搞反</td></tr>
+                <tr><td><b>最高点</b></td><td>在抛出点</td><td>在飞行轨迹中点</td><td class="highlight-cell">认为最高点 v=0（实际 v<sub>x</sub>≠0）</td></tr>
+                <tr><td><b>时间决定因素</b></td><td>只由高度决定</td><td>由 v₀和 θ 共同决定</td><td class="highlight-cell">平抛时间与 v₀ 无关（常考！）</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 常错题 -->
+    <div class="row-full alt">
+        <div class="sec-title">❌ 常错题</div>
+        <div class="error-box"><span class="fire">错题1</span> 平抛运动中，落地速度与水平方向的夹角。<br><b>错误</b>：tanα = v₀/(gt) ❌<br><b>正确</b>：tanα = gt/v₀ ✅</div>
+        <div class="error-box"><span class="fire">错题2</span> 斜抛运动中，最高点的速度。<br><b>错误</b>：最高点 v=0 ❌<br><b>正确</b>：最高点 v = v₀·cosθ（竖直分量=0，水平分量不变）✅</div>
+        <div class="error-box"><span class="fire">错题3</span> 平抛运动时间由 v₀ 决定。<br><b>错误</b>：v₀ 越大，时间越长 ❌<br><b>正确</b>：t=√(2h/g)，<b>与 v₀ 无关</b> ✅</div>
+    </div>
+
+    <!-- 交叉题型 -->
+    <div class="row-full warning">
+        <div class="sec-title">🔗 交叉题型</div>
+        <div class="cross-box"><span class="highlight-blue">① 第3讲+第6讲</span>：抛体运动的轨迹是抛物线 — 用导数求切线斜率（速度方向）</div>
+        <div class="cross-box"><span class="highlight-blue">② 第5讲+第6讲</span>：变加速度抛体（如空气阻力）→ 需用积分求解</div>
+        <div class="cross-box"><span class="highlight-blue">③ 第7讲+第6讲</span>：抛体与圆周运动的组合（最高点/最低点临界）</div>
+        <div class="cross-box"><span class="highlight-blue">④ 第4讲+第6讲</span>：已知轨迹方程 x(t)、y(t)，求合速度和合加速度（矢量求导）</div>
+    </div>
+</div>
+</body>
+</html>

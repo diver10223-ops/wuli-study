@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第8讲：关联运动</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #e6e9ef; display: flex; flex-direction: column; align-items: center; padding: 20px 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .page { width: 210mm; min-height: 297mm; background: white; padding: 18mm 15mm 15mm 15mm; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-radius: 4px; position: relative; background-image: radial-gradient(circle at 15px 30px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ccc 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ccc 1.5px, transparent 1.5px); background-size: 100% 100%; background-repeat: no-repeat; background-position: 0 0; }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; border-radius: 0; margin: 0 auto; padding: 18mm 15mm 15mm 15mm; width: 100%; min-height: 100vh; background-image: radial-gradient(circle at 15px 30px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 80px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 130px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 180px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 230px, #ddd 1.5px, transparent 1.5px), radial-gradient(circle at 15px 280px, #ddd 1.5px, transparent 1.5px); } .page:last-child { margin-bottom: 0; } }
+        .header { display: flex; justify-content: space-between; border-bottom: 3px solid #1a3c6e; padding-bottom: 6px; margin-bottom: 14px; }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 14px; color: #555; align-self: flex-end; }
+        .row-dual { display: flex; gap: 18px; margin-bottom: 16px; }
+        .col-left { flex: 0 0 38%; background: #f8faff; padding: 10px 12px; border-left: 4px solid #e74c3c; border-radius: 0 6px 6px 0; }
+        .col-right { flex: 1; background: #fcfcfc; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; }
+        .row-full { margin-top: 12px; padding: 10px 12px; border: 1px solid #dce1e8; border-radius: 6px; background: #fcfcfc; }
+        .row-full.alt { background: #f8faff; border-color: #b0c4de; }
+        .row-full.warning { background: #fffbf0; border-left: 6px solid #f39c12; }
+        .row-full.exam { background: #f0f7f0; border-left: 6px solid #27ae60; }
+        .sec-title { font-weight: 700; font-size: 15px; color: #1a3c6e; border-bottom: 2px dashed #b0c4de; padding-bottom: 4px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sec-title .badge { font-size: 12px; background: #1a3c6e; color: white; padding: 0 8px; border-radius: 12px; }
+        ul, .item-list { list-style: none; padding-left: 4px; }
+        ul li, .item-list li { margin-bottom: 6px; font-size: 13.5px; line-height: 1.6; padding-left: 18px; position: relative; }
+        ul li::before { content: "▸"; position: absolute; left: 0; color: #2980b9; font-weight: bold; }
+        .highlight-red { color: #c0392b; font-weight: 600; }
+        .highlight-blue { color: #2471a3; font-weight: 600; }
+        .warn { color: #e67e22; font-weight: bold; }
+        .fire { color: #e74c3c; font-weight: bold; }
+        .formula { background: #eef3f7; padding: 6px 12px; border-radius: 6px; font-family: 'Times New Roman', Times, serif; font-size: 16px; font-weight: 500; margin: 8px 0; border-left: 3px solid #2980b9; letter-spacing: 0.5px; }
+        .formula small { font-family: 'Segoe UI', sans-serif; font-weight: 400; font-size: 12px; color: #555; display: block; margin-top: 2px; }
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 4px; }
+        .compare-table th { background: #1a3c6e; color: white; padding: 6px 4px; border: 1px solid #2c3e50; text-align: center; }
+        .compare-table td { border: 1px solid #bdc3c7; padding: 6px 4px; vertical-align: top; background: white; }
+        .compare-table .highlight-cell { background: #fdedec; }
+        .page-break { page-break-before: always; }
+        .tip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; padding: 6px 0; }
+        .tip-list .item { font-size: 13px; padding: 4px 0; border-bottom: 1px dotted #ecf0f1; }
+        .error-box { background:#fdedec; padding:6px 10px; border-radius:4px; border-left:4px solid #e74c3c; font-size:13px; margin-top:4px; }
+        .cross-box { background:#f4f8fc; padding:6px 10px; border-radius:4px; border-left:4px solid #8e44ad; font-size:13px; margin-top:4px; }
+        @media print and (max-width: 800px) { .tip-list { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <div class="header">
+        <h1>📖 第8讲：关联运动</h1>
+        <span class="date">整理日期：2026.07.16</span>
+    </div>
+
+    <!-- 核心横幅 -->
+    <div class="row-full bridge" style="margin-bottom:12px;">
+        <div style="text-align:center; font-size:14px; font-weight:700; color:#1a3c6e;">
+            ⭐ 关联运动的核心：<span class="highlight-red">找几何约束关系</span> — 位移、速度、加速度的约束方程<br>
+            <span style="font-size:13px; font-weight:400; color:#555;">常见约束：绳长不变、杆长不变、接触点速度投影相等</span>
+        </div>
+    </div>
+
+    <div class="row-dual">
+        <div class="col-left">
+            <div class="sec-title">🔗 核心方法</div>
+            <ul>
+                <li><span class="highlight-red">步骤1</span>：确定研究对象和约束关系</li>
+                <li><span class="highlight-blue">步骤2</span>：写出位移约束方程（如 x₁ + x₂ = L）</li>
+                <li><span class="highlight-red">步骤3</span>：对时间求导 → 速度约束方程</li>
+                <li><span class="highlight-blue">步骤4</b>：再次求导 → 加速度约束方程</li>
+            </ul>
+            <div style="margin-top:10px; background:#fef9e7; padding:6px 10px; border-radius:4px; font-size:13px; border:1px solid #f1c40f;">
+                <b>💡 两条黄金法则</b><br>
+                ① 绳/杆不可伸长 → 两端沿绳方向速度 <b>相等</b><br>
+                ② 接触点无相对滑动 → 速度在接触面法线方向 <b>投影相等</b>
+            </div>
+        </div>
+        <div class="col-right">
+            <div class="sec-title">📌 三大经典模型</div>
+            <ul>
+                <li><span class="highlight-blue">① 绳拉物体</span>：物体 A 和 B 用绳连接，跨过定滑轮<br>→ v<sub>A</sub> = v<sub>B</sub>（同一根绳上速度大小相等）</li>
+                <li style="margin-top:8px;"><span class="highlight-red">② 杆连接</span>：两端速度沿杆方向 <b>投影相等</b><br>→ v<sub>1</sub>·cosθ₁ = v<sub>2</sub>·cosθ₂</li>
+                <li style="margin-top:8px;"><span class="highlight-blue">③ 接触约束</span>：两物体接触，沿法线方向速度相等<br>→ 斜面、圆弧轨道中常见</li>
+            </ul>
+            <div style="margin-top:10px; background:#fdedec; padding:6px 10px; border-radius:4px; font-size:13px;">
+                <span class="fire">🔥 注意</span>：求导时区分 <b>对时间求导</b> 和 <b>对坐标求导</b>（前者得速度，后者得斜率）
+            </div>
+        </div>
+    </div>
+
+    <!-- 常见题型 -->
+    <div class="row-full exam">
+        <div class="sec-title">📝 常见题型</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 16px; font-size:13px;">
+            <div><span class="fire">题型1</span> 定滑轮连接体的速度关系（同一绳速相等）</div>
+            <div><span class="fire">题型2</span> 动滑轮连接体的速度关系（速度叠加）</div>
+            <div><span class="fire">题型3</span> 杆两端的速度投影关系（投影相等）</div>
+            <div><span class="fire">题型4</span> 斜面约束：沿斜面方向速度相等</div>
+            <div><span class="fire">题型5</span> 滑块+滑槽的约束关系</div>
+            <div><span class="fire">题型6</span> 关联运动的加速度关系（速度求导）</div>
+        </div>
+    </div>
+
+    <!-- 易混淆点 -->
+    <div class="row-full">
+        <div class="sec-title">🧩 易混淆点</div>
+        <table class="compare-table">
+            <thead>
+                <tr><th style="width:25%;">约束类型</th><th style="width:25%;">速度关系</th><th style="width:25%;">易错</th><th style="width:25%;">判断方法</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><b>同一绳（定滑轮）</b></td><td>大小相等</td><td class="highlight-cell">误以为方向也相同</td><td>速度沿绳方向投影</td></tr>
+                <tr><td><b>动滑轮</b></td><td>v<sub>动</sub> = (v₁+v₂)/2</td><td class="highlight-cell">忘记除以2</td><td>绳长不变列方程</td></tr>
+                <tr><td><b>杆约束</b></td><td>v·cosθ 相等</td><td class="highlight-cell">直接用 v 相等</td><td>投影到杆方向</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 常错题 -->
+    <div class="row-full alt">
+        <div class="sec-title">❌ 常错题</div>
+        <div class="error-box"><span class="fire">错题1</span> 定滑轮连接体，绳子两端速度大小相等，方向相同。<br><b>错误</b>：方向相同 ❌<br><b>正确</b>：速度大小相等，但方向 <b>不一定相同</b>（沿绳方向投影相等）✅</div>
+        <div class="error-box"><span class="fire">错题2</span> 杆连接体中，两端速度相等。<br><b>错误</b>：v₁ = v₂ ❌<br><b>正确</b>：沿杆方向 <b>投影相等</b>，v₁·cosθ₁ = v₂·cosθ₂ ✅</div>
+        <div class="error-box"><span class="fire">错题3</span> 关联运动中，位移关系求导一次得加速度。<br><b>错误</b>：直接得加速度 ❌<br><b>正确</b>：位移求导一次得 <b>速度</b>，再求导一次得 <b>加速度</b> ✅</div>
+    </div>
+
+    <!-- 交叉题型 -->
+    <div class="row-full warning">
+        <div class="sec-title">🔗 交叉题型</div>
+        <div class="cross-box"><span class="highlight-blue">① 第1讲+第8讲</span>：相对运动中的关联约束（两个运动物体之间有绳/杆连接）</div>
+        <div class="cross-box"><span class="highlight-blue">② 第4讲+第8讲</span>：用导数求关联运动的速度和加速度（位移方程求导）</div>
+        <div class="cross-box"><span class="highlight-blue">③ 第7讲+第8讲</span>：圆周运动与关联运动的结合（如绳系小球+另一物体）</div>
+        <div class="cross-box"><span class="highlight-blue">④ 第2讲+第8讲</span>：关联运动中用图像法分析速度变化趋势</div>
+    </div>
+</div>
+</body>
+</html>

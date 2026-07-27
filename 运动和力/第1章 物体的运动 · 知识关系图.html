@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第1章 物体的运动 · 知识关系图</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #e6e9ef;
+            display: flex;
+            justify-content: center;
+            padding: 30px 20px;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            padding: 20mm 18mm 18mm 18mm;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            border-radius: 6px;
+            position: relative;
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .page { box-shadow: none; border-radius: 0; margin: 0 auto; width: 100%; min-height: 100vh; }
+        }
+        h1 {
+            text-align: center;
+            font-size: 26px;
+            color: #1a3c6e;
+            border-bottom: 4px solid #1a3c6e;
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #555;
+            font-size: 14px;
+            margin-top: -16px;
+            margin-bottom: 24px;
+        }
+        .map-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        /* 工具层 */
+        .layer-tools {
+            background: #eef3f7;
+            border: 2px solid #2980b9;
+            border-radius: 10px;
+            padding: 14px 18px;
+        }
+        .layer-tools .layer-label {
+            font-weight: 700;
+            color: #1a3c6e;
+            font-size: 15px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .layer-tools .layer-label .badge {
+            background: #2980b9;
+            color: white;
+            font-size: 11px;
+            padding: 0 12px;
+            border-radius: 12px;
+            font-weight: 400;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+        .tool-item {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border-left: 4px solid #2980b9;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            font-size: 14px;
+        }
+        .tool-item .num { font-weight: 700; color: #2980b9; }
+        .tool-item .desc { color: #555; font-size: 12px; display: block; margin-top: 2px; }
+        .arrow-down {
+            text-align: center;
+            font-size: 28px;
+            color: #2980b9;
+            line-height: 1;
+            margin: -4px 0;
+        }
+        /* 一维层 */
+        .layer-1d {
+            background: #f8faff;
+            border: 2px solid #8e44ad;
+            border-radius: 10px;
+            padding: 14px 18px;
+        }
+        .layer-1d .layer-label {
+            font-weight: 700;
+            color: #6c3483;
+            font-size: 15px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .layer-1d .layer-label .badge {
+            background: #8e44ad;
+            color: white;
+            font-size: 11px;
+            padding: 0 12px;
+            border-radius: 12px;
+            font-weight: 400;
+        }
+        .dim-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .dim-item {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border-left: 4px solid #8e44ad;
+            font-size: 14px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        .dim-item .num { font-weight: 700; color: #6c3483; }
+        .dim-item .desc { color: #555; font-size: 12px; display: block; margin-top: 2px; }
+        .dim-item .link { color: #8e44ad; font-size: 12px; display: block; margin-top: 2px; }
+        /* 二维层 */
+        .layer-2d {
+            background: #f0f7f0;
+            border: 2px solid #27ae60;
+            border-radius: 10px;
+            padding: 14px 18px;
+        }
+        .layer-2d .layer-label {
+            font-weight: 700;
+            color: #1e8449;
+            font-size: 15px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .layer-2d .layer-label .badge {
+            background: #27ae60;
+            color: white;
+            font-size: 11px;
+            padding: 0 12px;
+            border-radius: 12px;
+            font-weight: 400;
+        }
+        .twod-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .twod-item {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border-left: 4px solid #27ae60;
+            font-size: 14px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        .twod-item .num { font-weight: 700; color: #1e8449; }
+        .twod-item .desc { color: #555; font-size: 12px; display: block; margin-top: 2px; }
+        /* 关联层 */
+        .layer-link {
+            background: #fffbf0;
+            border: 2px solid #e67e22;
+            border-radius: 10px;
+            padding: 14px 18px;
+        }
+        .layer-link .layer-label {
+            font-weight: 700;
+            color: #b9770e;
+            font-size: 15px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .layer-link .layer-label .badge {
+            background: #e67e22;
+            color: white;
+            font-size: 11px;
+            padding: 0 12px;
+            border-radius: 12px;
+            font-weight: 400;
+        }
+        .link-item {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border-left: 4px solid #e67e22;
+            font-size: 14px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        .link-item .num { font-weight: 700; color: #b9770e; }
+        .link-item .desc { color: #555; font-size: 12px; display: block; margin-top: 2px; }
+        /* 底部总结 */
+        .summary {
+            margin-top: 16px;
+            background: #1a3c6e;
+            color: white;
+            padding: 14px 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .summary span { color: #f1c40f; }
+        /* 图例 */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px 24px;
+            margin-top: 14px;
+            padding: 10px 14px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 12px;
+            border: 1px solid #dee2e6;
+        }
+        .legend-item { display: flex; align-items: center; gap: 6px; }
+        .legend-color { width: 20px; height: 4px; border-radius: 2px; }
+        @media print and (max-width: 800px) {
+            .tool-grid, .dim-grid, .twod-grid { grid-template-columns: 1fr; }
+            .page { padding: 12mm 10mm; }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <h1>📖 第1章 物体的运动 · 知识关系图</h1>
+    <div class="subtitle">数学工具 → 一维运动 → 二维运动 → 关联运动（层级递进）</div>
+
+    <div class="map-container">
+        <!-- 工具层 -->
+        <div class="layer-tools">
+            <div class="layer-label">🔧 数学工具层 <span class="badge">第3~5讲 · 贯穿全章</span></div>
+            <div class="tool-grid">
+                <div class="tool-item">
+                    <span class="num">第3讲</span> 微元法
+                    <span class="desc">分割→近似→求和→取极限</span>
+                </div>
+                <div class="tool-item">
+                    <span class="num">第4讲</span> 导数
+                    <span class="desc">v = dx/dt &nbsp; a = dv/dt</span>
+                </div>
+                <div class="tool-item">
+                    <span class="num">第5讲</span> 定积分
+                    <span class="desc">Δx = ∫v·dt &nbsp; Δv = ∫a·dt</span>
+                </div>
+            </div>
+            <div style="font-size:12px; color:#555; margin-top:6px; text-align:center;">
+                ⚡ 导数 = 瞬时变化率 &nbsp;|&nbsp; 积分 = 累积量 &nbsp;|&nbsp; 微元 = 积分的物理前身
+            </div>
+        </div>
+
+        <div class="arrow-down">⬇</div>
+
+        <!-- 一维层 -->
+        <div class="layer-1d">
+            <div class="layer-label">📏 一维运动 <span class="badge">第1~2讲 · 基础</span></div>
+            <div class="dim-grid">
+                <div class="dim-item">
+                    <span class="num">第1讲</span> 相对运动
+                    <span class="desc">v<sub>绝对</sub> = v<sub>相对</sub> + v<sub>牵连</sub></span>
+                    <span class="link">↕ 参考系变换</span>
+                </div>
+                <div class="dim-item">
+                    <span class="num">第2讲</span> 代数与图像
+                    <span class="desc">v-t图（斜率=a，面积=x）<br>x-t图（斜率=v）</span>
+                    <span class="link">↕ 数形结合</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow-down">⬇</div>
+
+        <!-- 二维层 -->
+        <div class="layer-2d">
+            <div class="layer-label">📐 二维运动 <span class="badge">第6~7讲 · 拓展</span></div>
+            <div class="twod-grid">
+                <div class="twod-item">
+                    <span class="num">第6讲</span> 平抛与斜抛
+                    <span class="desc">水平匀速 + 竖直匀加速<br>t 是连接 x 和 y 的桥梁</span>
+                </div>
+                <div class="twod-item">
+                    <span class="num">第7讲</span> 圆周运动
+                    <span class="desc">a<sub>n</sub> = v²/r = ω²r<br>方向时刻指向圆心</span>
+                </div>
+            </div>
+            <div style="font-size:12px; color:#555; margin-top:6px; text-align:center;">
+                🔗 第6讲依赖第2讲（公式）和第4讲（导数） &nbsp;|&nbsp; 第7讲依赖第4讲（导数求角速度）
+            </div>
+        </div>
+
+        <div class="arrow-down">⬇</div>
+
+        <!-- 关联层 -->
+        <div class="layer-link">
+            <div class="layer-label">🔗 关联运动 <span class="badge">第8讲 · 综合</span></div>
+            <div class="link-item">
+                <span class="num">第8讲</span> 关联运动
+                <span class="desc">绳/杆/接触面约束 → 位移方程 → 求导（速度约束）→ 再求导（加速度约束）</span>
+                <span style="font-size:12px; color:#b9770e; display:block; margin-top:4px;">
+                    ⭐ 依赖第4讲（导数求约束关系）+ 第1讲（参考系）
+                </span>
+            </div>
+        </div>
+
+        <!-- 总结 -->
+        <div class="summary">
+            🧠 核心逻辑：<span>数学工具（微元/导数/积分）</span> → <span>一维运动</span> → <span>二维运动</span> → <span>关联运动</span><br>
+            <span style="font-size:13px; font-weight:400;">每一个“→”都依赖前一部分的数学方法，难度逐层递增</span>
+        </div>
+
+        <!-- 图例 -->
+        <div class="legend">
+            <span style="font-weight:600; color:#1a3c6e;">📌 图例</span>
+            <div class="legend-item"><span class="legend-color" style="background:#2980b9;"></span> 工具层</div>
+            <div class="legend-item"><span class="legend-color" style="background:#8e44ad;"></span> 一维运动</div>
+            <div class="legend-item"><span class="legend-color" style="background:#27ae60;"></span> 二维运动</div>
+            <div class="legend-item"><span class="legend-color" style="background:#e67e22;"></span> 关联运动</div>
+            <div class="legend-item"><span style="font-size:18px; color:#2980b9;">⬇</span> 递进方向</div>
+            <div class="legend-item"><span style="font-size:14px; color:#8e44ad;">↕</span> 相互关联</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

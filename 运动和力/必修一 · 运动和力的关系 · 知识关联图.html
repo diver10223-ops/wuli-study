@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>必修一 · 运动和力的关系 · 知识关联图</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #e6e9ef;
+            display: flex;
+            justify-content: center;
+            padding: 24px 16px;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            padding: 14mm 16mm 14mm 16mm;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            border-radius: 6px;
+            position: relative;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #1e2a3a;
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .page { box-shadow: none; border-radius: 0; margin: 0 auto; width: 100%; min-height: 100vh; }
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 4px solid #1a3c6e;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+        .header h1 { font-size: 22px; color: #1a3c6e; letter-spacing: 1px; }
+        .header .date { font-size: 13px; color: #555; align-self: flex-end; }
+
+        /* ---- 图的主体 ---- */
+        .map-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        /* 每一层用一个带颜色边框的区块 */
+        .layer {
+            border-radius: 8px;
+            padding: 10px 14px;
+            border: 2px solid #ccc;
+        }
+        .layer-tools { border-color: #2980b9; background: #f0f6fd; }
+        .layer-1d { border-color: #8e44ad; background: #f6f0fa; }
+        .layer-2d { border-color: #27ae60; background: #f0f7f0; }
+        .layer-link { border-color: #e67e22; background: #fef9f0; }
+        .layer-dynamics { border-color: #c0392b; background: #fdf0ef; }
+        .layer-experiment { border-color: #1a3c6e; background: #f0f2f5; }
+
+        .layer-title {
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .layer-title .badge {
+            font-size: 10px;
+            padding: 0 10px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 400;
+        }
+        .badge-blue { background: #2980b9; }
+        .badge-purple { background: #8e44ad; }
+        .badge-green { background: #27ae60; }
+        .badge-orange { background: #e67e22; }
+        .badge-red { background: #c0392b; }
+        .badge-dark { background: #1a3c6e; }
+
+        .node-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 6px 10px;
+            margin-top: 4px;
+        }
+        .node-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+        .node-grid.two { grid-template-columns: 1fr 1fr; }
+        .node-grid.five { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; }
+
+        .node {
+            background: white;
+            padding: 5px 8px;
+            border-radius: 4px;
+            border-left: 3px solid #2980b9;
+            font-size: 12px;
+            line-height: 1.4;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .node .label { font-weight: 700; color: #1a3c6e; display: block; }
+        .node .sub { color: #555; font-size: 11px; display: block; }
+        .node .arrow { color: #2980b9; font-size: 11px; display: block; margin-top: 2px; }
+
+        .node.border-blue { border-left-color: #2980b9; }
+        .node.border-purple { border-left-color: #8e44ad; }
+        .node.border-green { border-left-color: #27ae60; }
+        .node.border-orange { border-left-color: #e67e22; }
+        .node.border-red { border-left-color: #c0392b; }
+        .node.border-dark { border-left-color: #1a3c6e; }
+
+        /* 关联箭头行 */
+        .arrow-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            font-size: 22px;
+            color: #2980b9;
+            padding: 0 0 2px 0;
+            letter-spacing: 4px;
+        }
+        .arrow-row .label {
+            font-size: 11px;
+            color: #777;
+            font-weight: 400;
+            letter-spacing: 0;
+        }
+
+        /* 底部图例 */
+        .legend {
+            margin-top: 12px;
+            padding: 8px 14px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 24px;
+            font-size: 12px;
+        }
+        .legend-item { display: flex; align-items: center; gap: 6px; }
+        .legend-color { width: 18px; height: 4px; border-radius: 2px; }
+
+        .note-box {
+            margin-top: 10px;
+            padding: 8px 14px;
+            background: #fef9e7;
+            border-radius: 6px;
+            border-left: 4px solid #f39c12;
+            font-size: 12.5px;
+            color: #555;
+        }
+        .note-box strong { color: #1a3c6e; }
+
+        @media print and (max-width: 800px) {
+            .node-grid, .node-grid.three, .node-grid.two, .node-grid.five {
+                grid-template-columns: 1fr 1fr;
+            }
+            .page { padding: 10mm 10mm; }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- ===== 页眉 ===== -->
+    <div class="header">
+        <h1>📖 必修一 · 运动和力的关系 · 知识关联图</h1>
+        <span class="date">2026.07.16</span>
+    </div>
+
+    <div style="font-size:13px; color:#555; margin-bottom:12px; background:#f4f8fc; padding:6px 12px; border-radius:4px; border:1px solid #dce1e8;">
+        ⭐ 这张图把 <b>数学工具（微元/导数/积分）</b>、<b>运动学</b>、<b>力学</b>、<b>动力学</b>、<b>实验</b> 全部串在一起。<br>
+        箭头方向 = <b>“依赖/推导出”</b>，看懂这张图，你就知道“物理为什么这么学”。
+    </div>
+
+    <div class="map-container">
+
+        <!-- ========================================================== -->
+        <!-- 第1层：数学工具层（微元/导数/积分）                           -->
+        <!-- ========================================================== -->
+        <div class="layer layer-tools">
+            <div class="layer-title">
+                🔧 第1层：数学工具层
+                <span class="badge badge-blue">贯穿全章</span>
+                <span style="font-size:11px; font-weight:400; color:#555; margin-left:auto;">对应“物体的运动”第3~5讲</span>
+            </div>
+            <div class="node-grid three">
+                <div class="node border-blue">
+                    <span class="label">📐 微元法</span>
+                    <span class="sub">分割 → 近似 → 求和 → 取极限</span>
+                    <span class="arrow">⬇ 给积分提供物理基础</span>
+                </div>
+                <div class="node border-blue">
+                    <span class="label">📈 导数</span>
+                    <span class="sub">v = dx/dt &nbsp; a = dv/dt</span>
+                    <span class="arrow">⬇ 求瞬时变化率</span>
+                </div>
+                <div class="node border-blue">
+                    <span class="label">📊 定积分</span>
+                    <span class="sub">Δx = ∫v·dt &nbsp; Δv = ∫a·dt</span>
+                    <span class="arrow">⬇ 求累积量</span>
+                </div>
+            </div>
+            <div style="font-size:11px; color:#555; margin-top:4px; text-align:center; background:white; padding:3px; border-radius:4px;">
+                ⚡ 三者关系：微元法（物理思想）→ 取极限 → 导数/积分（数学工具）
+            </div>
+        </div>
+
+        <!-- 箭头 -->
+        <div class="arrow-row">
+            <span>⬇</span>
+            <span class="label">提供数学语言</span>
+            <span>⬇</span>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- 第2层：一维运动层（运动学基础）                               -->
+        <!-- ========================================================== -->
+        <div class="layer layer-1d">
+            <div class="layer-title">
+                📏 第2层：一维运动（运动学基础）
+                <span class="badge badge-purple">必修一第1~2章</span>
+                <span style="font-size:11px; font-weight:400; color:#555; margin-left:auto;">对应“物体的运动”第1~2讲</span>
+            </div>
+            <div class="node-grid four">
+                <div class="node border-purple">
+                    <span class="label">📍 参考系 &amp; 质点</span>
+                    <span class="sub">描述运动的前提</span>
+                    <span class="arrow">⬇ 建立坐标系</span>
+                </div>
+                <div class="node border-purple">
+                    <span class="label">📌 位移 / 时间 / 速度</span>
+                    <span class="sub">位置变化快慢</span>
+                    <span class="arrow">⬇ 平均速度 → 瞬时速度（导数）</span>
+                </div>
+                <div class="node border-purple">
+                    <span class="label">🚀 加速度 a</span>
+                    <span class="sub">速度变化快慢 = dv/dt</span>
+                    <span class="arrow">⬇ 核心“二阶量”</span>
+                </div>
+                <div class="node border-purple">
+                    <span class="label">📈 图像法（v-t / x-t）</span>
+                    <span class="sub">斜率 = a/v &nbsp; 面积 = x/Δv</span>
+                    <span class="arrow">⬇ 数形结合</span>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-top:4px;">
+                <div class="node border-purple" style="border-left-color:#8e44ad;">
+                    <span class="label">🔹 匀变速公式</span>
+                    <span class="sub">v = v₀+at &nbsp; x = v₀t+½at² &nbsp; v²−v₀²=2ax</span>
+                    <span class="arrow">⬇ 代数法（仅限匀变速）</span>
+                </div>
+                <div class="node border-purple" style="border-left-color:#8e44ad;">
+                    <span class="label">🔹 自由落体 / 竖直上抛</span>
+                    <span class="sub">v₀=0, a=g &nbsp; 对称性</span>
+                    <span class="arrow">⬇ 匀变速的特例</span>
+                </div>
+                <div class="node border-purple" style="border-left-color:#8e44ad;">
+                    <span class="label">🔹 相对运动</span>
+                    <span class="sub">v<sub>绝对</sub> = v<sub>相对</sub> + v<sub>牵连</sub></span>
+                    <span class="arrow">⬇ 参考系变换</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 箭头 -->
+        <div class="arrow-row">
+            <span>⬇</span>
+            <span class="label">一维分解 → 二维合成</span>
+            <span>⬇</span>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- 第3层：二维运动层                                             -->
+        <!-- ========================================================== -->
+        <div class="layer layer-2d">
+            <div class="layer-title">
+                📐 第3层：二维运动（运动学拓展）
+                <span class="badge badge-green">必修二内容</span>
+                <span style="font-size:11px; font-weight:400; color:#555; margin-left:auto;">对应“物体的运动”第6~7讲</span>
+            </div>
+            <div class="node-grid two">
+                <div class="node border-green">
+                    <span class="label">🎯 平抛与斜抛</span>
+                    <span class="sub">水平匀速 + 竖直匀加速</span>
+                    <span class="arrow" style="color:#27ae60;">
+                        ⬇ t 是连接 x 和 y 的桥梁<br>
+                        ⬇ 依赖：匀变速公式（第2层）+ 导数求合速度（第1层）
+                    </span>
+                </div>
+                <div class="node border-green">
+                    <span class="label">⭕ 圆周运动</span>
+                    <span class="sub">a<sub>n</sub> = v²/r = ω²r</span>
+                    <span class="arrow" style="color:#27ae60;">
+                        ⬇ 方向时刻指向圆心<br>
+                        ⬇ 依赖：导数求角速度（第1层）+ 牛顿第二定律（第5层）
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 箭头 -->
+        <div class="arrow-row">
+            <span>⬇</span>
+            <span class="label">约束关系 → 综合应用</span>
+            <span>⬇</span>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- 第4层：关联运动层                                            -->
+        <!-- ========================================================== -->
+        <div class="layer layer-link">
+            <div class="layer-title">
+                🔗 第4层：关联运动（综合应用）
+                <span class="badge badge-orange">综合</span>
+                <span style="font-size:11px; font-weight:400; color:#555; margin-left:auto;">对应“物体的运动”第8讲</span>
+            </div>
+            <div class="node-grid" style="grid-template-columns:1fr 1fr 1fr;">
+                <div class="node border-orange">
+                    <span class="label">🧵 绳/杆约束</span>
+                    <span class="sub">绳长不变 → 位移方程</span>
+                    <span class="arrow">⬇ 求导得速度约束</span>
+                </div>
+                <div class="node border-orange">
+                    <span class="label">📐 接触面约束</span>
+                    <span class="sub">速度在法线方向投影相等</span>
+                    <span class="arrow">⬇ 斜面、圆弧轨道</span>
+                </div>
+                <div class="node border-orange">
+                    <span class="label">⚡ 加速度约束</span>
+                    <span class="sub">对速度方程再次求导</span>
+                    <span class="arrow">⬇ 依赖第1层（二阶导数）</span>
+                </div>
+            </div>
+            <div style="font-size:11px; color:#555; margin-top:4px; background:white; padding:3px 10px; border-radius:4px;">
+                ⭐ 核心方法：<b>“位移方程 → 求导 → 速度关系 → 再求导 → 加速度关系”</b>
+            </div>
+        </div>
+
+        <!-- 箭头 -->
+        <div class="arrow-row">
+            <span>⬇</span>
+            <span class="label">受力分析 → 动力学</span>
+            <span>⬇</span>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- 第5层：力学 + 动力学（核心枢纽）                              -->
+        <!-- ========================================================== -->
+        <div class="layer layer-dynamics">
+            <div class="layer-title">
+                ⚖️ 第5层：力学 + 动力学（F=ma 是桥梁）
+                <span class="badge badge-red">必修一第3~4章</span>
+                <span style="font-size:11px; font-weight:400; color:#555; margin-left:auto;">“a 是连接运动和力的桥梁”</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <!-- 左半：力学 -->
+                <div style="background:white; padding:8px 12px; border-radius:6px; border:1px solid #f5c6cb;">
+                    <div style="font-weight:700; color:#c0392b; font-size:13px; margin-bottom:4px;">🔹 力学（第3章）</div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px 8px; font-size:12px;">
+                        <div><b>重力</b> G=mg（竖直向下）</div>
+                        <div><b>弹力</b> F=kx（垂直接触面）</div>
+                        <div><b>摩擦力</b> f=μN（滑动）</div>
+                        <div><b>牛顿第三定律</b> F<sub>AB</sub>=−F<sub>BA</sub></div>
+                        <div style="grid-column:1/3;"><b>力的合成与分解</b>（平行四边形定则 / 正交分解）</div>
+                        <div style="grid-column:1/3; background:#fdedec; padding:2px 6px; border-radius:4px;">
+                            ⭐ 受力分析口诀：<b>“一重二弹三摩擦”</b>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右半：动力学 -->
+                <div style="background:white; padding:8px 12px; border-radius:6px; border:1px solid #f5c6cb;">
+                    <div style="font-weight:700; color:#c0392b; font-size:13px; margin-bottom:4px;">🔹 动力学（第4章）</div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px 8px; font-size:12px;">
+                        <div><b>牛顿第一定律</b>（惯性）</div>
+                        <div><b>牛顿第二定律</b> F<sub>合</sub>=ma</div>
+                        <div style="grid-column:1/3;"><b>超重与失重</b>（a向上→超重；a向下→失重）</div>
+                        <div style="grid-column:1/3;"><b>两类动力学问题</b>：①已知力求运动 ②已知运动求力</div>
+                        <div style="grid-column:1/3; background:#fdedec; padding:2px 6px; border-radius:4px;">
+                            ⭐ <b>核心公式链</b>：受力分析 → F<sub>合</sub>=ma → a → 运动学公式
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 连接枢纽 -->
+            <div style="background:#1a3c6e; color:white; padding:6px 14px; border-radius:6px; text-align:center; font-weight:700; font-size:15px; margin-top:6px; letter-spacing:1px;">
+                🚀 F<sub>合</sub> = ma &nbsp;→&nbsp; <span style="color:#f1c40f;">a</span> &nbsp;→&nbsp; 运动学公式 &nbsp;→&nbsp; x, v, t
+                <div style="font-size:11px; font-weight:400; color:#b0c4de; margin-top:2px;">
+                    a 是连接“力学（第3章）”和“运动学（第1~2章）”的唯一桥梁
+                </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-top:6px;">
+                <div class="node border-red" style="border-left-color:#c0392b;">
+                    <span class="label">📌 临界问题</span>
+                    <span class="sub">弹力=0 / 摩擦力=最大静摩擦</span>
+                </div>
+                <div class="node border-red" style="border-left-color:#c0392b;">
+                    <span class="label">📌 连接体问题</span>
+                    <span class="sub">整体法求 a → 隔离法求内力</span>
+                </div>
+                <div class="node border-red" style="border-left-color:#c0392b;">
+                    <span class="label">📌 瞬时加速度</span>
+                    <span class="sub">某时刻合力决定该时刻 a</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 箭头 -->
+        <div class="arrow-row">
+            <span>⬇</span>
+            <span class="label">验证规律 ← → 提供数据</span>
+            <span>⬇</span>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- 第6层：实验层                                                -->
+        <!-- ========================================================== -->
+        <div class="layer layer-experiment">
+            <div class="layer-title">
+                🔬 第6层：实验层（验证规律 + 提供数据）
+                <span class="badge badge-dark">必修一实验</span>
+            </div>
+            <div class="node-grid five">
+                <div class="node border-dark">
+                    <span class="label">📋 探究小车速度变化</span>
+                    <span class="sub">打点计时器 → 求瞬时速度</span>
+                    <span class="arrow">⬇ 逐差法求 a</span>
+                </div>
+                <div class="node border-dark">
+                    <span class="label">📋 探究 a 与 F、m 关系</span>
+                    <span class="sub">控制变量法</span>
+                    <span class="arrow">⬇ a-F图 / a-1/m图</span>
+                </div>
+                <div class="node border-dark">
+                    <span class="label">⚖️ 平衡摩擦力</span>
+                    <span class="sub">垫高木板</span>
+                    <span class="arrow">⬇ 使 F≈mg</span>
+                </div>
+                <div class="node border-dark">
+                    <span class="label">📐 验证平行四边形定则</span>
+                    <span class="sub">力的合成实验</span>
+                    <span class="arrow">⬇ 第3章</span>
+                </div>
+                <div class="node border-dark">
+                    <span class="label">🧪 胡克定律实验</span>
+                    <span class="sub">F=kx</span>
+                    <span class="arrow">⬇ 第3章</span>
+                </div>
+            </div>
+            <div style="font-size:11px; color:#555; margin-top:4px; background:white; padding:3px 10px; border-radius:4px; text-align:center;">
+                ⭐ 实验题答题模板：<b>原理 → 器材 → 步骤 → 数据处理 → 结论 → 误差分析</b>
+            </div>
+        </div>
+
+    </div><!-- end map-container -->
+
+    <!-- ===== 图例 ===== -->
+    <div class="legend">
+        <span style="font-weight:600; color:#1a3c6e;">📌 图例</span>
+        <div class="legend-item"><span class="legend-color" style="background:#2980b9;"></span> 数学工具层</div>
+        <div class="legend-item"><span class="legend-color" style="background:#8e44ad;"></span> 一维运动</div>
+        <div class="legend-item"><span class="legend-color" style="background:#27ae60;"></span> 二维运动</div>
+        <div class="legend-item"><span class="legend-color" style="background:#e67e22;"></span> 关联运动</div>
+        <div class="legend-item"><span class="legend-color" style="background:#c0392b;"></span> 力学/动力学</div>
+        <div class="legend-item"><span class="legend-color" style="background:#1a3c6e;"></span> 实验层</div>
+        <div class="legend-item"><span style="font-size:18px; color:#2980b9;">⬇</span> 依赖/推导方向</div>
+    </div>
+
+    <!-- ===== 使用说明 ===== -->
+    <div class="note-box">
+        <strong>💡 怎么看这张图？</strong><br>
+        ① <b>从上往下看</b>：数学工具（第1层）→ 运动学（第2~4层）→ 力学/动力学（第5层）→ 实验（第6层）。<br>
+        ② <b>看箭头</b>：箭头指向 = “依赖谁”。比如“平抛”依赖“匀变速公式”（第2层）和“导数”（第1层）。<br>
+        ③ <b>找核心枢纽</b>：第5层（F=ma）连接了“力学”和“运动学”——<span style="color:#c0392b; font-weight:700;">a 是整个体系的中心</span>。<br>
+        ④ <b>检查自己的盲区</b>：如果在某一层看不懂“为什么依赖上一层”，那就是你的知识缺口。
+    </div>
+
+</div>
+</body>
+</html>
