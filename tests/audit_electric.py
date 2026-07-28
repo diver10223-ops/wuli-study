@@ -70,9 +70,12 @@ def main() -> None:
         ROOT / "assets/storage.js",
         ROOT / "assets/diagnostic.js",
         ROOT / "assets/learning.js",
+        ROOT / "assets/assessment.js",
         ROOT / "data/e4-a-diagnostic.js",
         ROOT / "data/e4-a-learning.js",
         ROOT / "data/e4-a-models.js",
+        ROOT / "data/e4-a-check.js",
+        ROOT / "data/e4-a-exam.js",
     ]
     for script in shared_scripts:
         result = subprocess.run(
@@ -155,7 +158,7 @@ def main() -> None:
             failures.append(f"E4 matrix: missing section {heading}")
 
     e4_source = (ROOT / "e4.html").read_text(encoding="utf-8")
-    for link in {"e4-a-diagnostic.html", "e4-a.html", "e4-a-models.html", "e4-legacy.html", "e4-test.html"}:
+    for link in {"e4-a-diagnostic.html", "e4-a.html", "e4-a-models.html", "e4-a-check.html", "e4-a-exam.html", "e4-legacy.html", "e4-test.html"}:
         if f'href="{link}"' not in e4_source:
             failures.append(f"e4.html: missing route {link}")
     e4_a_diagnostic = (ROOT / "e4-a-diagnostic.html").read_text(encoding="utf-8") + (ROOT / "data/e4-a-diagnostic.js").read_text(encoding="utf-8") + (ROOT / "assets/diagnostic.js").read_text(encoding="utf-8")
@@ -180,6 +183,20 @@ def main() -> None:
     for asset in {"assets/storage.js", "assets/learning.js", "data/e4-a-models.js"}:
         if f'src="{asset}"' not in e4_models:
             failures.append(f"e4-a-models.html: missing shared learning asset {asset}")
+
+    for page_name, data_name in {"e4-a-check.html": "data/e4-a-check.js", "e4-a-exam.html": "data/e4-a-exam.js"}.items():
+        source = (ROOT / page_name).read_text(encoding="utf-8")
+        for asset in {"assets/storage.js", "assets/assessment.js", data_name}:
+            if f'src="{asset}"' not in source:
+                failures.append(f"{page_name}: missing assessment asset {asset}")
+    e4_check_rules = (ROOT / "data/e4-a-check.js").read_text(encoding="utf-8")
+    for rule in {"c.correct>=8", "sectionsPassed", "gatesPassed", "physics-e4-a-learning-v1", "physics-e4-a-models-v1"}:
+        if rule not in e4_check_rules:
+            failures.append(f"E4 A check: missing rule {rule}")
+    e4_exam_rules = (ROOT / "data/e4-a-exam.js").read_text(encoding="utf-8")
+    for rule in {"c.score>=80", "sectionsPassed", "gatesPassed", "physics-e4-a-check-v1", "durationSeconds:3600"}:
+        if rule not in e4_exam_rules:
+            failures.append(f"E4 A exam: missing rule {rule}")
 
     rules = {
         "e2-a-exam.html": ["score >= 80", "criticalFailures.length === 0"],

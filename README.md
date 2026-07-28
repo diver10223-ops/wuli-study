@@ -48,6 +48,8 @@
 - [参加 E4 磁场与安培力A轨前置诊断](e4-a-diagnostic.html)
 - [打开 E4 磁场与安培力A轨知识卡](e4-a.html)
 - [打开 E4 磁场与安培力A轨基础模型](e4-a-models.html)
+- [参加 E4 磁场与安培力A轨即时检测](e4-a-check.html)
+- [参加 E4 磁场与安培力A轨基础卷](e4-a-exam.html)
 - [查看 E4 旧版第一轮素材](e4-legacy.html)
 - [打开 E4 磁场与安培力混合小测](e4-test.html)
 - [第3题修复：平行导线与磁场叠加](exam-03.html)
