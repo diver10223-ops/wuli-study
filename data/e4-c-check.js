@@ -1,4 +1,4 @@
-window.E4CCheck=Object.freeze({version:1,module:'E4',track:'C',storageKey:'physics-e4-c-check-v1',passTitle:'可以进入C强基卷',failTitle:'先回补C轨任务',reviewDays:1,prerequisites:[{key:'physics-e4-c-learning-v1',label:'8项C轨任务未全部完成',test:(v)=>new Set(v?.done||[]).size===8}],questions:[
+window.E4CCheck=Object.freeze({version:1,module:'E4',track:'C',storageKey:'physics-e4-c-check-v1',passTitle:'可以进入C强基卷',failTitle:'先回补C轨任务',reviewDays:1,prerequisites:[{key:'physics-e4-c-learning-v1',label:'8项C轨任务未全部完成',test:(v)=>new Set(v?.done||[]).size===8},{key:'physics-e4-c-models-v1',label:'6项模型任务未全部完成',test:(v)=>new Set(v?.done||[]).size===6}],questions:[
 {id:'E4CC01',section:'模型推导',task:'C01',node:'E4-K03/K05',gate:'模型边界',text:'长直电流磁场关系使用前必须说明？',options:['长度、距离和边缘近似条件','导线颜色','电势零点'],answer:0},
 {id:'E4CC02',section:'模型推导',task:'C02',node:'E4-K04/K05',text:'连续分布叠加前对称性主要用于？',options:['判断分量抵消与保留','证明总场为零','省略微元定义'],answer:0},
 {id:'E4CC03',section:'模型推导',task:'C03',node:'E4-K07',text:'由电流元求整体力需要？',options:['按方向叠加各微元力','只加长度','只看端点'],answer:0},

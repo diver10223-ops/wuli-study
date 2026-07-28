@@ -1,4 +1,4 @@
-window.E4BCheck=Object.freeze({version:1,module:'E4',track:'B',storageKey:'physics-e4-b-check-v1',passTitle:'可以进入B拓展卷',failTitle:'先回补B轨任务',reviewDays:1,prerequisites:[{key:'physics-e4-b-learning-v1',label:'8项B轨学习任务未全部完成',test:(v)=>new Set(v?.done||[]).size===8}],questions:[
+window.E4BCheck=Object.freeze({version:1,module:'E4',track:'B',storageKey:'physics-e4-b-check-v1',passTitle:'可以进入B拓展卷',failTitle:'先回补B轨任务',reviewDays:1,prerequisites:[{key:'physics-e4-b-learning-v1',label:'8项B轨学习任务未全部完成',test:(v)=>new Set(v?.done||[]).size===8},{key:'physics-e4-b-models-v1',label:'6项模型任务未全部完成',test:(v)=>new Set(v?.done||[]).size===6}],questions:[
 {id:'E4BC01',section:'空间叠加',task:'B01',node:'E4-K05',gate:'空间矢量叠加',text:'寻找多场源零场位置前应？',options:['筛选B方向可能相消区域','直接令距离相等','只看最近场源'],answer:0},
 {id:'E4BC02',section:'空间叠加',task:'B02',node:'E4-K07',text:'弯折导线在匀强场中的合力应？',options:['分段求力并矢量合成','总长代BIL','只求最长段'],answer:0},
 {id:'E4BC03',section:'空间叠加',task:'B03',node:'E4-K08',text:'三导线中判断中间导线受力应？',options:['叠加另外两根在此处的B再判F','只用同向吸引口诀','必为零'],answer:0},
