@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E1静电场 B轨拓展学习包</title><link rel="stylesheet" href="assets/electric.css"></head>
+<body>
+  <header class="hero"><div class="w"><h1>E1静电场 · B轨拓展迁移</h1><p>多对象 · 图像 · 多过程 · 条件切换 · 陌生装置</p></div></header>
+  <main class="w">
+    <section class="c notice" id="admission"></section>
+    <section class="c"><h2>B轨方法链</h2><div class="plan">确定对象与区域 → 画方向/图像 → 写条件 → 分阶段建模 → 检查临界 → 说明结论边界</div></section>
+    <section class="c grid">
+      <article class="m"><span class="status review">B01 · K02/K03</span><h3>多电荷叠加与对称</h3><p>逐个场源画场强，利用对称性只简化分量，不省略方向判断。</p><div class="challenge"><b>迁移任务：</b>三个点电荷位于等边三角形顶点，选择一个非顶点位置，说明怎样用对称轴判断可抵消与可相加的分量。</div><label class="task"><input type="checkbox" value="B01">我能用对称性简化而不跳过矢量图</label></article>
+
+      <article class="m"><span class="status review">B02 · K02/K03</span><h3>零场点、平衡与临界</h3><p>先确定方向可能相反的区域，再列大小关系；场强为零不自动表示电势为零。</p><div class="challenge"><b>迁移任务：</b>比较同号不等量与异号不等量点电荷的零场点可能区域，并说明不能只解大小方程的原因。</div><label class="task"><input type="checkbox" value="B02">我能先筛选区域，再求零场或平衡条件</label></article>
+
+      <article class="m"><span class="status review">B03 · K04/K05</span><h3>等势面与φ-x、E-x图像</h3><p>认清横纵轴和正方向，从电势变化读取场的方向与强弱，再结合电荷符号判断力和能量。</p><div class="challenge"><b>迁移任务：</b>画一段非匀强场的φ-x示意图，标出电势下降最快处，并说明怎样定性判断场强。</div><label class="task"><input type="checkbox" value="B03">我能在场线、等势面和函数图像间转换</label></article>
+
+      <article class="m"><span class="status review">B04 · K06/K07</span><h3>电势能、多过程与反向推理</h3><p>分阶段记录电场力功、外力功、动能和电势能；由结果反推条件时检查是否唯一。</p><div class="challenge"><b>迁移任务：</b>设计一个“电势能先降后升但末动能大于初动能”的两阶段过程，并列出能量账本。</div><label class="task"><input type="checkbox" value="B04">我能建立分阶段能量账本并检查反推条件</label></article>
+
+      <article class="m"><span class="status review">B05 · K08/K09</span><h3>电容器动态、能量与外力功</h3><p>区分接电源和断电源，跟踪C、Q、U、E，再确定场能、电源交换能量和外力功。</p><div class="challenge"><b>迁移任务：</b>分别讨论接电源和断电源两种情况下缓慢拉开极板时，能量从哪里来、到哪里去。</div><label class="task"><input type="checkbox" value="B05">我能说明状态量变化与能量来源</label></article>
+
+      <article class="m"><span class="status review">B06 · K10</span><h3>带电粒子多区域与临界边界</h3><p>每进入一个区域重新定义初态、受力和规律，用时间、位移或能量条件连接相邻阶段。</p><div class="challenge"><b>迁移任务：</b>粒子先加速后偏转，写出从加速电压到偏转位移的关系链，并列出“恰好不撞板”的边界条件。</div><label class="task"><input type="checkbox" value="B06">我能分区建模并用边界条件判断临界</label></article>
+
+      <article class="m"><span class="status review">B07 · K11</span><h3>静电装置与方案评价</h3><p>从装置结构识别静电机制，提出可观察证据，说明工作条件、风险和可能失效情境。</p><div class="challenge"><b>迁移任务：</b>选择静电除尘、喷涂或屏蔽装置之一，写出“机制—证据—条件—局限—改进”五段式评价。</div><label class="task"><input type="checkbox" value="B07">我能用证据评价陌生静电装置</label></article>
+    </section>
+    <section class="c"><h2>学习进度</h2><p><strong id="count">0</strong>/7项完成</p><progress id="bar" max="7" value="0"></progress><div class="plan" id="plan"></div><p><a href="e1-b-diagnostic.html">重新进行B准入诊断</a> · <a href="e1.html">返回E1入口</a></p></section>
+    <section class="c"><h2>下一步计划</h2><div class="plan">七项任务完成后先参加B轨即时检测，再进入正式B拓展卷。勾选任务不能替代考试证据。</div><p><a class="btn-link" href="e1-b-check.html">参加B轨即时检测</a> <a class="btn-link" href="e1-b-exam.html">参加B轨拓展卷</a></p></section>
+  </main>
+  <script src="assets/module.js"></script>
+  <script>
+    const diagnostic=JSON.parse(localStorage.getItem('physics-e1-b-diagnostic-v1')||'null'),aExam=JSON.parse(localStorage.getItem('physics-e1-a-exam-v1')||'null'),admission=document.getElementById('admission');
+    const admitted=Boolean(diagnostic?.admitted||aExam?.passed);
+    if(diagnostic?.admitted)admission.innerHTML=`<h2 class="pass">B轨准入通过</h2><p>诊断${diagnostic.correct}/10。优先节点：${diagnostic.weak?.join('、')||'无明显缺口'}。</p>`;
+    else if(aExam?.passed)admission.innerHTML='<h2 class="pass">A轨已经通过</h2><p>可以开始B轨；建议先完成B准入诊断以调整任务顺序。</p>';
+    else admission.innerHTML='<h2 class="fail">尚无B轨准入证据</h2><p>可以预览，但请先通过A基础卷或B准入诊断。</p><p><a class="btn-link" href="e1-b-diagnostic.html">参加B准入诊断</a></p>';
+    if(admitted)initModule('physics-e1-b-learning-v1');else{document.querySelectorAll('.task input').forEach(x=>x.disabled=true);document.getElementById('count').textContent='0';document.getElementById('bar').value=0;document.getElementById('plan').textContent='预览模式：取得准入证据后才启用正式任务记录。';}
+  </script>
+</body></html>

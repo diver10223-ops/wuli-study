@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E1静电场 A轨基础模型</title><link rel="stylesheet" href="assets/electric.css"></head>
+<body>
+  <header class="hero"><div class="w"><h1>E1静电场 · A轨基础模型</h1><p>识别条件 → 研究对象 → 方向/符号 → 规律 → 方程 → 检查</p></div></header>
+  <main class="w">
+    <section class="c notice"><h2>使用方法</h2><p>每个模型先完成“独立题”，再展开参考要点。只有能够指出错解错误并说明适用条件，才勾选完成。</p></section>
+    <section class="c" id="models">
+      <article class="knowledge-card"><div class="question-meta"><span>M01</span><code>E1-K02</code></div><h2>库仑力与平衡</h2><p><b>识别：</b>带电体可视为点电荷，先逐个选择研究对象并画沿连线方向的力。</p><p><b>步骤：</b>检查模型→判断吸引/排斥→画力→选正方向→列平衡或牛顿方程。</p><div class="challenge"><b>独立题：</b>两个同号点电荷固定，第三个带电小球位于连线上。写出它平衡时需要满足的方向条件和大小关系，不要求代数求根。</div><details><summary>参考要点与错解辨析</summary><p>两侧电荷对第三球的力必须反向，大小满足库仑力相等。错解：只令两个力大小相等，却没有检查方向是否相反。</p></details><label class="task"><input type="checkbox" value="M01">我能先判方向，再建立平衡关系</label></article>
+
+      <article class="knowledge-card"><div class="question-meta"><span>M02</span><code>E1-K03</code></div><h2>电场强度矢量叠加</h2><p><b>识别：</b>求空间某点的合场强，而不是求某个检验电荷的受力。</p><p><b>步骤：</b>分别求每个场源的场强→画方向→选坐标轴→分解或几何合成。</p><div class="challenge"><b>独立题：</b>两个等量同号点电荷关于某点对称，说明该点哪些场强分量抵消、哪些可能相加。</div><details><summary>参考要点与错解辨析</summary><p>必须依据具体几何画两个场强；对称方向的分量可能抵消，另一方向可能相加。错解：看到“等量”就直接写合场强为零。</p></details><label class="task"><input type="checkbox" value="M02">我能逐个画场强并做矢量合成</label></article>
+
+      <article class="knowledge-card"><div class="question-meta"><span>M03</span><code>E1-K04/K05</code></div><h2>电场线、等势面与图像</h2><p><b>识别：</b>题目给出场线、等势面或φ-x信息，要求判断方向、强弱、功或运动趋势。</p><p><b>步骤：</b>认清图例与坐标→读场强方向→比较等势疏密/电势变化→结合电荷符号。</p><div class="challenge"><b>独立题：</b>A、B在同一等势面，正电荷从A移到B。判断电场力功和电势能变化，并说明是否能断言不受力。</div><details><summary>参考要点与错解辨析</summary><p>电势差为零，电场力功和电势能变化为零；过程中仍可能受电场力。错解：功为零就认为力为零。</p></details><label class="task"><input type="checkbox" value="M03">我能把图像、电势差、功和受力分开判断</label></article>
+
+      <article class="knowledge-card"><div class="question-meta"><span>M04</span><code>E1-K05/K06</code></div><h2>电势、电势能与电场力做功</h2><p><b>识别：</b>涉及不同位置、正负电荷、外力或动能变化。</p><p><b>步骤：</b>定义Δφ=φ末-φ初→写ΔEₚ=qΔφ→写W电=-ΔEₚ→再接动能或外力功。</p><div class="challenge"><b>独立题：</b>负电荷从低电势点移到高电势点，判断电势能和电场力功的符号。</div><details><summary>参考要点与错解辨析</summary><p>Δφ&gt;0、q&lt;0，所以ΔEₚ&lt;0，W电&gt;0。错解：只看“电势升高”就写电势能升高。</p></details><label class="task"><input type="checkbox" value="M04">我能先写q和Δφ，再判断能量</label></article>
+
+      <article class="knowledge-card"><div class="question-meta"><span>M05</span><code>E1-K07</code></div><h2>匀强电场</h2><p><b>识别：</b>平行板中部或题目明确给出匀强电场。</p><p><b>步骤：</b>确定场方向→取沿场投影距离→使用U=Ed→结合F=qE和运动/能量。</p><div class="challenge"><b>独立题：</b>两点连线与场强方向夹角为60°、距离为L，写出两点电势差大小。</div><details><summary>参考要点与错解辨析</summary><p>沿场方向投影为Lcos60°，电势差大小为ELcos60°。错解：无条件写EL。</p></details><label class="task"><input type="checkbox" value="M05">我能使用沿场投影并说明匀强条件</label></article>
+
+      <article class="knowledge-card"><div class="question-meta"><span>M06</span><code>E1-K08/K09</code></div><h2>电容器动态变化</h2><p><b>识别：</b>移动极板、插介质、接通/断开电源。</p><p><b>步骤：</b>先判U不变还是Q不变→判断C→由Q=CU判断另一状态量→再判断E、力或能量。</p><div class="challenge"><b>独立题：</b>平行板电容器始终接理想电源，增大板间距。判断C、Q和板间场强的变化。</div><details><summary>参考要点与错解辨析</summary><p>C减小，U保持，Q=CU减小；理想平行板近似下E=U/d减小。错解：把断电后的Q不变套到接电源状态。</p></details><label class="task"><input type="checkbox" value="M06">我能先判电源状态，再按因果链分析</label></article>
+
+      <article class="knowledge-card"><div class="question-meta"><span>M07</span><code>E1-K10</code></div><h2>带电粒子加速</h2><p><b>识别：</b>粒子沿电场方向或反方向运动，关注速度或动能。</p><p><b>步骤：</b>写电性和位移方向→判断电场力功→使用动能定理；需要时间时再用运动学。</p><div class="challenge"><b>独立题：</b>粒子由静止经电势差加速，说明为何写动能增加量时必须确认运动方向和电荷符号。</div><details><summary>参考要点与错解辨析</summary><p>电场力功q(φ初-φ末)必须为正才由静止加速；不能把qU中的符号条件省略后机械套式。</p></details><label class="task"><input type="checkbox" value="M07">我能用电场力功连接动能且检查符号</label></article>
+
+      <article class="knowledge-card"><div class="question-meta"><span>M08</span><code>E1-K10</code></div><h2>带电粒子偏转</h2><p><b>识别：</b>初速度与匀强电场不共线，常见为垂直进入平行板区域。</p><p><b>步骤：</b>沿初速度与场方向分解→一方向匀速、另一方向匀加速→用共同时间连接→检查是否先撞板或离开区域。</p><div class="challenge"><b>独立题：</b>粒子水平进入竖直匀强电场，列出求离开电场时偏移量所需的三个基本关系。</div><details><summary>参考要点与错解辨析</summary><p>水平方向L=v₀t；竖直加速度a=qE/m（带符号或先定方向）；偏移y=at²/2。错解：两个方向都使用同一加速度。</p></details><label class="task"><input type="checkbox" value="M08">我能分解运动并检查边界</label></article>
+    </section>
+    <section class="c"><h2>模型进度</h2><p><strong id="count">0</strong>/8个模型完成</p><progress id="bar" max="8" value="0"></progress><div class="plan" id="plan"></div><p><a href="e1-a.html">返回知识卡</a> · <a href="e1.html">返回E1入口</a></p></section>
+    <section class="c"><h2>下一步计划</h2><div class="plan">八个模型完成后参加正式A基础卷。模型勾选只代表学习任务完成，不能替代考试证据。</div><p><a class="btn-link" href="e1-a-exam.html">参加E1 A轨基础卷</a></p></section>
+  </main>
+  <script src="assets/module.js"></script><script>initModule('physics-e1-a-models-v1')</script>
+</body></html>

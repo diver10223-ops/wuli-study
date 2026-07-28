@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E4磁场与安培力 A轨前置诊断</title><link rel="stylesheet" href="assets/electric.css"></head>
+<body>
+  <header class="hero"><div class="w"><h1>E4磁场与安培力 · A轨前置诊断</h1><p>15题 · 30分钟 · 方向、对象、条件三个硬门槛</p></div></header>
+  <main class="w">
+    <section class="c notice"><h2>独立完成规则</h2><ul><li>不查资料，不先看旧错题解析；</li><li>至少答对12题；</li><li>电流磁场方向、安培力研究对象、`F=BIL`适用条件三个门槛题必须答对；</li><li>记录每题状态，猜对不作为关键门槛通过证据。</li></ul></section>
+    <section class="c" id="quiz"></section>
+    <section class="c actions"><button class="btn" id="submit" type="button">提交A轨诊断</button><button class="btn secondary" id="reset" type="button">清空重做</button></section>
+    <section class="c" id="result" hidden></section>
+    <section class="c"><h2>下一步计划</h2><div class="plan" id="plan">提交后按E4-K01—K13生成回补路线。</div><p><a href="e4.html">← 返回E4三轨入口</a></p></section>
+  </main>
+  <script src="assets/storage.js"></script>
+  <script src="assets/diagnostic.js"></script>
+  <script src="data/e4-a-diagnostic.js"></script>
+  <script>WuliDiagnostic.run(E4ADiagnostic);</script>
+</body></html>
