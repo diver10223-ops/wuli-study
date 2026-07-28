@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>E2/E3 B轨准入诊断</title>
+  <link rel="stylesheet" href="assets/electric.css">
+</head>
+<body>
+  <header class="hero"><div class="w"><h1>E2/E3 · B轨准入诊断</h1><p>20分钟 · 10题 · 只检查进入拓展学习所需的前置能力</p></div></header>
+  <main class="w">
+    <section class="c notice">
+      <h2>诊断用途</h2>
+      <p>本诊断不是B拓展卷。A基础卷已经通过的学习者可以用它确定B轨起点；未完成A卷的学习者也可以直接参加。诊断发现个别基础缺口时，只回补对应A节点。</p>
+      <ul><li>总正确率达到70%；</li><li>节点支路、功率对象、实验图像三个基础门槛必须通过；</li><li>猜对只作为待复核证据。</li></ul>
+    </section>
+    <section class="c" id="quiz"></section>
+    <section class="c actions"><button class="btn" id="submit" type="button">提交准入诊断</button><button class="btn secondary" id="reset" type="button">重新作答</button></section>
+    <section class="c" id="result" hidden></section>
+    <section class="c"><h2>下一步计划</h2><div class="plan" id="plan">提交后生成B轨准入或精确回补路线。</div><p><a href="e2-tracks.html">← 返回三轨入口</a></p></section>
+  </main>
+  <script>
+    const questions = [
+      {id:'BD01', node:'E2-K06', group:'基础门槛', gate:'节点支路', text:'并联电路总电流4 A，支路甲1.5 A，支路乙电流为？', options:['1.5 A','2.5 A','4 A'], answer:1},
+      {id:'BD02', node:'E2-K09', group:'基础门槛', gate:'功率对象', text:'计算电动机机械功率前，必须先确认什么？', options:['所用电流是电动机支路电流','干路电流最大','线圈电阻等于外电阻'], answer:0},
+      {id:'BD03', node:'E3-K06', group:'基础门槛', gate:'实验图像', text:'电源U-I图像的斜率为负，求内阻时应使用？', options:['斜率本身且不写单位','斜率绝对值并结合坐标单位','纵截距除以横截距且不说明条件'], answer:1},
+      {id:'BD04', node:'E2-K08', group:'动态迁移', text:'电源内阻不可忽略，外电路等效电阻增大。正确的首段因果链是？', options:['总电流减小→内电压减小→路端电压增大','总电流增大→内电压减小→路端电压增大','路端电压先增大→总电流再减小'], answer:0},
+      {id:'BD05', node:'E2-K04', group:'图像迁移', text:'非线性元件的U-I图像不经过原点。分析某工作状态时应优先？', options:['把元件当作恒定电阻','读取该工作点的U和I并检查所求物理量','强制延长图线通过原点'], answer:1},
+      {id:'BD06', node:'E2-K09', group:'能量迁移', text:'电动机输入功率为UI，线圈热功率为I²r。在忽略其他损耗时机械功率为？', options:['UI+I²r','UI-I²r','I²r-UI'], answer:1},
+      {id:'BD07', node:'E3-K03', group:'实验设计', text:'两个伏安法方案测得结果不同，评价方案时最合理的是？', options:['只选电路图更简单的','比较电表内阻造成的系统误差及适用条件','选择读数更大的'], answer:1},
+      {id:'BD08', node:'E3-K07', group:'实验设计', text:'评价传感器是否适合某测量范围，至少应考虑？', options:['灵敏度、工作区间和重复性','外壳颜色','导线长度越长越好'], answer:0},
+      {id:'BD09', node:'E2-K10', group:'论证表达', text:'判断电路故障时，“某元件一定断路”的结论成立，需要？', options:['一种现象即可','现有测量证据能排除其他合理故障','只依据自己的第一感觉'], answer:1},
+      {id:'BD10', node:'E3-K05', group:'论证表达', text:'实验图像有一个偏离趋势的点，规范处理是？', options:['立即删除','检查原始记录、操作和重复测量后说明处理依据','修改该点使其落在图线上'], answer:1}
+    ];
+    const key = 'physics-e2e3-b-diagnostic-v1';
+    const quiz = document.getElementById('quiz');
+
+    quiz.innerHTML = questions.map((q, index) => `<article class="question"><div class="question-meta"><span>${index + 1}. ${q.group}</span><code>${q.node}</code>${q.gate ? `<strong>门槛：${q.gate}</strong>` : ''}</div><h3>${q.text}</h3><div class="options">${q.options.map((option, optionIndex) => `<label><input type="radio" name="${q.id}" value="${optionIndex}"> <span>${option}</span></label>`).join('')}</div><div class="response-meta"><label>信心 <select data-confidence="${q.id}"><option value="">未选择</option><option>高</option><option>中</option><option>低</option></select></label><label>状态 <select data-state="${q.id}"><option value="">未选择</option><option>独立完成</option><option>猜测</option><option>不会</option></select></label></div></article>`).join('');
+
+    function grade() {
+      const nodes = {};
+      const failedGates = [];
+      const weak = [];
+      const guessed = [];
+      let correct = 0;
+      const answers = {};
+      const confidence = {};
+      const states = {};
+      questions.forEach(q => {
+        const selected = document.querySelector(`input[name="${q.id}"]:checked`)?.value ?? null;
+        answers[q.id] = selected;
+        confidence[q.id] = document.querySelector(`[data-confidence="${q.id}"]`).value;
+        states[q.id] = document.querySelector(`[data-state="${q.id}"]`).value;
+        const isCorrect = selected !== null && Number(selected) === q.answer;
+        nodes[q.node] ||= {correct:0,total:0};
+        nodes[q.node].total += 1;
+        if (isCorrect) {
+          correct += 1;
+          nodes[q.node].correct += 1;
+          if (states[q.id] === '猜测') guessed.push(q.node);
+        } else {
+          weak.push(q.node);
+          if (q.gate) failedGates.push(q.gate);
+        }
+      });
+      const admitted = correct >= 7 && failedGates.length === 0;
+      const data = {version:1,correct,total:10,admitted,nodes,failedGates,weak:[...new Set(weak)],guessed:[...new Set(guessed)],answers,confidence,states,submittedAt:new Date().toISOString()};
+      localStorage.setItem(key, JSON.stringify(data));
+      const result = document.getElementById('result');
+      result.hidden = false;
+      result.innerHTML = `<h2 class="${admitted ? 'pass' : 'fail'}">${correct}/10 · ${admitted ? '可以进入B轨' : '先精确回补'}</h2><p><strong>基础门槛：</strong>${failedGates.length ? `未通过${failedGates.join('、')}` : '全部通过'}</p><p><strong>薄弱节点：</strong>${[...new Set(weak)].join('、') || '无'}</p><p><strong>猜对待复核：</strong>${[...new Set(guessed)].join('、') || '无'}</p>`;
+      const plan = document.getElementById('plan');
+      plan.innerHTML = admitted ? '<strong>准入：</strong>进入B轨拓展学习包。先学习诊断中未稳定的节点，再完成六个B轨任务。' : `<strong>回补：</strong>${failedGates.length ? failedGates.join('、') : [...new Set(weak)].join('、')}。完成对应A轨知识卡和一道相邻题后可以重新诊断，不需要重学全部A轨。`;
+      if (admitted) result.innerHTML += '<p><a class="btn-link" href="e2-b.html">进入B轨拓展学习包</a></p>';
+      result.scrollIntoView({behavior:'smooth'});
+    }
+
+    document.getElementById('submit').addEventListener('click', grade);
+    document.getElementById('reset').addEventListener('click', () => {
+      localStorage.removeItem(key);
+      document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+      document.querySelectorAll('select').forEach(select => select.value = '');
+      document.getElementById('result').hidden = true;
+      document.getElementById('plan').textContent = '提交后生成B轨准入或精确回补路线。';
+    });
+  </script>
+</body>
+</html>

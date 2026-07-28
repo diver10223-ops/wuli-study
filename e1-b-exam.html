@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E1静电场 B轨拓展卷</title><link rel="stylesheet" href="assets/electric.css"></head>
+<body>
+  <header class="hero exam-hero"><div class="w"><div class="timer"><span id="timer">75:00</span><small>剩余时间</small></div><h1>E1静电场 · B轨拓展卷</h1><p>20题 · 100分 · 75分钟</p></div></header>
+  <main class="w">
+    <section class="c notice"><h2>出关规则</h2><ul><li>总分不低于75分；</li><li>多过程建模和电容器动态分别不低于60%；</li><li>至少一道陌生图像或装置题独立答对；</li><li>猜对不能替代独立迁移证据。</li></ul><div class="progress-line"><progress id="progress" max="20" value="0"></progress><span id="progress-text">0/20已作答</span></div></section>
+    <section class="c" id="quiz"></section>
+    <section class="c actions"><button class="btn" id="submit" type="button">提交B拓展卷</button><button class="btn secondary" id="save" type="button">暂存</button><span id="save-state"></span></section>
+    <section class="c" id="result" hidden></section>
+    <section class="c"><h2>下一步计划</h2><div class="plan" id="plan">提交后按B01—B07生成路线。</div><p><a href="e1.html">← 返回E1入口</a></p></section>
+  </main>
+  <script>
+    const questions=[
+      {id:'E1BE01',section:'叠加几何',task:'B01',node:'E1-K03',text:'三个场强矢量合成前，最可靠的步骤是？',options:['统一坐标并分别画方向/分量','只比较大小','把等量矢量全部抵消'],answer:0},
+      {id:'E1BE02',section:'叠加几何',task:'B01',node:'E1-K02/K03',novel:true,text:'等边三角形两个顶点放等量同号电荷，求第三顶点场强时，对称性说明？',options:['沿对称轴垂直的分量抵消，沿轴分量相加','两个场强完全抵消','合场强必沿任意边'],answer:0},
+      {id:'E1BE03',section:'叠加几何',task:'B02',node:'E1-K03',text:'同号不等量点电荷的连线零场点若存在，通常应先在何处寻找？',options:['两电荷之间且靠近电荷量较小者，再核验','任意外侧','必在中点'],answer:0},
+      {id:'E1BE04',section:'叠加几何',task:'B02',node:'E1-K02/K03',text:'场强为零的点，其电势？',options:['不一定为零','一定为零','一定为正'],answer:0},
+      {id:'E1BE05',section:'叠加几何',task:'B02',node:'E1-K02',text:'带电小球平衡问题只列库仑力大小相等为何不够？',options:['还需检查各力方向和其他受力','还需电势为零','质量必须相等'],answer:0},
+
+      {id:'E1BE06',section:'图像迁移',task:'B03',node:'E1-K04/K05',novel:true,text:'φ-x图像在x增大方向持续下降，电场沿x方向的分量通常指向？',options:['+x方向','-x方向','无法由任何图像判断'],answer:0},
+      {id:'E1BE07',section:'图像迁移',task:'B03',node:'E1-K04/K05',text:'φ-x图像某处更陡，定性表示？',options:['该处沿x方向场强分量绝对值更大','电势能一定更大','场强一定为零'],answer:0},
+      {id:'E1BE08',section:'图像迁移',task:'B03',node:'E1-K04',text:'粒子轨迹是否与电场线重合，取决于？',options:['初始速度、受力及其他条件，不能只看电场线','永远重合','只取决于电荷量大小'],answer:0},
+
+      {id:'E1BE09',section:'能量粒子',task:'B04',node:'E1-K06',text:'外力与电场力都做功时，动能变化应由？',options:['所有力总功决定','只由电场力功决定','只由电势能决定且无需系统说明'],answer:0},
+      {id:'E1BE10',section:'能量粒子',task:'B04',node:'E1-K06',text:'由末动能增大能否唯一断定电势能减小？',options:['不能，还要看外力等其他功','能','只对负电荷不能'],answer:0},
+      {id:'E1BE11',section:'能量粒子',task:'B06',node:'E1-K10',text:'粒子先加速再偏转，两阶段之间最重要的连接量是？',options:['加速区末速度作为偏转区初速度','两个区域加速度相同','总时间必相等'],answer:0},
+      {id:'E1BE12',section:'能量粒子',task:'B06',node:'E1-K10',novel:true,text:'“恰好不撞上极板”的临界条件通常意味着？',options:['轨迹在边界处恰好相切或恰好经过限定点，需结合几何核验','偏转为零','电场力为零'],answer:0},
+      {id:'E1BE13',section:'能量粒子',task:'B06',node:'E1-K10',text:'粒子进入第二电场区域后，应？',options:['重新定义该段初态和受力','沿用第一段加速度','忽略区域边界'],answer:0},
+
+      {id:'E1BE14',section:'电容动态',task:'B05',node:'E1-K09',text:'始终接理想电源的电容器缓慢拉开极板，首先保持？',options:['U','Q','C'],answer:0},
+      {id:'E1BE15',section:'电容动态',task:'B05',node:'E1-K09',text:'断电电容器缓慢拉开极板，忽略漏电，首先保持？',options:['Q','U','C'],answer:0},
+      {id:'E1BE16',section:'电容动态',task:'B05',node:'E1-K08/K09',novel:true,text:'讨论拉开极板时场能变化，为什么必须区分接电源和断电源？',options:['电源是否交换能量且保持量不同','两种情况C变化方向不同','只有接电源时存在电场'],answer:0},
+      {id:'E1BE17',section:'电容动态',task:'B05',node:'E1-K09',text:'电容器动态中不能同时默认Q、U都不变，是因为？',options:['两者由连接状态和Q=CU共同约束','二者单位相同','C永远为零'],answer:0},
+
+      {id:'E1BE18',section:'探究表达',task:'B07',node:'E1-K11',novel:true,text:'评价静电除尘方案是否有效，最有力的证据是？',options:['在控制其他条件时比较装置开启前后的颗粒去除数据','只描述装置外观','引用“异种电荷相吸”即可'],answer:0},
+      {id:'E1BE19',section:'探究表达',task:'B07',node:'E1-K11',text:'静电屏蔽结论必须说明的边界之一是？',options:['导体状态、结构和所讨论场的条件','金属颜色','屏蔽任意场都绝对完美'],answer:0},
+      {id:'E1BE20',section:'探究表达',task:'B07',node:'E1-K11',text:'规范方案评价至少包含？',options:['机制、证据、条件、局限和改进','名称和用途','最终结论一句话'],answer:0}
+    ];
+    const key='physics-e1-b-exam-v1',draftKey=`${key}-draft`;let seconds=4500,finished=false,timerHandle;
+    const quiz=document.getElementById('quiz'),progress=document.getElementById('progress'),timer=document.getElementById('timer'),result=document.getElementById('result'),plan=document.getElementById('plan');
+    quiz.innerHTML=questions.map((q,i)=>`<article class="question"><div class="question-meta"><span>${i+1}. ${q.section}</span><code>${q.task} · ${q.node}</code>${q.novel?'<strong>陌生情境</strong>':''}</div><h3>${q.text}</h3><div class="options">${q.options.map((o,j)=>`<label><input type="radio" name="${q.id}" value="${j}"> <span>${o}</span></label>`).join('')}</div><div class="response-meta"><label>状态 <select data-state="${q.id}"><option value="">未选择</option><option>独立完成</option><option>猜测</option><option>不会</option><option>来不及</option></select></label><label>信心 <select data-confidence="${q.id}"><option value="">未选择</option><option>高</option><option>中</option><option>低</option></select></label></div></article>`).join('');
+    function collect(){const answers={},states={},confidence={};questions.forEach(q=>{answers[q.id]=document.querySelector(`input[name="${q.id}"]:checked`)?.value??null;states[q.id]=document.querySelector(`[data-state="${q.id}"]`).value;confidence[q.id]=document.querySelector(`[data-confidence="${q.id}"]`).value;});return{answers,states,confidence};}
+    function update(){const n=Object.values(collect().answers).filter(v=>v!==null).length;progress.value=n;document.getElementById('progress-text').textContent=`${n}/20已作答`;}
+    function saveDraft(show=true){localStorage.setItem(draftKey,JSON.stringify({...collect(),seconds,updatedAt:new Date().toISOString()}));if(show)document.getElementById('save-state').textContent='已保存';}
+    function restore(){const d=JSON.parse(localStorage.getItem(draftKey)||'null');if(!d)return;seconds=Number.isFinite(d.seconds)?d.seconds:4500;questions.forEach(q=>{if(d.answers?.[q.id]!==null&&d.answers?.[q.id]!==undefined){const x=document.querySelector(`input[name="${q.id}"][value="${d.answers[q.id]}"]`);if(x)x.checked=true;}document.querySelector(`[data-state="${q.id}"]`).value=d.states?.[q.id]||'';document.querySelector(`[data-confidence="${q.id}"]`).value=d.confidence?.[q.id]||'';});update();}
+    function tick(){timer.textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;if(seconds<=0){clearInterval(timerHandle);grade();return;}seconds--;if(seconds%30===0)saveDraft(false);}
+    function grade(){if(finished)return;finished=true;clearInterval(timerHandle);const response=collect(),sections={},tasks={},weak=[],guessed=[];let correct=0,novelIndependent=false;questions.forEach(q=>{const ok=response.answers[q.id]!==null&&Number(response.answers[q.id])===q.answer;sections[q.section]||={correct:0,total:0};tasks[q.task]||={correct:0,total:0};sections[q.section].total++;tasks[q.task].total++;if(ok){correct++;sections[q.section].correct++;tasks[q.task].correct++;if(response.states[q.id]==='猜测')guessed.push(q.node);if(q.novel&&response.states[q.id]==='独立完成')novelIndependent=true;}else weak.push({task:q.task,node:q.node});});const score=correct*5,multiCorrect=sections['能量粒子'].correct,multiPassed=multiCorrect/sections['能量粒子'].total>=.6,capacitorPassed=sections['电容动态'].correct/sections['电容动态'].total>=.6,passed=score>=75&&multiPassed&&capacitorPassed&&novelIndependent;const reviewDate=new Date(Date.now()+7*86400000).toISOString().slice(0,10);const data={version:1,track:'B',score,correct,sections,tasks,weak,guessed:[...new Set(guessed)],multiPassed,capacitorPassed,novelIndependent,passed,reviewDate,secondsUsed:4500-seconds,response,submittedAt:new Date().toISOString()};localStorage.setItem(key,JSON.stringify(data));localStorage.removeItem(draftKey);result.hidden=false;result.innerHTML=`<h2 class="${passed?'pass':'fail'}">${score}/100 · ${passed?'B轨当前通过':'B轨暂未通过'}</h2><div class="score-grid">${Object.entries(sections).map(([n,v])=>`<div><span>${n}</span><strong>${v.correct}/${v.total}</strong></div>`).join('')}</div><p><strong>多过程建模：</strong>${multiPassed?'通过':'未通过'}</p><p><strong>电容器动态：</strong>${capacitorPassed?'通过':'未通过'}</p><p><strong>陌生题独立完成：</strong>${novelIndependent?'满足':'未满足'}</p><p><strong>猜对待复核：</strong>${[...new Set(guessed)].join('、')||'无'}</p><p><strong>回补任务：</strong>${[...new Set(weak.map(x=>x.task))].join('、')||'无'}</p>`;plan.innerHTML=passed?`<strong>通过路线：</strong>可进入E1 C轨前置诊断，并在${reviewDate}完成B轨新题复测。`:'<strong>修复路线：</strong>优先返回列出的B任务；只有证据显示A基础错误时才回落A轨。';result.scrollIntoView({behavior:'smooth'});}
+    quiz.addEventListener('change',update);document.getElementById('save').addEventListener('click',()=>saveDraft(true));document.getElementById('submit').addEventListener('click',()=>{const n=Object.values(collect().answers).filter(v=>v!==null).length;if(n<20&&!confirm(`还有${20-n}题未作答，仍要提交吗？`))return;grade();});restore();tick();timerHandle=setInterval(tick,1000);
+  </script>
+</body></html>

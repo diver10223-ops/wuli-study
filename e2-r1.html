@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>电学学习 · R1 前置诊断</title>
+  <style>
+    :root { color-scheme: light; --blue:#1d4ed8; --blue-soft:#eff6ff; --ink:#172033; --muted:#657089; --line:#dbe3ef; --green:#15803d; --red:#b91c1c; --amber:#b45309; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:#f4f7fb; color:var(--ink); font-family:"Noto Sans SC","Microsoft YaHei",sans-serif; line-height:1.65; }
+    button,input,select { font:inherit; }
+    .shell { width:min(100% - 24px, 980px); margin:0 auto; }
+    header { color:white; background:linear-gradient(135deg,#123a8c,#2563eb); padding:28px 0 54px; }
+    header h1 { margin:0; font-size:clamp(25px,5vw,38px); }
+    header p { margin:8px 0 0; color:#dbeafe; }
+    .status { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+    .pill { background:#ffffff1f; border:1px solid #ffffff45; border-radius:999px; padding:5px 12px; font-size:14px; }
+    main { margin-top:-32px; padding-bottom:70px; }
+    .card { background:white; border:1px solid var(--line); border-radius:16px; box-shadow:0 10px 28px #19366412; padding:22px; margin-bottom:16px; }
+    h2 { margin:0 0 14px; font-size:21px; }
+    h3 { margin:4px 0 12px; font-size:17px; }
+    .notice { background:#fff8e8; border-left:4px solid #f59e0b; padding:12px 14px; border-radius:8px; }
+    .student-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    label.field span { display:block; color:var(--muted); font-size:13px; margin-bottom:4px; }
+    input[type=text],select { width:100%; border:1px solid var(--line); border-radius:9px; padding:10px 11px; background:white; }
+    .progress-row { display:flex; align-items:center; gap:12px; position:sticky; top:0; z-index:5; background:#f4f7fbeF; backdrop-filter:blur(8px); padding:10px 0; }
+    progress { flex:1; height:10px; accent-color:var(--blue); }
+    .question { border-top:1px solid var(--line); padding:20px 0; }
+    .question:first-child { border-top:0; padding-top:4px; }
+    .q-title { font-weight:700; margin-bottom:12px; }
+    .option { display:block; border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin:8px 0; cursor:pointer; }
+    .option:hover { border-color:#93b4f5; background:var(--blue-soft); }
+    .option input { margin-right:8px; }
+    .confidence { display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-top:10px; color:var(--muted); font-size:14px; }
+    .confidence button { border:1px solid var(--line); background:white; border-radius:999px; padding:4px 12px; cursor:pointer; }
+    .confidence button.active { color:white; background:var(--blue); border-color:var(--blue); }
+    .actions { display:flex; flex-wrap:wrap; gap:10px; }
+    .primary,.secondary { border:0; border-radius:10px; padding:11px 18px; cursor:pointer; font-weight:700; }
+    .primary { background:var(--blue); color:white; }
+    .secondary { background:#e8eef8; color:#263a5e; }
+    .result-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:9px; }
+    .node { border:1px solid var(--line); border-radius:12px; padding:12px; text-align:center; }
+    .node strong { display:block; font-size:20px; }
+    .pass { color:var(--green); }.review { color:var(--red); }.warn { color:var(--amber); }
+    .next-plan { background:var(--blue-soft); border:1px solid #bfdbfe; border-radius:12px; padding:16px; }
+    .learning-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .learn-card { border:1px solid var(--line); border-radius:12px; padding:15px; background:#fbfdff; }
+    .learn-card h3 { color:#173f91; }
+    .formula { font-family:Georgia,serif; text-align:center; background:#eef4ff; border-radius:8px; padding:9px; margin:8px 0; font-size:18px; }
+    .task-check { display:block; padding:8px 0; border-bottom:1px dashed var(--line); }
+    .locked { opacity:.55; pointer-events:none; position:relative; }
+    .locked::after { content:"完成并提交S0诊断后解锁"; position:absolute; inset:18px; display:grid; place-items:center; color:#173f91; background:#ffffffde; border:1px dashed #86a9ec; border-radius:12px; font-weight:700; }
+    .hidden { display:none; }
+    footer { text-align:center; color:var(--muted); font-size:13px; margin-top:25px; }
+    @media (max-width:720px) { .student-grid,.result-grid,.learning-grid { grid-template-columns:1fr; } .card { padding:17px; } header { padding-top:22px; } }
+    @media print { header { padding:14px; } main { margin-top:0; } .actions,.progress-row { display:none; } body { background:white; } .card { box-shadow:none; break-inside:avoid; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="shell">
+      <h1>⚡ 电学学习 · R1 前置诊断</h1>
+      <p>先诊断，再学习。18题用于确定起点，不计正式成绩。</p>
+      <div class="status">
+        <span class="pill">建议用时 25 分钟</span><span class="pill">答案提交前隐藏</span><span class="pill">进度保存在本机</span>
+      </div>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="card">
+      <h2>开始前</h2>
+      <div class="notice">请独立完成，不搜索、不看讲义。不会可以选“我还不确定”，这比猜对更有诊断价值。</div>
+      <div class="student-grid" style="margin-top:14px">
+        <label class="field"><span>教材版本</span><input id="book" type="text" placeholder="例如：人教版"></label>
+        <label class="field"><span>学校当前章节</span><input id="chapter" type="text" placeholder="例如：磁场与安培力"></label>
+      </div>
+    </section>
+    <div class="progress-row"><progress id="progress" max="18" value="0"></progress><strong id="progressText">0 / 18</strong><span id="timer">25:00</span></div>
+    <section class="card">
+      <h2>前置诊断</h2>
+      <div id="quiz"></div>
+      <div class="actions"><button class="primary" id="submit">提交并查看诊断</button><button class="secondary" id="save">保存进度</button><button class="secondary" id="reset">重新开始</button></div>
+    </section>
+    <section class="card hidden" id="result">
+      <h2>诊断结果</h2>
+      <p id="scoreLine"></p><div class="result-grid" id="nodes"></div>
+      <h3 style="margin-top:20px">下一步计划</h3><div class="next-plan" id="nextPlan"></div>
+    </section>
+    <section class="card locked" id="learning">
+      <h2>R1 第一轮学习 / 预习</h2>
+      <p>按S1 → S2 → S3 → S4完成。勾选任务会保存在当前浏览器。</p>
+      <h3>S1 · 章节地图</h3>
+      <div class="next-plan">电源转化能量 → 形成电势差 → 闭合电路中电荷定向移动 → 节点分配电流 → 用电器转化能量 → 仪表提供证据</div>
+      <label class="task-check"><input type="checkbox" class="learn-task" value="map"> 我能不用原文说出至少4个节点，并解释 I总 = I₁ + I₂。</label>
+      <h3 style="margin-top:18px">S2 · 六张概念卡</h3>
+      <div class="learning-grid">
+        <article class="learn-card"><h3>C1 电流方向</h3><p>电流方向按正电荷定向移动方向规定；金属电子方向与电流相反。</p><label><input type="checkbox" class="learn-task" value="c1"> 我能用正离子和电子各举一例</label></article>
+        <article class="learn-card"><h3>C2 电流属于支路</h3><p>串联同支路电流相等；并联节点满足流入电流等于流出电流。</p><label><input type="checkbox" class="learn-task" value="c2"> 我能给干路、支路电流分别命名</label></article>
+        <article class="learn-card"><h3>C3 R=U/I 的边界</h3><p>它可描述工作状态；元件电阻是否恒定还取决于材料、温度和伏安特性。</p><label><input type="checkbox" class="learn-task" value="c3"> 我不会再说“电压决定电阻”</label></article>
+        <article class="learn-card"><h3>C4 电压与电动势</h3><p>电压对应两点；电动势描述电源通过非静电力完成能量转化的能力。</p><label><input type="checkbox" class="learn-task" value="c4"> 我能解释二者区别</label></article>
+        <article class="learn-card"><h3>C5 三类功率</h3><p>输入功率P=UI；热功率P热=I²R；电动机还可能输出机械功率。</p><label><input type="checkbox" class="learn-task" value="c5"> 我能说明第16题错在哪里</label></article>
+        <article class="learn-card"><h3>C6 仪表接法</h3><p>电流表串联测支路电流；电压表并联测两点电势差；先用大量程保证安全。</p><label><input type="checkbox" class="learn-task" value="c6"> 我能解释接错的后果</label></article>
+      </div>
+      <h3 style="margin-top:18px">S3 · 最少规律</h3>
+      <div class="learning-grid"><div class="formula">I = I₁ + I₂</div><div class="formula">I = U / R</div><div class="formula">E = I(R + r)</div><div class="formula">U = E − Ir</div><div class="formula">P入 = UI</div><div class="formula">P热 = I²R</div></div>
+      <label class="task-check"><input type="checkbox" class="learn-task" value="formula"> 列式前，我会写清对象、支路、条件和单位。</label>
+      <h3 style="margin-top:18px">S4 · 两个基础模型</h3>
+      <div class="learning-grid">
+        <article class="learn-card"><h3>M01 单一闭合电路</h3><p>E=9 V、r=1 Ω、R=8 Ω。请先求I，再求路端电压和内电压。</p><details><summary>核对答案</summary><p>I=1 A，U=8 V，U内=1 V。</p></details><label><input type="checkbox" class="learn-task" value="m01"> 我能独立完成并用E=U+Ir检查</label></article>
+        <article class="learn-card"><h3>M02 支路电流</h3><p>4 Ω与12 Ω并联接12 V。请分别求两支路、干路电流和等效电阻。</p><details><summary>核对答案</summary><p>3 A、1 A、4 A、3 Ω。</p></details><label><input type="checkbox" class="learn-task" value="m02"> 我先标I、I₁、I₂再列式</label></article>
+      </div>
+      <div class="actions" style="margin-top:18px"><button class="primary" id="finishR1">检查R1完成情况</button></div>
+      <div class="next-plan hidden" id="r1Plan" style="margin-top:14px"></div>
+    </section>
+    <footer>本页面仅在当前浏览器保存学习数据，不上传姓名和试卷。清除浏览器数据会删除记录。</footer>
+  </main>
+  <script>
+    const questions = [
+      ["金属导线中电子向右定向移动，约定电流方向是？",["向右","向左","没有电流","无法判断"],1,"basic"],
+      ["电路中只要有电源，就一定有持续电流。",["正确","错误，还需要闭合通路","只有电压大时正确","只有直流电源正确"],1,"basic"],
+      ["两个相同电阻 R 串联，等效电阻是？",["R/2","R","2R","4R"],2,"circuit"],
+      ["两个相同电阻 R 并联，等效电阻是？",["R/2","R","2R","4R"],0,"circuit"],
+      ["并联电路干路 3 A，支路1为 1 A，支路2为？",["1 A","2 A","3 A","4 A"],1,"circuit"],
+      ["并联的两只用电器电流一定相等吗？",["一定","不一定，取决于支路条件","只取决于电源","只要并联就相等"],1,"circuit"],
+      ["R=U/I 是否表示电压变2倍，电阻一定变2倍？",["是","不是，还要看元件和状态","只对灯泡是","只对电动机是"],1,"formula"],
+      ["某元件 U=6 V、I=2 A，此状态下 U/I 为？",["2 Ω","3 Ω","4 Ω","12 Ω"],1,"formula"],
+      ["用电器 U=6 V、I=2 A，输入功率为？",["3 W","8 W","12 W","18 W"],2,"formula"],
+      ["所有用电器的全部输入功率都可写成 I²R。",["正确","错误，电动机等不能这样表示全部输入功率","只在并联时正确","只在串联时错误"],1,"formula"],
+      ["电压与电动势的正确区别是？",["二者完全相同","电压描述两点电势差，电动势描述电源能量转化能力","电压属于电源，电动势属于电阻","电动势只在断路时存在"],1,"formula"],
+      ["电源标称 1.5 V，工作时路端电压永远等于1.5 V。",["正确","错误，路端电压还与电流和内阻有关","只有并联时正确","无法比较"],1,"formula"],
+      ["U-I直线过(0,1.5)和(0.5,1.0)，斜率为？",["-1 Ω","-0.5 Ω","1 Ω","3 Ω"],0,"graph"],
+      ["U=E-Ir 图像的纵截距与斜率绝对值分别表示？",["r和E","E和r","U和I","功率和效率"],1,"graph"],
+      ["过原点的U-I直线越陡，U/I和电阻怎样？",["都更大","都更小","U/I大而电阻小","无关系"],0,"graph"],
+      ["测某支路电流和元件电压时，电流表/电压表应？",["都串联","都并联","电流表串联、电压表并联","电流表并联、电压表串联"],2,"meter"],
+      ["试测时通常先选较大量程，主要为了？",["让示数更大","防止超量程损坏，再兼顾精度","省略调零","改变被测电路"],1,"meter"],
+      ["读取物理图像时，优先检查的组合是？",["颜色和页面大小","坐标轴、单位、刻度及斜率/截距意义","只看是否直线","只看最后一个点"],1,"meter"]
+    ];
+    const labels={basic:"电流与闭合",circuit:"串并联与节点",formula:"公式与功率",graph:"图像工具",meter:"仪表基础"};
+    const pass={basic:2,circuit:3,formula:4,graph:2,meter:2};
+    const state=JSON.parse(localStorage.getItem("electricR1")||"{}");
+    let seconds=Number(state.seconds ?? 1500), submitted=false;
+    const quiz=document.getElementById("quiz");
+    const learning=document.getElementById("learning");
+    questions.forEach((q,i)=>{ const box=document.createElement("div"); box.className="question"; box.innerHTML=`<div class="q-title">${i+1}. ${q[0]}</div>${q[1].map((o,j)=>`<label class="option"><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")}<div class="confidence">信心：${["高","中","低"].map(v=>`<button type="button" data-q="${i}" data-c="${v}">${v}</button>`).join("")}</div>`; quiz.appendChild(box); });
+    function restore(){ document.getElementById("book").value=state.book||""; document.getElementById("chapter").value=state.chapter||""; Object.entries(state.answers||{}).forEach(([i,v])=>{const el=document.querySelector(`input[name=q${i}][value='${v}']`);if(el)el.checked=true;}); Object.entries(state.confidence||{}).forEach(([i,v])=>{const el=document.querySelector(`button[data-q='${i}'][data-c='${v}']`);if(el)el.classList.add("active");}); updateProgress(); }
+    function collect(){ const answers={},confidence={}; const book=document.getElementById("book"), chapter=document.getElementById("chapter"); questions.forEach((_,i)=>{const a=document.querySelector(`input[name=q${i}]:checked`);if(a)answers[i]=a.value;const c=document.querySelector(`button[data-q='${i}'].active`);if(c)confidence[i]=c.dataset.c;}); const learned=[...document.querySelectorAll('.learn-task:checked')].map(x=>x.value); return {book:book.value,chapter:chapter.value,answers,confidence,learned,submitted,seconds}; }
+    function save(){ localStorage.setItem("electricR1",JSON.stringify(collect())); }
+    function updateProgress(){const n=document.querySelectorAll("input[type=radio]:checked").length;progress.value=n;progressText.textContent=`${n} / 18`;}
+    document.addEventListener("change",()=>{updateProgress();save();});
+    document.querySelectorAll(".confidence button").forEach(b=>b.onclick=()=>{document.querySelectorAll(`button[data-q='${b.dataset.q}']`).forEach(x=>x.classList.remove("active"));b.classList.add("active");save();});
+    document.getElementById("save").onclick=()=>{save();alert("已保存在当前浏览器。");};
+    document.getElementById("reset").onclick=()=>{if(confirm("确定清除本机上的作答并重新开始吗？")){localStorage.removeItem("electricR1");location.reload();}};
+    document.getElementById("submit").onclick=()=>{ const data=collect(); if(Object.keys(data.answers).length<18&&!confirm("还有题目未作答，仍要提交吗？"))return; submitted=true; const scores={basic:0,circuit:0,formula:0,graph:0,meter:0},totals={basic:0,circuit:0,formula:0,graph:0,meter:0}; questions.forEach((q,i)=>{totals[q[3]]++;if(Number(data.answers[i])===q[2])scores[q[3]]++;}); const total=Object.values(scores).reduce((a,b)=>a+b,0); scoreLine.innerHTML=`完成 <strong>${Object.keys(data.answers).length}/18</strong> 题，答对 <strong>${total}/18</strong>。总分只作参考，请看各节点。`; nodes.innerHTML=Object.keys(scores).map(k=>`<div class="node"><span>${labels[k]}</span><strong class="${scores[k]>=pass[k]?"pass":"review"}">${scores[k]}/${totals[k]}</strong><small>${scores[k]>=pass[k]?"通过":"需要补修"}</small></div>`).join(""); const weak=Object.keys(scores).filter(k=>scores[k]<pass[k]); nextPlan.innerHTML=weak.length?`<b>现在做什么：</b>先补修“${weak.map(k=>labels[k]).join("、")}”，同时使用下方概念卡。<br><b>完成标准：</b>补修节点达到通过线后完成M01/M02。`:`<b>现在做什么：</b>进入下方S1—S4学习任务。<br><b>完成标准：</b>全部学习检查项完成，两个基础模型独立正确。`; result.classList.remove("hidden"); learning.classList.remove("locked"); result.scrollIntoView({behavior:"smooth"}); save(); };
+    (state.learned||[]).forEach(v=>{const el=document.querySelector(`.learn-task[value='${v}']`);if(el)el.checked=true;}); if(state.submitted){submitted=true;learning.classList.remove('locked');}
+    document.getElementById('finishR1').onclick=()=>{const done=document.querySelectorAll('.learn-task:checked').length,total=document.querySelectorAll('.learn-task').length;r1Plan.innerHTML=done===total?`<b>R1检查项 ${done}/${total}。</b><br>下一步：请不看答案重新做M01、M02；独立正确后记录R1通过，等待R2同步巩固。`:`<b>已完成 ${done}/${total}。</b><br>下一步：只完成尚未勾选的概念或模型，不需要从头重学。`;r1Plan.classList.remove('hidden');save();};
+    const tick=setInterval(()=>{if(submitted)return clearInterval(tick);seconds=Math.max(0,seconds-1);timer.textContent=`${String(Math.floor(seconds/60)).padStart(2,"0")}:${String(seconds%60).padStart(2,"0")}`;if(seconds%15===0)save();if(seconds===0){clearInterval(tick);timer.classList.add("review");}},1000);
+    restore(); timer.textContent=`${String(Math.floor(seconds/60)).padStart(2,"0")}:${String(seconds%60).padStart(2,"0")}`;
+  </script>
+</body>
+</html>
