@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>E2/E3 恒定电流与电学实验 · 三轨入口</title>
+  <link rel="stylesheet" href="assets/electric.css">
+</head>
+<body>
+  <header class="hero"><div class="w"><h1>E2/E3 三轨学习入口</h1><p>先选择学习深度，再在轨道内部使用R1—R6学习周期</p></div></header>
+  <main class="w">
+    <section class="c notice">
+      <h2>先分清两个维度</h2>
+      <p><strong>A/B/C决定学多深，R1—R6决定什么时候学。</strong>进入B轨不等于进入高三复习，完成R3也不等于完成B轨。</p>
+      <p><a href="docs/E2-E3三轨知识矩阵与考卷规格.md">查看完整知识矩阵与三套考卷规格</a></p>
+    </section>
+
+    <section class="c track-grid">
+      <article class="track track-a">
+        <span>A轨 · 已有功能样板</span>
+        <h2>基础核心</h2>
+        <p>适合首次学习、同步巩固和基础回补。完成概念、标准电路和核心实验。</p>
+        <ul><li><a href="index.html">R1第一轮预习</a></li><li><a href="r2.html">R2同步巩固</a></li><li><a href="r3.html">R3阶段出关</a></li></ul>
+        <p><a class="btn-link" href="e2-a-exam.html">参加A轨基础卷</a></p>
+        <p class="route"><strong>出口：</strong>A基础卷用于分轨判定；现有R3卷只作为周期出关证据。</p>
+      </article>
+      <article class="track track-b">
+        <span>B轨 · 规格已定义</span>
+        <h2>拓展迁移</h2>
+        <p>复杂动态电路、非线性元件、图像迁移、综合实验和开放论证。</p>
+        <p><a class="btn-link" href="e2-b-diagnostic.html">参加B准入诊断</a></p>
+        <p><a href="e2-b.html">进入B轨拓展学习包</a></p>
+        <p><a href="e2-b-check.html">即时检测</a> · <a href="e2-b-exam.html">正式拓展卷</a></p>
+        <p class="route">可由A卷通过后进入，也允许先做B准入诊断。</p>
+      </article>
+      <article class="track track-c">
+        <span>C轨 · 规格已定义</span>
+        <h2>强基拓展</h2>
+        <p>模型推导、电路网络初步、非理想测量建模和探究设计。</p>
+        <p><a class="btn-link" href="e2-c-diagnostic.html">参加C轨前置诊断</a></p>
+        <p><a href="e2-c.html">进入C轨强基学习包</a></p>
+        <p><a href="e2-c-check.html">即时检测</a> · <a href="e2-c-exam.html">正式强基卷</a></p>
+        <p class="route">需要B轨通过、工具诊断通过并确认强基目标；不作为普通高考默认任务。</p>
+      </article>
+    </section>
+
+    <section class="c">
+      <h2>现有学习证据如何使用</h2>
+      <p>R1—R3、混合小测和第16题修复记录不会丢失，但只能更新它们实际覆盖的A轨知识点。它们不能自动解锁全部B轨或C轨。</p>
+      <div class="plan" id="saved-status">正在读取当前浏览器中的学习记录……</div>
+    </section>
+
+    <section class="c"><h2>下一步计划</h2><div class="plan"><strong>当前：</strong>A/B/C三轨均已有准入、学习和正式考核入口。<br><strong>建设：</strong>下一步进行E2/E3全流程质量审计，再把模板复制到E1。</div><p><a href="electric.html">← 返回电学总中心</a></p></section>
+  </main>
+  <script>
+    const cExam = JSON.parse(localStorage.getItem('physics-e2e3-c-exam-v1') || 'null');
+    const cDiagnostic = JSON.parse(localStorage.getItem('physics-e2e3-c-diagnostic-v1') || 'null');
+    const bExam = JSON.parse(localStorage.getItem('physics-e2e3-b-exam-v1') || 'null');
+    const aExam = JSON.parse(localStorage.getItem('physics-e2e3-a-exam-v1') || 'null');
+    const r3 = JSON.parse(localStorage.getItem('r3Exam') || 'null');
+    const r2 = JSON.parse(localStorage.getItem('r2Test') || 'null');
+    const status = document.getElementById('saved-status');
+    const evidence = [];
+    if (cExam) evidence.push(`C强基卷${cExam.total}分：${!cExam.reviewComplete ? '待审核' : cExam.passed ? '当前通过' : '需要回补'}`);
+    if (cDiagnostic) evidence.push(`C前置诊断${cDiagnostic.correct}/10：${cDiagnostic.admitted ? '已准入' : '条件未齐'}`);
+    if (bExam) evidence.push(`B拓展卷${bExam.score}分：${bExam.passed ? '当前通过' : '需要回补'}`);
+    if (aExam) evidence.push(`A基础卷${aExam.score}分：${aExam.passed ? '当前通过' : '需要回补'}`);
+    if (r2) evidence.push(`已找到R2小测记录${r2.score ?? '（分数未记录）'}`);
+    if (r3) evidence.push(`已找到R3出关记录：${r3.passed ? '通过' : '未通过'}`);
+    status.textContent = evidence.length ? `${evidence.join('；')}。各项记录只更新所属轨道：A轨证据不能冒充B/C轨通过，B轨证据也不能冒充C轨通过。` : '尚未找到分轨考核记录。可以从A轨R1开始，或直接参加B准入诊断。';
+
+  </script>
+</body>
+</html>

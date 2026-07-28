@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E1静电场 A轨基础卷</title><link rel="stylesheet" href="assets/electric.css"></head>
+<body>
+  <header class="hero exam-hero"><div class="w"><div class="timer"><span id="timer">60:00</span><small>剩余时间</small></div><h1>E1静电场 · A轨基础卷</h1><p>20题 · 100分 · 60分钟</p></div></header>
+  <main class="w">
+    <section class="c notice"><h2>出关规则</h2><ul><li>总分不低于80分；</li><li>场强方向、符号与能量、电容器状态三个关键题必须答对；</li><li>场与力、势与能、电容器/粒子三大类均不低于60%；</li><li>猜对只记待复核，不作为稳定掌握。</li></ul><div class="progress-line"><progress id="progress" max="20" value="0"></progress><span id="progress-text">0/20已作答</span></div></section>
+    <section class="c" id="quiz"></section>
+    <section class="c actions"><button class="btn" id="submit" type="button">提交A基础卷</button><button class="btn secondary" id="save" type="button">暂存</button><span id="save-state"></span></section>
+    <section class="c" id="result" hidden></section>
+    <section class="c"><h2>下一步计划</h2><div class="plan" id="plan">提交后按知识节点和关键门槛生成。</div><p><a href="e1.html">← 返回E1入口</a></p></section>
+  </main>
+  <script>
+    const questions=[
+      {id:'E1A01',section:'概念条件',bucket:'场与力',node:'E1-K01',text:'摩擦起电过程中，若把两个物体作为孤立系统，正确的是？',options:['总电荷守恒','产生了新的净电荷','质子在固体间转移'],answer:0},
+      {id:'E1A02',section:'概念条件',bucket:'场与力',node:'E1-K02',text:'库仑定律直接适用前应检查？',options:['点电荷模型及环境条件','两物体质量相同','电荷必须静止且不受其他力'],answer:0},
+      {id:'E1A03',section:'概念条件',bucket:'势与能',node:'E1-K05',text:'更换电势零点后保持不变的是？',options:['每一点电势','同两点电势差','所有电势的正负'],answer:1},
+      {id:'E1A04',section:'概念条件',bucket:'电容器/粒子',node:'E1-K08',text:'关于C=Q/U，正确的是？',options:['对给定线性电容器，C主要由结构和介质决定','Q增大一定导致C增大','U减小一定导致C增大'],answer:0},
+
+      {id:'E1A05',section:'场强矢量',bucket:'场与力',node:'E1-K03',critical:'场强方向',text:'场强方向定义为？',options:['正检验电荷受力方向','负检验电荷受力方向','电子速度方向'],answer:0},
+      {id:'E1A06',section:'场强矢量',bucket:'场与力',node:'E1-K03',text:'某点场强向右，放入负电荷后其电场力方向？',options:['向右','向左','一定为零'],answer:1},
+      {id:'E1A07',section:'场强矢量',bucket:'场与力',node:'E1-K02',text:'点电荷间距离变为原来2倍，其他条件不变，库仑力大小变为？',options:['1/2','1/4','2倍'],answer:1},
+      {id:'E1A08',section:'场强矢量',bucket:'场与力',node:'E1-K03',text:'两个场源在某点产生的场强大小相等，能否直接判定合场强为零？',options:['能','不能，还要判断方向','只要电荷同号就能'],answer:1},
+      {id:'E1A09',section:'场强矢量',bucket:'场与力',node:'E1-K04',text:'关于静电场电场线，正确的是？',options:['可相交','切线表示场强方向','一定是粒子轨迹'],answer:1},
+
+      {id:'E1A10',section:'势能做功',bucket:'势与能',node:'E1-K06',critical:'符号与能量',text:'负电荷从低电势移到高电势，其电势能变化？',options:['减小','增大','与电荷符号无关'],answer:0},
+      {id:'E1A11',section:'势能做功',bucket:'势与能',node:'E1-K06',text:'电场力做正功时，电势能？',options:['减小','增大','不变'],answer:0},
+      {id:'E1A12',section:'势能做功',bucket:'势与能',node:'E1-K04/K05',text:'电荷沿同一等势面移动，电场力功？',options:['为零','一定为正','一定为负'],answer:0},
+      {id:'E1A13',section:'势能做功',bucket:'势与能',node:'E1-K07',text:'匀强电场中两点连线长度L，与场强夹角60°，电势差大小为？',options:['EL','ELcos60°','ELsin60°且无条件'],answer:1},
+
+      {id:'E1A14',section:'电容器',bucket:'电容器/粒子',node:'E1-K09',critical:'电容器状态',text:'电容器断开电源且忽略漏电后，增大板间距，首先保持不变的是？',options:['Q','U','C'],answer:0},
+      {id:'E1A15',section:'电容器',bucket:'电容器/粒子',node:'E1-K09',text:'平行板电容器始终接理想电源，增大板间距时？',options:['U保持不变','Q保持不变','C保持不变'],answer:0},
+      {id:'E1A16',section:'电容器',bucket:'电容器/粒子',node:'E1-K08',text:'同一线性电容器Q、U同时变为2倍，C？',options:['2倍','1/2','不变'],answer:2},
+      {id:'E1A17',section:'电容器',bucket:'电容器/粒子',node:'E1-K09',text:'分析电容器动态变化的第一步是？',options:['判断接电源还是断电源','直接判断电场强度','假设Q和U都不变'],answer:0},
+
+      {id:'E1A18',section:'粒子模型',bucket:'电容器/粒子',node:'E1-K10',text:'带电粒子由静止在电场中加速，最稳妥的首步是？',options:['明确电性、场方向和受力/做功','直接写最终速度','忽略电势差符号'],answer:0},
+      {id:'E1A19',section:'粒子模型',bucket:'电容器/粒子',node:'E1-K10',text:'粒子水平进入竖直匀强电场，只受电场力，水平方向通常？',options:['匀速','匀加速且加速度为qE/m','静止'],answer:0},
+      {id:'E1A20',section:'粒子模型',bucket:'电容器/粒子',node:'E1-K10',text:'计算偏转位移前还应检查？',options:['粒子是否先撞板或离开电场区域','电荷量是否为整数','场强是否向右'],answer:0}
+    ];
+    const key='physics-e1-a-exam-v1',draftKey=`${key}-draft`;let seconds=3600,finished=false,timerHandle;
+    const quiz=document.getElementById('quiz'),progress=document.getElementById('progress'),timer=document.getElementById('timer'),result=document.getElementById('result'),plan=document.getElementById('plan');
+    quiz.innerHTML=questions.map((q,i)=>`<article class="question"><div class="question-meta"><span>${i+1}. ${q.section}</span><code>${q.node}</code>${q.critical?`<strong>门槛：${q.critical}</strong>`:''}</div><h3>${q.text}</h3><div class="options">${q.options.map((o,j)=>`<label><input type="radio" name="${q.id}" value="${j}"> <span>${o}</span></label>`).join('')}</div><div class="response-meta"><label>状态 <select data-state="${q.id}"><option value="">未选择</option><option>独立完成</option><option>猜测</option><option>不会</option><option>来不及</option></select></label><label>信心 <select data-confidence="${q.id}"><option value="">未选择</option><option>高</option><option>中</option><option>低</option></select></label></div></article>`).join('');
+    function collect(){const answers={},states={},confidence={};questions.forEach(q=>{answers[q.id]=document.querySelector(`input[name="${q.id}"]:checked`)?.value??null;states[q.id]=document.querySelector(`[data-state="${q.id}"]`).value;confidence[q.id]=document.querySelector(`[data-confidence="${q.id}"]`).value;});return{answers,states,confidence};}
+    function update(){const n=Object.values(collect().answers).filter(v=>v!==null).length;progress.value=n;document.getElementById('progress-text').textContent=`${n}/20已作答`;}
+    function saveDraft(show=true){localStorage.setItem(draftKey,JSON.stringify({...collect(),seconds,updatedAt:new Date().toISOString()}));if(show)document.getElementById('save-state').textContent='已保存';}
+    function restore(){const d=JSON.parse(localStorage.getItem(draftKey)||'null');if(!d)return;seconds=Number.isFinite(d.seconds)?d.seconds:3600;questions.forEach(q=>{if(d.answers?.[q.id]!==null&&d.answers?.[q.id]!==undefined){const x=document.querySelector(`input[name="${q.id}"][value="${d.answers[q.id]}"]`);if(x)x.checked=true;}document.querySelector(`[data-state="${q.id}"]`).value=d.states?.[q.id]||'';document.querySelector(`[data-confidence="${q.id}"]`).value=d.confidence?.[q.id]||'';});update();}
+    function tick(){timer.textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;if(seconds<=0){clearInterval(timerHandle);grade();return;}seconds--;if(seconds%30===0)saveDraft(false);}
+    function grade(){if(finished)return;finished=true;clearInterval(timerHandle);const response=collect(),sections={},buckets={},weak=[],failedGates=[],guessed=[];let correct=0;questions.forEach(q=>{const ok=response.answers[q.id]!==null&&Number(response.answers[q.id])===q.answer;sections[q.section]||={correct:0,total:0};buckets[q.bucket]||={correct:0,total:0};sections[q.section].total++;buckets[q.bucket].total++;if(ok){correct++;sections[q.section].correct++;buckets[q.bucket].correct++;if(response.states[q.id]==='猜测')guessed.push(q.node);}else{weak.push(q.node);if(q.critical)failedGates.push(q.critical);}});const score=correct*5,bucketsPassed=Object.values(buckets).every(v=>v.correct/v.total>=.6),passed=score>=80&&bucketsPassed&&!failedGates.length;const reviewDate=new Date(Date.now()+7*86400000).toISOString().slice(0,10);const data={version:1,track:'A',score,correct,sections,buckets,weak:[...new Set(weak)],failedGates,guessed:[...new Set(guessed)],passed,reviewDate,secondsUsed:3600-seconds,response,submittedAt:new Date().toISOString()};localStorage.setItem(key,JSON.stringify(data));localStorage.removeItem(draftKey);result.hidden=false;result.innerHTML=`<h2 class="${passed?'pass':'fail'}">${score}/100 · ${passed?'A轨当前通过':'A轨暂未通过'}</h2><div class="score-grid">${Object.entries(sections).map(([n,v])=>`<div><span>${n}</span><strong>${v.correct}/${v.total}</strong></div>`).join('')}</div><p><strong>关键门槛：</strong>${failedGates.join('、')||'全部通过'}</p><p><strong>薄弱节点：</strong>${[...new Set(weak)].join('、')||'无'}</p><p><strong>猜对待复核：</strong>${[...new Set(guessed)].join('、')||'无'}</p>`;plan.innerHTML=passed?`<strong>通过路线：</strong>可进入E1 B轨准入；并在${reviewDate}完成A轨新题复测。`:`<strong>修复路线：</strong>优先返回${failedGates.join('、')||[...new Set(weak)].join('、')}对应知识卡和模型，不重学整个A轨。`;result.scrollIntoView({behavior:'smooth'});}
+    quiz.addEventListener('change',update);document.getElementById('save').addEventListener('click',()=>saveDraft(true));document.getElementById('submit').addEventListener('click',()=>{const n=Object.values(collect().answers).filter(v=>v!==null).length;if(n<20&&!confirm(`还有${20-n}题未作答，仍要提交吗？`))return;grade();});restore();tick();timerHandle=setInterval(tick,1000);
+  </script>
+</body></html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E2/E3 C轨即时检测</title><link rel="stylesheet" href="assets/electric.css"></head>
+<body>
+  <header class="hero"><div class="w"><h1>E2/E3 · C轨即时检测</h1><p>8题 · 对应C01—C08 · 检查推导与建模准备</p></div></header>
+  <main class="w">
+    <section class="c notice"><h2>规则</h2><p>至少答对6题才建议进入正式强基卷。即时检测只检查方法判断；正式卷仍需提交书面推导和探究设计。</p></section>
+    <section class="c" id="quiz"></section>
+    <section class="c actions"><button class="btn" id="submit" type="button">提交即时检测</button><button class="btn secondary" id="reset" type="button">清空重做</button></section>
+    <section class="c" id="result" hidden></section>
+    <section class="c"><h2>下一步计划</h2><div class="plan" id="plan">提交后精确返回C01—C08。</div><p><a href="e2-c.html">← 返回C轨学习包</a></p></section>
+  </main>
+  <script>
+    const questions=[
+      {id:'CC01',task:'C01',node:'E2-K01/K06',text:'稳态节点电流代数和为零的物理依据是？',options:['节点不发生持续电荷积累','所有支路电阻相同','所有电流方向相同'],answer:0},
+      {id:'CC02',task:'C02',node:'E2-K02/K06',text:'预设支路电流方向后求得负值，正确解释是？',options:['方程一定错误','实际方向与预设方向相反','电流不存在'],answer:1},
+      {id:'CC03',task:'C03',node:'E2-K07',text:'两个网络在端口处等效，意味着？',options:['内部结构完全相同','指定工作范围内端口U-I关系相同','任何频率和状态下都相同'],answer:1},
+      {id:'CC04',task:'C04',node:'E2-K09',text:'研究负载最大功率时，首先必须明确？',options:['电源模型、可调参数和允许范围','答案一定在R=r且无需条件','效率必定最大'],answer:0},
+      {id:'CC05',task:'C05',node:'E2-K04',text:'非线性曲线上工作点U/I与局部ΔU/ΔI的区别是？',options:['前者是原点割线比值，后者描述工作点附近变化','两者永远相等','后者没有单位'],answer:0},
+      {id:'CC06',task:'C06',node:'E3-K01/K03',text:'分析伏安法系统误差的强基方法是？',options:['把非理想电表内阻写入方程并比较测量值与真值','只背偏大或偏小','忽略电表'],answer:0},
+      {id:'CC07',task:'C07',node:'E3-K06',text:'增加数据点通常不能自动消除什么？',options:['随机波动','系统误差','对整体趋势的观察'],answer:1},
+      {id:'CC08',task:'C08',node:'E3-K07',text:'可反驳的实验假设必须能够？',options:['导出可测量且可能与数据冲突的预测','保证结论正确','避免定义变量'],answer:0}
+    ];
+    const key='physics-e2e3-c-check-v1',quiz=document.getElementById('quiz'),result=document.getElementById('result'),plan=document.getElementById('plan');
+    quiz.innerHTML=questions.map((q,i)=>`<article class="question"><div class="question-meta"><span>${q.task}</span><code>${q.node}</code></div><h3>${i+1}. ${q.text}</h3><div class="options">${q.options.map((o,j)=>`<label><input type="radio" name="${q.id}" value="${j}"> <span>${o}</span></label>`).join('')}</div></article>`).join('');
+    function grade(){let correct=0;const weak=[],answers={};questions.forEach(q=>{const v=document.querySelector(`input[name="${q.id}"]:checked`)?.value??null;answers[q.id]=v;if(v!==null&&Number(v)===q.answer)correct++;else weak.push({task:q.task,node:q.node});});const passed=correct>=6;localStorage.setItem(key,JSON.stringify({version:1,correct,total:8,passed,weak,answers,submittedAt:new Date().toISOString()}));result.hidden=false;result.innerHTML=`<h2 class="${passed?'pass':'fail'}">${correct}/8 · ${passed?'可以进入C强基卷':'先回补C任务'}</h2><p><strong>待回补：</strong>${weak.map(x=>`${x.task}（${x.node}）`).join('、')||'无'}</p>`;plan.innerHTML=passed?'<strong>下一步：</strong>进入正式C强基卷，并准备纸笔完成书面推导与探究题。':`<strong>下一步：</strong>返回${weak.map(x=>x.task).join('、')}，补完推导或建模任务后再测。`;if(passed)result.innerHTML+='<p><a class="btn-link" href="e2-c-exam.html">参加C轨强基卷</a></p>';result.scrollIntoView({behavior:'smooth'});}
+    document.getElementById('submit').addEventListener('click',grade);document.getElementById('reset').addEventListener('click',()=>{localStorage.removeItem(key);document.querySelectorAll('input').forEach(x=>x.checked=false);result.hidden=true;plan.textContent='提交后精确返回C01—C08。';});
+  </script>
+</body></html>
