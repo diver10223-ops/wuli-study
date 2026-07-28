@@ -66,7 +66,15 @@ def main() -> None:
         for error in check_page(page):
             failures.append(f"{page.relative_to(ROOT)}: {error}")
 
-    for script in [ROOT / "assets/storage.js", ROOT / "assets/diagnostic.js", ROOT / "data/e4-a-diagnostic.js"]:
+    shared_scripts = [
+        ROOT / "assets/storage.js",
+        ROOT / "assets/diagnostic.js",
+        ROOT / "assets/learning.js",
+        ROOT / "data/e4-a-diagnostic.js",
+        ROOT / "data/e4-a-learning.js",
+        ROOT / "data/e4-a-models.js",
+    ]
+    for script in shared_scripts:
         result = subprocess.run(
             ["node", "--check", script], capture_output=True, text=True, check=False
         )
@@ -147,7 +155,7 @@ def main() -> None:
             failures.append(f"E4 matrix: missing section {heading}")
 
     e4_source = (ROOT / "e4.html").read_text(encoding="utf-8")
-    for link in {"e4-a-diagnostic.html", "e4-legacy.html", "e4-test.html"}:
+    for link in {"e4-a-diagnostic.html", "e4-a.html", "e4-a-models.html", "e4-legacy.html", "e4-test.html"}:
         if f'href="{link}"' not in e4_source:
             failures.append(f"e4.html: missing route {link}")
     e4_a_diagnostic = (ROOT / "e4-a-diagnostic.html").read_text(encoding="utf-8") + (ROOT / "data/e4-a-diagnostic.js").read_text(encoding="utf-8") + (ROOT / "assets/diagnostic.js").read_text(encoding="utf-8")
@@ -158,6 +166,20 @@ def main() -> None:
     for asset in {"assets/storage.js", "assets/diagnostic.js", "data/e4-a-diagnostic.js"}:
         if f'src="{asset}"' not in e4_a_diagnostic:
             failures.append(f"e4-a-diagnostic.html: missing shared engine {asset}")
+
+    e4_learning = (ROOT / "e4-a.html").read_text(encoding="utf-8")
+    for asset in {"assets/storage.js", "assets/learning.js", "data/e4-a-learning.js"}:
+        if f'src="{asset}"' not in e4_learning:
+            failures.append(f"e4-a.html: missing shared learning asset {asset}")
+    e4_learning_data = (ROOT / "data/e4-a-learning.js").read_text(encoding="utf-8")
+    for node in {f"E4-K{i:02d}" for i in range(1, 14)}:
+        if node not in e4_learning_data:
+            failures.append(f"E4 A learning: missing knowledge node {node}")
+
+    e4_models = (ROOT / "e4-a-models.html").read_text(encoding="utf-8")
+    for asset in {"assets/storage.js", "assets/learning.js", "data/e4-a-models.js"}:
+        if f'src="{asset}"' not in e4_models:
+            failures.append(f"e4-a-models.html: missing shared learning asset {asset}")
 
     rules = {
         "e2-a-exam.html": ["score >= 80", "criticalFailures.length === 0"],
