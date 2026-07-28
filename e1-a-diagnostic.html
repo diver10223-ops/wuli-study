@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E1静电场 A轨前置诊断</title><link rel="stylesheet" href="assets/electric.css"></head>
+<body>
+  <header class="hero"><div class="w"><h1>E1静电场 · A轨前置诊断</h1><p>15题 · 25分钟 · 用于确定知识卡优先顺序</p></div></header>
+  <main class="w">
+    <section class="c notice"><h2>诊断规则</h2><p>本诊断不用于跳过整个静电场，只确定哪些A轨节点需要优先学习。第5题场强方向、第9题电荷符号与能量、第12题电容器状态是关键门槛。</p></section>
+    <section class="c" id="quiz"></section>
+    <section class="c actions"><button class="btn" id="submit" type="button">提交诊断</button><button class="btn secondary" id="reset" type="button">清空重做</button></section>
+    <section class="c" id="result" hidden></section>
+    <section class="c"><h2>下一步计划</h2><div class="plan" id="plan">提交后按E1-K01—K11生成学习顺序。</div><p><a href="e1.html">← 返回E1入口</a></p></section>
+  </main>
+  <script>
+    const questions=[
+      {id:'E1D01',node:'E1-K01',text:'两个完全相同的金属小球，一个带电、一个不带电，接触前后系统总电荷如何？',options:['守恒','一定增加','一定变为零'],answer:0},
+      {id:'E1D02',node:'E1-K01',text:'摩擦起电的本质更接近？',options:['产生新电荷','电子在物体间转移','质子在固体中自由移动'],answer:1},
+      {id:'E1D03',node:'E1-K02',text:'使用库仑定律处理两个带电体前，首先要检查？',options:['能否视为点电荷及环境条件','质量是否相同','速度是否为零'],answer:0},
+      {id:'E1D04',node:'E1-K02',text:'两个异种点电荷之间的库仑力方向是？',options:['相互吸引，沿两电荷连线','相互排斥，垂直连线','与连线无关'],answer:0},
+      {id:'E1D05',node:'E1-K03',gate:'场强方向',text:'某点电场强度的方向定义为？',options:['正检验电荷在该点的受力方向','负检验电荷在该点的受力方向','任意电荷速度方向'],answer:0},
+      {id:'E1D06',node:'E1-K03',text:'某点场强为E，放入电荷量为-q的粒子，其电场力方向？',options:['与E同向','与E反向','一定为零'],answer:1},
+      {id:'E1D07',node:'E1-K04',text:'关于静电场中的电场线，下列正确的是？',options:['电场线可以相交','切线方向表示该点场强方向','电场线就是粒子实际轨迹'],answer:1},
+      {id:'E1D08',node:'E1-K05',text:'选择不同的电势零点后，不变的是？',options:['每点电势数值','两点间电势差','所有电势都必须为正'],answer:1},
+      {id:'E1D09',node:'E1-K06',gate:'符号与能量',text:'正电荷从高电势移动到低电势，电势能变化为？',options:['减小','增大','只由路径决定'],answer:0},
+      {id:'E1D10',node:'E1-K06',text:'电场力对电荷做正功时，电势能如何变化？',options:['减小','增大','不变'],answer:0},
+      {id:'E1D11',node:'E1-K07',text:'平行板间用E=U/d时，主要前提是？',options:['板间区域可近似为匀强电场且d为沿场方向距离','任何电场都适用','U必须为正'],answer:0},
+      {id:'E1D12',node:'E1-K09',gate:'电容器状态',text:'平行板电容器充电后与电源断开，再增大板间距离，首先保持不变的是？',options:['电荷量Q','电压U','电容C'],answer:0},
+      {id:'E1D13',node:'E1-K08',text:'电容C=Q/U描述的是？',options:['电容器容纳电荷本领的属性关系','任何情况下C随Q增加而增加','电荷产生电压的速度'],answer:0},
+      {id:'E1D14',node:'E1-K10',text:'带电粒子在匀强电场中只受电场力时，分析顺序应优先是？',options:['明确电性、场方向和受力，再选运动或能量规律','直接套位移公式','忽略粒子电性'],answer:0},
+      {id:'E1D15',node:'E1-K11',text:'静电屏蔽的常见应用依据是？',options:['导体静电平衡时内部场的特征及表面电荷重新分布','绝缘体内永远没有电场','所有金属都能屏蔽任意变化的场且无条件'],answer:0}
+    ];
+    const key='physics-e1-a-diagnostic-v1',quiz=document.getElementById('quiz'),result=document.getElementById('result'),plan=document.getElementById('plan');
+    quiz.innerHTML=questions.map((q,i)=>`<article class="question"><div class="question-meta"><span>${i+1}. 前置诊断</span><code>${q.node}</code>${q.gate?`<strong>门槛：${q.gate}</strong>`:''}</div><h3>${q.text}</h3><div class="options">${q.options.map((o,j)=>`<label><input type="radio" name="${q.id}" value="${j}"> <span>${o}</span></label>`).join('')}</div><div class="response-meta"><label>信心 <select data-confidence="${q.id}"><option value="">未选择</option><option>高</option><option>中</option><option>低</option></select></label></div></article>`).join('');
+    function grade(){let correct=0;const weak=[],failedGates=[],answers={},confidence={};questions.forEach(q=>{const value=document.querySelector(`input[name="${q.id}"]:checked`)?.value??null;answers[q.id]=value;confidence[q.id]=document.querySelector(`[data-confidence="${q.id}"]`).value;const ok=value!==null&&Number(value)===q.answer;if(ok)correct++;else{weak.push(q.node);if(q.gate)failedGates.push(q.gate);}});const data={version:1,correct,total:15,weak:[...new Set(weak)],failedGates,answers,confidence,submittedAt:new Date().toISOString()};localStorage.setItem(key,JSON.stringify(data));result.hidden=false;result.innerHTML=`<h2>${correct}/15 · 诊断完成</h2><p><strong>关键门槛：</strong>${failedGates.length?`优先修复${failedGates.join('、')}`:'全部通过'}</p><p><strong>优先知识卡：</strong>${[...new Set(weak)].join('、')||'基础诊断未发现明显缺口，仍需完成最小检测'}</p>`;plan.innerHTML=`<strong>下一步：</strong>进入A轨知识卡，先完成${failedGates.length?failedGates.join('、'):[...new Set(weak)].slice(0,4).join('、')||'K01—K10最小检测'}。诊断高分不等于A轨出关。`;result.innerHTML+='<p><a class="btn-link" href="e1-a.html">进入A轨知识卡</a></p>';result.scrollIntoView({behavior:'smooth'});}
+    document.getElementById('submit').addEventListener('click',grade);document.getElementById('reset').addEventListener('click',()=>{localStorage.removeItem(key);document.querySelectorAll('input').forEach(x=>x.checked=false);document.querySelectorAll('select').forEach(x=>x.value='');result.hidden=true;plan.textContent='提交后按E1-K01—K11生成学习顺序。';});
+  </script>
+</body></html>

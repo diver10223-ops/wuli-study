@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E2/E3 B轨拓展卷</title><link rel="stylesheet" href="assets/electric.css"></head>
+<body>
+  <header class="hero exam-hero"><div class="w"><div class="timer"><span id="timer">75:00</span><small>剩余时间</small></div><h1>E2/E3 · B轨拓展卷</h1><p>20题 · 100分 · 75分钟 · 条件变化与迁移</p></div></header>
+  <main class="w">
+    <section class="c notice"><h2>出关规则</h2><ul><li>总分不低于75分；</li><li>迁移建模和实验设计分别不低于60%；</li><li>至少一道标记为“陌生情境”的题独立答对；</li><li>猜对不能充当独立迁移证据。</li></ul><div class="progress-line"><progress id="progress" max="20" value="0"></progress><span id="progress-text">0/20已作答</span></div></section>
+    <section class="c" id="quiz"></section>
+    <section class="c actions"><button class="btn" id="submit" type="button">提交B拓展卷</button><button class="btn secondary" id="save" type="button">暂存</button><span id="save-state"></span></section>
+    <section class="c" id="result" hidden></section>
+    <section class="c"><h2>下一步计划</h2><div class="plan" id="plan">提交后按B01—B06和知识节点生成路线。</div><p><a href="e2-tracks.html">← 返回三轨入口</a></p></section>
+  </main>
+  <script>
+    const questions=[
+      {id:'BE01',section:'动态电路',task:'B01',node:'E2-K08',novel:true,text:'含内阻电源给“定值电阻与光敏电阻并联部分”供电。光照增强使光敏电阻减小。分析时正确的第一步是？',options:['先判断并联部分及外电路等效电阻变化','直接断定定值电阻电流增大','先假设路端电压不变'],answer:0},
+      {id:'BE02',section:'动态电路',task:'B01',node:'E2-K08',text:'外电路等效电阻减小时，电源内阻不可忽略，则？',options:['总电流增大、内电压增大、路端电压减小','总电流减小、路端电压增大','总电流不变'],answer:0},
+      {id:'BE03',section:'动态电路',task:'B01',node:'E2-K06/K08',text:'开关闭合导致一条新支路并入。判断原支路电流变化时还必须考虑？',options:['路端电压可能随总电流改变','原支路电阻必定改变','电源电动势必定改变'],answer:0},
+      {id:'BE04',section:'动态电路',task:'B02',node:'E2-K04',text:'非线性元件工作点改变后，能否用原工作点U/I代替新工作点电阻？',options:['总能','不能，应读取新工作点的U和I','只要电流增大就能'],answer:1},
+      {id:'BE05',section:'动态电路',task:'B02',node:'E2-K04/K05',novel:true,text:'元件曲线与外电路约束线没有交点，最合理的解释是？',options:['所设工作状态不能同时满足两者约束','元件一定损坏','任取一点即可'],answer:0},
+
+      {id:'BE06',section:'能量效率',task:'B03',node:'E2-K09',text:'电动机机械功率的正确能量账本是？',options:['P机=UI-I²r（忽略其他损耗）','P机=I²r','P机=UI+I²r'],answer:0},
+      {id:'BE07',section:'能量效率',task:'B03',node:'E2-K09',text:'比较两个效率数值前必须首先确认？',options:['分子分母对应的输入和有效输出对象相同','数值更大的必定正确','电流相同即可'],answer:0},
+      {id:'BE08',section:'能量效率',task:'B03',node:'E2-K07/K09',text:'电源输出功率不等于电源总功率，差值主要对应？',options:['电源内阻热功率','外电阻功率','电动势'],answer:0},
+      {id:'BE09',section:'能量效率',task:'B03',node:'E2-K09',novel:true,text:'负载变化后电动机输入功率增加，能否断定机械功率增加？',options:['能','不能，还要比较线圈热损耗及其他损耗变化','只看电压即可'],answer:1},
+
+      {id:'BE10',section:'图像迁移',task:'B02',node:'E2-K04',text:'读取非线性元件工作电阻时，应使用？',options:['该工作点U/I','曲线任意两点连线斜率且不看坐标轴','纵截距'],answer:0},
+      {id:'BE11',section:'图像迁移',task:'B05',node:'E3-K06',text:'比较两种U-I图像方案时，斜率含义不同的主要原因可能是？',options:['横纵轴选择和方程形式不同','图线颜色不同','数据点数量不同就一定改变物理意义'],answer:0},
+      {id:'BE12',section:'图像迁移',task:'B06',node:'E3-K07',text:'传感器定标曲线高端变平表示？',options:['该区间输出对输入变化不敏感','灵敏度升高','量程无限扩大'],answer:0},
+
+      {id:'BE13',section:'实验设计',task:'B05',node:'E3-K03',text:'比较伏安法内外接方案时，核心依据是？',options:['电表内阻相对待测电阻的影响','导线颜色','电源放置方向'],answer:0},
+      {id:'BE14',section:'实验设计',task:'B05',node:'E3-K06',novel:true,text:'某测E、r方案数据点集中在很窄电流区间，主要问题是？',options:['斜率估计对读数误差更敏感','纵截距必定为零','数据越集中越准确'],answer:0},
+      {id:'BE15',section:'实验设计',task:'B05',node:'E3-K05',text:'异常点处理的合理步骤是？',options:['核对记录与操作、必要时重复测量、说明处理依据','直接删除','改成靠近拟合线的数值'],answer:0},
+      {id:'BE16',section:'实验设计',task:'B06',node:'E3-K07',text:'选择传感器时，除灵敏度外还应重点考虑？',options:['工作区间、重复性和响应特征','外壳颜色','导线越长越好'],answer:0},
+      {id:'BE17',section:'实验设计',task:'B04',node:'E2-K10',text:'设计故障排查方案时，新增测量最有价值的标准是？',options:['能区分现存的竞争性假设','读数尽可能大','操作步骤尽可能多'],answer:0},
+
+      {id:'BE18',section:'开放表达',task:'B04',node:'E2-K10',text:'“元件一定断路”属于可靠结论的必要条件是？',options:['证据排除了其他合理解释','观察到一次异常','学生很有信心'],answer:0},
+      {id:'BE19',section:'开放表达',task:'B06',node:'E3-K07',novel:true,text:'传感器在目标区间部分饱和，最合理的改进方向是？',options:['调整工作区间或更换适配传感器并重新定标','忽略饱和数据','把输出值按比例随意放大'],answer:0},
+      {id:'BE20',section:'开放表达',task:'B05',node:'E3-K03/K06',text:'评价“方案更好”的规范表达至少包含？',options:['评价指标、适用条件、证据和局限','只写结论','只比较器材数量'],answer:0}
+    ];
+    const key='physics-e2e3-b-exam-v1',draftKey=`${key}-draft`;let seconds=4500,finished=false,timerHandle;
+    const quiz=document.getElementById('quiz'),progress=document.getElementById('progress'),timer=document.getElementById('timer'),result=document.getElementById('result'),plan=document.getElementById('plan'),save=document.getElementById('save'),submit=document.getElementById('submit');
+    quiz.innerHTML=questions.map((q,i)=>`<article class="question"><div class="question-meta"><span>${i+1}. ${q.section}</span><code>${q.task} · ${q.node}</code>${q.novel?'<strong>陌生情境</strong>':''}</div><h3>${q.text}</h3><div class="options">${q.options.map((o,j)=>`<label><input type="radio" name="${q.id}" value="${j}"> <span>${o}</span></label>`).join('')}</div><div class="response-meta"><label>状态 <select data-state="${q.id}"><option value="">未选择</option><option>独立完成</option><option>猜测</option><option>不会</option><option>来不及</option></select></label><label>信心 <select data-confidence="${q.id}"><option value="">未选择</option><option>高</option><option>中</option><option>低</option></select></label></div></article>`).join('');
+    function collect(){const answers={},states={},confidence={};questions.forEach(q=>{answers[q.id]=document.querySelector(`input[name="${q.id}"]:checked`)?.value??null;states[q.id]=document.querySelector(`[data-state="${q.id}"]`).value;confidence[q.id]=document.querySelector(`[data-confidence="${q.id}"]`).value;});return{answers,states,confidence};}
+    function update(){const n=Object.values(collect().answers).filter(v=>v!==null).length;progress.value=n;document.getElementById('progress-text').textContent=`${n}/20已作答`;}
+    function saveDraft(show=true){localStorage.setItem(draftKey,JSON.stringify({...collect(),seconds,updatedAt:new Date().toISOString()}));if(show)document.getElementById('save-state').textContent='已保存';}
+    function restore(){const d=JSON.parse(localStorage.getItem(draftKey)||'null');if(!d)return;seconds=Number.isFinite(d.seconds)?d.seconds:4500;questions.forEach(q=>{if(d.answers?.[q.id]!==null&&d.answers?.[q.id]!==undefined){const x=document.querySelector(`input[name="${q.id}"][value="${d.answers[q.id]}"]`);if(x)x.checked=true;}document.querySelector(`[data-state="${q.id}"]`).value=d.states?.[q.id]||'';document.querySelector(`[data-confidence="${q.id}"]`).value=d.confidence?.[q.id]||'';});update();}
+    function tick(){timer.textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;if(seconds<=0){clearInterval(timerHandle);grade();return;}seconds--;if(seconds%30===0)saveDraft(false);}
+    function grade(){if(finished)return;finished=true;clearInterval(timerHandle);const response=collect(),sections={},tasks={},weak=[],guessed=[];let correct=0,novelIndependent=false;questions.forEach(q=>{const ok=response.answers[q.id]!==null&&Number(response.answers[q.id])===q.answer;sections[q.section]||={correct:0,total:0};tasks[q.task]||={correct:0,total:0};sections[q.section].total++;tasks[q.task].total++;if(ok){correct++;sections[q.section].correct++;tasks[q.task].correct++;if(response.states[q.id]==='猜测')guessed.push(q.node);if(q.novel&&response.states[q.id]==='独立完成')novelIndependent=true;}else weak.push({task:q.task,node:q.node});});const score=correct*5;const migrationCorrect=['动态电路','能量效率','图像迁移'].reduce((n,s)=>n+sections[s].correct,0),migrationTotal=12;const experimentCorrect=sections['实验设计'].correct+sections['开放表达'].correct,experimentTotal=8;const passed=score>=75&&migrationCorrect/migrationTotal>=.6&&experimentCorrect/experimentTotal>=.6&&novelIndependent;const data={version:1,track:'B',score,correct,sections,tasks,weak,guessed:[...new Set(guessed)],novelIndependent,passed,secondsUsed:4500-seconds,response,submittedAt:new Date().toISOString()};localStorage.setItem(key,JSON.stringify(data));localStorage.removeItem(draftKey);result.hidden=false;result.innerHTML=`<h2 class="${passed?'pass':'fail'}">${score}/100 · ${passed?'B轨当前通过':'B轨暂未通过'}</h2><div class="score-grid">${Object.entries(sections).map(([n,v])=>`<div><span>${n}</span><strong>${v.correct}/${v.total}</strong></div>`).join('')}</div><p><strong>陌生情境独立完成：</strong>${novelIndependent?'已满足':'未满足'}</p><p><strong>猜对待复核：</strong>${[...new Set(guessed)].join('、')||'无'}</p><p><strong>回补任务：</strong>${[...new Set(weak.map(x=>x.task))].join('、')||'无'}</p>`;plan.innerHTML=passed?'<strong>通过路线：</strong>可以结束B轨并安排7天新题复测，或申请C轨前置诊断。':'<strong>修复路线：</strong>优先返回列出的B任务；只有同一A基础节点反复暴露时才回落A轨。';result.scrollIntoView({behavior:'smooth'});}
+    quiz.addEventListener('change',update);save.addEventListener('click',()=>saveDraft(true));submit.addEventListener('click',()=>{const n=Object.values(collect().answers).filter(v=>v!==null).length;if(n<20&&!confirm(`还有${20-n}题未作答，仍要提交吗？`))return;grade();});restore();tick();timerHandle=setInterval(tick,1000);
+  </script>
+</body></html>

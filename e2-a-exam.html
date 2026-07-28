@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>E2/E3 A轨基础卷</title>
+  <link rel="stylesheet" href="assets/electric.css">
+</head>
+<body>
+  <header class="hero exam-hero">
+    <div class="w">
+      <div class="timer" aria-live="polite"><span id="timer">60:00</span><small>剩余时间</small></div>
+      <h1>E2/E3 · A轨基础卷</h1>
+      <p>20题 · 100分 · 60分钟 · 独立完成</p>
+    </div>
+  </header>
+  <main class="w">
+    <section class="c notice">
+      <h2>考试规则</h2>
+      <ul>
+        <li>本卷用于判断A基础轨是否完成，不等同R3期中期末前检测。</li>
+        <li>每题5分；总分至少80分，概念、电路、实验三大类均不得低于60%。</li>
+        <li>第7题支路对象、第10题非纯电阻功率、第14题仪表安全是关键门槛，必须答对。</li>
+        <li>每题同时记录信心和作答状态；猜对不能作为稳定掌握证据。</li>
+      </ul>
+      <div class="progress-line"><progress id="answer-progress" max="20" value="0"></progress><span id="answer-count">0/20已作答</span></div>
+    </section>
+
+    <section class="c" id="quiz" aria-label="A轨基础卷题目"></section>
+
+    <section class="c actions">
+      <button class="btn" id="submit" type="button">提交A基础卷</button>
+      <button class="btn secondary" id="save" type="button">暂存作答</button>
+      <p id="save-message" aria-live="polite"></p>
+    </section>
+
+    <section class="c" id="result" hidden aria-live="polite"></section>
+
+    <section class="c">
+      <h2>下一步计划</h2>
+      <div class="plan" id="next-plan">完成并提交后，系统会根据知识节点生成精确路线。</div>
+      <p><a href="e2-tracks.html">← 返回E2/E3三轨入口</a></p>
+    </section>
+  </main>
+
+  <script>
+    const questions = [
+      {id:'A01', node:'E2-K01', group:'概念条件', text:'关于电流，下列说法正确的是？', options:['电流方向一定与电子定向移动方向相同','电流必须说明所研究的具体支路','只要电路中有电源就一定有持续电流'], answer:1},
+      {id:'A02', node:'E2-K03', group:'概念条件', text:'关于电动势和路端电压，下列说法正确的是？', options:['电动势等于任何工作状态下的路端电压','电动势描述电源把其他形式能转化为电能的本领','电源有内阻时路端电压一定大于电动势'], answer:1},
+      {id:'A03', node:'E2-K04', group:'概念条件', text:'由R=U/I可以得到的正确结论是？', options:['对同一导体，电阻一定随U增大而增大','R=U/I给出某工作状态下电压与电流的比值','任何元件都满足U与I成正比'], answer:1},
+      {id:'A04', node:'E2-K05', group:'概念条件', text:'使用欧姆定律前最重要的检查是？', options:['电流数值是否为整数','元件及其工作状态是否满足欧姆关系','电路中是否只有一个电阻'], answer:1},
+
+      {id:'A05', node:'E2-K06', group:'电路计算', text:'两个电阻并联在6 V电源两端，其中一支路电阻为3 Ω，该支路电流为？', options:['0.5 A','2 A','18 A'], answer:1},
+      {id:'A06', node:'E2-K07', group:'电路计算', text:'电源电动势6 V、内阻1 Ω，外电阻5 Ω，电路电流为？', options:['1 A','1.2 A','6 A'], answer:0},
+      {id:'A07', node:'E2-K06', group:'电路计算', critical:'支路对象', text:'并联电路干路电流3 A，电阻支路电流1 A，则另一条电动机支路电流为？', options:['1 A','2 A','3 A'], answer:1},
+      {id:'A08', node:'E2-K08', group:'电路计算', text:'电源内阻不可忽略。外电路等效电阻增大时，第一步可以确定的是？', options:['总电流减小','所有支路电流都增大','电源内电压增大'], answer:0},
+      {id:'A09', node:'E2-K09', group:'电路计算', text:'一个纯电阻两端电压6 V，通过电流2 A，其电功率为？', options:['3 W','12 W','18 W'], answer:1},
+      {id:'A10', node:'E2-K09', group:'电路计算', critical:'非纯电阻功率', text:'电动机端电压6 V、支路电流2 A、线圈电阻1 Ω，其机械功率为？', options:['4 W','8 W','12 W'], answer:1},
+
+      {id:'A11', node:'E2-K07', group:'图像故障', text:'电源U-I图像中，纵轴截距和斜率绝对值分别表示？', options:['电动势和内阻','内阻和电动势','输出功率和效率'], answer:0},
+      {id:'A12', node:'E2-K10', group:'图像故障', text:'某支路灯泡不亮，电压表跨接灯泡两端示数接近电源电压，最可能的是？', options:['灯泡处断路','灯泡处短路','电源一定损坏'], answer:0},
+      {id:'A13', node:'E2-K04', group:'图像故障', text:'比较两个元件的U-I图像时，首先必须确认？', options:['图线颜色','坐标轴分别表示哪个物理量及单位','图线是否经过原点'], answer:1},
+
+      {id:'A14', node:'E3-K01', group:'实验操作', critical:'仪表安全', text:'用电流表测量前，不能确定电流大小时应如何选择量程？', options:['先用较大量程试测','直接用最小量程提高精度','任意量程都不会损坏仪表'], answer:0},
+      {id:'A15', node:'E3-K02', group:'实验操作', text:'使用多用电表欧姆挡，更换倍率后必须？', options:['机械调零','重新欧姆调零','立即接入带电电路'], answer:1},
+      {id:'A16', node:'E3-K03', group:'实验操作', text:'伏安法测电阻选择内接或外接方案，主要是为了？', options:['消除所有随机误差','减小电表内阻引起的系统误差','让电流一定最大'], answer:1},
+
+      {id:'A17', node:'E3-K05', group:'实验表达', text:'描绘元件伏安特性时，合理的数据处理方式是？', options:['只记录一个工作点','在安全范围内取多组数据并作图','把所有偏离直线的数据删除'], answer:1},
+      {id:'A18', node:'E3-K06', group:'实验表达', text:'用U-I图测电源电动势和内阻，规范描述斜率时应包括？', options:['只写斜率数值','符号、单位及其物理意义','只写图线倾斜方向'], answer:1},
+      {id:'A19', node:'E3-K07', group:'实验表达', text:'研究传感器特性时，判断“灵敏度”首先要明确？', options:['输入量与输出量及图像斜率含义','导线颜色','电源是否放在左侧'], answer:0},
+      {id:'A20', node:'E3-K06', group:'实验表达', text:'实验图线出现明显异常点时，正确处理是？', options:['不加说明直接删除','检查原始记录和操作，说明依据后再决定是否剔除','为使图线好看而修改数据'], answer:1}
+    ];
+
+    const storageKey = 'physics-e2e3-a-exam-v1';
+    let secondsLeft = 3600;
+    let timerHandle;
+    let submitted = false;
+
+    const quiz = document.getElementById('quiz');
+    quiz.innerHTML = questions.map((q, index) => `
+      <article class="question" data-id="${q.id}">
+        <div class="question-meta"><span>${index + 1}. ${q.group}</span><code>${q.node}</code>${q.critical ? `<strong>关键门槛：${q.critical}</strong>` : ''}</div>
+        <h3>${q.text}</h3>
+        <div class="options">${q.options.map((option, optionIndex) => `<label><input type="radio" name="${q.id}" value="${optionIndex}"> <span>${option}</span></label>`).join('')}</div>
+        <div class="response-meta">
+          <label>信心 <select data-confidence="${q.id}"><option value="">未选择</option><option>高</option><option>中</option><option>低</option></select></label>
+          <label>状态 <select data-state="${q.id}"><option value="">未选择</option><option>独立完成</option><option>猜测</option><option>不会</option><option>来不及</option></select></label>
+        </div>
+      </article>`).join('');
+
+    function collect() {
+      const answers = {};
+      const confidence = {};
+      const states = {};
+      questions.forEach(q => {
+        answers[q.id] = document.querySelector(`input[name="${q.id}"]:checked`)?.value ?? null;
+        confidence[q.id] = document.querySelector(`[data-confidence="${q.id}"]`).value;
+        states[q.id] = document.querySelector(`[data-state="${q.id}"]`).value;
+      });
+      return {answers, confidence, states};
+    }
+
+    function updateProgress() {
+      const answered = Object.values(collect().answers).filter(value => value !== null).length;
+      document.getElementById('answer-progress').value = answered;
+      document.getElementById('answer-count').textContent = `${answered}/20已作答`;
+    }
+
+    function saveDraft(showMessage = true) {
+      const data = {...collect(), secondsLeft, updatedAt: new Date().toISOString(), submitted: false};
+      localStorage.setItem(`${storageKey}-draft`, JSON.stringify(data));
+      if (showMessage) document.getElementById('save-message').textContent = '已保存在当前浏览器。';
+    }
+
+    function restoreDraft() {
+      const draft = JSON.parse(localStorage.getItem(`${storageKey}-draft`) || 'null');
+      if (!draft || draft.submitted) return;
+      secondsLeft = Number.isFinite(draft.secondsLeft) ? draft.secondsLeft : 3600;
+      questions.forEach(q => {
+        if (draft.answers?.[q.id] !== null && draft.answers?.[q.id] !== undefined) {
+          const input = document.querySelector(`input[name="${q.id}"][value="${draft.answers[q.id]}"]`);
+          if (input) input.checked = true;
+        }
+        document.querySelector(`[data-confidence="${q.id}"]`).value = draft.confidence?.[q.id] || '';
+        document.querySelector(`[data-state="${q.id}"]`).value = draft.states?.[q.id] || '';
+      });
+      updateProgress();
+    }
+
+    function tick() {
+      document.getElementById('timer').textContent = `${String(Math.floor(secondsLeft / 60)).padStart(2, '0')}:${String(secondsLeft % 60).padStart(2, '0')}`;
+      if (secondsLeft <= 0) {
+        clearInterval(timerHandle);
+        if (!submitted) grade();
+        return;
+      }
+      secondsLeft -= 1;
+      if (secondsLeft % 30 === 0) saveDraft(false);
+    }
+
+    function grade() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerHandle);
+      const response = collect();
+      const groups = {};
+      const nodes = {};
+      const wrong = [];
+      const criticalFailures = [];
+      let correct = 0;
+
+      questions.forEach(q => {
+        const isCorrect = response.answers[q.id] !== null && Number(response.answers[q.id]) === q.answer;
+        groups[q.group] ||= {correct: 0, total: 0};
+        nodes[q.node] ||= {correct: 0, total: 0};
+        groups[q.group].total += 1;
+        nodes[q.node].total += 1;
+        if (isCorrect) {
+          correct += 1;
+          groups[q.group].correct += 1;
+          nodes[q.node].correct += 1;
+        } else {
+          wrong.push(q.node);
+          if (q.critical) criticalFailures.push(q.critical);
+        }
+      });
+
+      const score = correct * 5;
+      const conceptRate = groups['概念条件'].correct / groups['概念条件'].total;
+      const circuitRate = groups['电路计算'].correct / groups['电路计算'].total;
+      const experimentCorrect = groups['实验操作'].correct + groups['实验表达'].correct;
+      const experimentTotal = groups['实验操作'].total + groups['实验表达'].total;
+      const experimentRate = experimentCorrect / experimentTotal;
+      const guessedCorrect = questions.filter(q => response.answers[q.id] !== null && Number(response.answers[q.id]) === q.answer && response.states[q.id] === '猜测').map(q => q.node);
+      const passed = score >= 80 && conceptRate >= .6 && circuitRate >= .6 && experimentRate >= .6 && criticalFailures.length === 0;
+      const reviewDate = new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10);
+      const resultData = {version: 1, track: 'A', score, correct, groups, nodes, wrong: [...new Set(wrong)], criticalFailures, guessedCorrect: [...new Set(guessedCorrect)], passed, secondsUsed: 3600 - secondsLeft, reviewDate, response, submittedAt: new Date().toISOString()};
+      localStorage.setItem(storageKey, JSON.stringify(resultData));
+      localStorage.removeItem(`${storageKey}-draft`);
+
+      const result = document.getElementById('result');
+      result.hidden = false;
+      result.innerHTML = `
+        <h2 class="${passed ? 'pass' : 'fail'}">${score}/100 · ${passed ? 'A轨当前通过' : 'A轨暂未通过'}</h2>
+        <div class="score-grid">${Object.entries(groups).map(([name, value]) => `<div><span>${name}</span><strong>${value.correct}/${value.total}</strong></div>`).join('')}</div>
+        <h3>关键门槛</h3><p>${criticalFailures.length ? `未通过：${criticalFailures.join('、')}` : '支路对象、非纯电阻功率和仪表安全均通过。'}</p>
+        <h3>需要回补的知识点</h3><p>${[...new Set(wrong)].join('、') || '没有答错节点。'}</p>
+        <h3>猜对但尚未形成稳定证据</h3><p>${[...new Set(guessedCorrect)].join('、') || '无。'}</p>`;
+
+      const plan = document.getElementById('next-plan');
+      if (passed) {
+        plan.innerHTML = `<strong>通过路线：</strong>可以选择B轨准入/拓展学习，或在${reviewDate}完成A轨新题复测后结束当前阶段。`;
+      } else if (criticalFailures.length) {
+        plan.innerHTML = `<strong>优先修复关键节点：</strong>${criticalFailures.join('、')}。只返回相关A轨知识卡和错题任务，完成相邻变式后再重测。`;
+      } else {
+        plan.innerHTML = `<strong>精确回补：</strong>${[...new Set(wrong)].join('、') || '分项或总分未达线'}。不要求重新完成全部R1—R3。`;
+      }
+      result.scrollIntoView({behavior: 'smooth'});
+    }
+
+    quiz.addEventListener('change', updateProgress);
+    document.getElementById('save').addEventListener('click', () => saveDraft(true));
+    document.getElementById('submit').addEventListener('click', () => {
+      const answered = Object.values(collect().answers).filter(value => value !== null).length;
+      if (answered < questions.length && !window.confirm(`还有${questions.length - answered}题未作答，仍要提交吗？`)) return;
+      grade();
+    });
+    restoreDraft();
+    tick();
+    timerHandle = setInterval(tick, 1000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E2/E3 B轨即时检测</title><link rel="stylesheet" href="assets/electric.css"></head>
+<body>
+  <header class="hero"><div class="w"><h1>E2/E3 · B轨即时检测</h1><p>6题 · 对应B01—B06 · 检查理解，不作为B轨出关卷</p></div></header>
+  <main class="w">
+    <section class="c notice"><h2>规则</h2><p>至少答对5题才建议进入正式B拓展卷。答错后只返回对应的B任务；如果错误来自节点、功率对象或图像基础，才回到A轨节点。</p></section>
+    <section class="c" id="quiz"></section>
+    <section class="c actions"><button class="btn" id="submit" type="button">提交即时检测</button><button class="btn secondary" id="reset" type="button">清空重做</button></section>
+    <section class="c" id="result" hidden></section>
+    <section class="c"><h2>下一步计划</h2><div class="plan" id="plan">提交后生成。</div><p><a href="e2-b.html">← 返回B轨学习包</a></p></section>
+  </main>
+  <script>
+    const questions = [
+      {id:'BC01',task:'B01',node:'E2-K08',text:'动态电路中路端电压增大，为什么不能直接断定每条支路电流都增大？',options:['因为局部支路的电阻和分流关系也可能变化','因为欧姆定律永远失效','因为总电流一定增大'],answer:0},
+      {id:'BC02',task:'B02',node:'E2-K04/K05',text:'非线性元件伏安曲线与外电路约束线交点的含义是？',options:['只满足元件自身特性','只满足电源约束','同时满足元件特性和外电路约束'],answer:2},
+      {id:'BC03',task:'B03',node:'E2-K09',text:'分析电动机效率随负载变化时，最完整的做法是？',options:['只计算I²r','区分输入、热损耗和有效输出，并确认各量属于电动机支路','只比较端电压'],answer:1},
+      {id:'BC04',task:'B04',node:'E2-K10',text:'用一次电压测量判断“灯泡一定断路”，还需要满足什么条件？',options:['测量结果能排除其他合理故障','电压表示数较大即可','灯泡外观完好'],answer:0},
+      {id:'BC05',task:'B05',node:'E3-K03/K06',text:'比较两种测量方案，以下哪组评价维度最完整？',options:['图是否好看、器材是否少','原理、可测量量、仪表影响、误差方向、数据处理和器材限制','只比较最终数值'],answer:1},
+      {id:'BC06',task:'B06',node:'E3-K07',text:'传感器在高输入端趋于饱和，说明？',options:['输入继续增大时输出变化很小，灵敏度下降','量程和测量能力一定同时增加','可以忽略工作区间'],answer:0}
+    ];
+    const key='physics-e2e3-b-check-v1';
+    const quiz=document.getElementById('quiz'),result=document.getElementById('result'),plan=document.getElementById('plan'),submit=document.getElementById('submit'),reset=document.getElementById('reset');
+    quiz.innerHTML=questions.map((q,i)=>`<article class="question"><div class="question-meta"><span>${q.task}</span><code>${q.node}</code></div><h3>${i+1}. ${q.text}</h3><div class="options">${q.options.map((o,j)=>`<label><input type="radio" name="${q.id}" value="${j}"> <span>${o}</span></label>`).join('')}</div></article>`).join('');
+    function grade(){let correct=0;const weak=[];const answers={};questions.forEach(q=>{const value=document.querySelector(`input[name="${q.id}"]:checked`)?.value??null;answers[q.id]=value;if(value!==null&&Number(value)===q.answer)correct++;else weak.push({task:q.task,node:q.node});});const passed=correct>=5;const data={version:1,correct,total:6,passed,weak,answers,submittedAt:new Date().toISOString()};localStorage.setItem(key,JSON.stringify(data));result.hidden=false;result.innerHTML=`<h2 class="${passed?'pass':'fail'}">${correct}/6 · ${passed?'可以进入B拓展卷':'先回补B任务'}</h2><p><strong>待回补：</strong>${weak.map(x=>`${x.task}（${x.node}）`).join('、')||'无'}</p>`;plan.innerHTML=passed?'<strong>下一步：</strong>进入正式B拓展卷。即时检测通过只表示可以参加考试，不表示B轨完成。':`<strong>下一步：</strong>返回${weak.map(x=>x.task).join('、')}完成迁移任务后重测；若反复失败，再检查对应A轨节点。`;if(passed)result.innerHTML+='<p><a class="btn-link" href="e2-b-exam.html">参加B轨拓展卷</a></p>';result.scrollIntoView({behavior:'smooth'});}
+    submit.addEventListener('click',grade);reset.addEventListener('click',()=>{localStorage.removeItem(key);document.querySelectorAll('input').forEach(x=>x.checked=false);result.hidden=true;plan.textContent='提交后生成。';});
+  </script>
+</body></html>
