@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E1静电场 B轨即时检测</title><link rel="stylesheet" href="assets/electric.css"></head>
+<body>
+  <header class="hero"><div class="w"><h1>E1静电场 · B轨即时检测</h1><p>7题 · 对应B01—B07 · 检查迁移方法</p></div></header>
+  <main class="w">
+    <section class="c notice"><h2>规则</h2><p>至少答对6题才建议进入正式B拓展卷。未通过时只返回对应B任务；若同一基础方向或符号错误反复出现，再回补A轨。</p></section>
+    <section class="c" id="quiz"></section>
+    <section class="c actions"><button class="btn" id="submit" type="button">提交即时检测</button><button class="btn secondary" id="reset" type="button">清空重做</button></section>
+    <section class="c" id="result" hidden></section>
+    <section class="c"><h2>下一步计划</h2><div class="plan" id="plan">提交后精确返回B01—B07。</div><p><a href="e1-b.html">← 返回B轨学习包</a></p></section>
+  </main>
+  <script>
+    const questions=[
+      {id:'E1BC01',task:'B01',node:'E1-K02/K03',text:'利用对称性求合场强时，不能省略哪一步？',options:['逐个画出各场强方向','直接把大小相等的场强删去','假设所有分量相消'],answer:0},
+      {id:'E1BC02',task:'B02',node:'E1-K02/K03',text:'求零场点时先筛选区域，是为了保证？',options:['参与相消的场强方向相反','电势一定为零','距离一定相等'],answer:0},
+      {id:'E1BC03',task:'B03',node:'E1-K04/K05',text:'φ-x图像在某处变化更陡，定性上通常表示沿x方向的场强分量？',options:['绝对值更大','一定为零','与变化快慢无关'],answer:0},
+      {id:'E1BC04',task:'B04',node:'E1-K06/K07',text:'多阶段能量题中存在外力做功，正确做法是？',options:['分阶段记录各类功和能量变化','仍默认机械能守恒','只记录电势能'],answer:0},
+      {id:'E1BC05',task:'B05',node:'E1-K08/K09',text:'缓慢拉开断电电容器极板时，能量分析必须包含？',options:['外力功与场能变化','理想电源始终供能','U保持不变'],answer:0},
+      {id:'E1BC06',task:'B06',node:'E1-K10',text:'粒子从加速区进入偏转区，连接两段的关键状态量之一是？',options:['离开加速区的速度作为偏转区初速度','全程同一加速度','只使用总路程'],answer:0},
+      {id:'E1BC07',task:'B07',node:'E1-K11',text:'评价陌生静电装置的完整结构应包括？',options:['机制、证据、条件、局限和改进','用途和名称','一个公式即可'],answer:0}
+    ];
+    const key='physics-e1-b-check-v1',quiz=document.getElementById('quiz'),result=document.getElementById('result'),plan=document.getElementById('plan');
+    quiz.innerHTML=questions.map((q,i)=>`<article class="question"><div class="question-meta"><span>${q.task}</span><code>${q.node}</code></div><h3>${i+1}. ${q.text}</h3><div class="options">${q.options.map((o,j)=>`<label><input type="radio" name="${q.id}" value="${j}"> <span>${o}</span></label>`).join('')}</div></article>`).join('');
+    function grade(){let correct=0;const weak=[],answers={};questions.forEach(q=>{const value=document.querySelector(`input[name="${q.id}"]:checked`)?.value??null;answers[q.id]=value;if(value!==null&&Number(value)===q.answer)correct++;else weak.push({task:q.task,node:q.node});});const passed=correct>=6;localStorage.setItem(key,JSON.stringify({version:1,correct,total:7,passed,weak,answers,submittedAt:new Date().toISOString()}));result.hidden=false;result.innerHTML=`<h2 class="${passed?'pass':'fail'}">${correct}/7 · ${passed?'可以进入B拓展卷':'先回补B任务'}</h2><p><strong>待回补：</strong>${weak.map(x=>`${x.task}（${x.node}）`).join('、')||'无'}</p>`;plan.innerHTML=passed?'<strong>下一步：</strong>参加正式B拓展卷；即时检测不能替代出关证据。':`<strong>下一步：</strong>返回${weak.map(x=>x.task).join('、')}完成迁移任务后重测。`;if(passed)result.innerHTML+='<p><a class="btn-link" href="e1-b-exam.html">参加B轨拓展卷</a></p>';result.scrollIntoView({behavior:'smooth'});}
+    document.getElementById('submit').addEventListener('click',grade);document.getElementById('reset').addEventListener('click',()=>{localStorage.removeItem(key);document.querySelectorAll('input').forEach(x=>x.checked=false);result.hidden=true;plan.textContent='提交后精确返回B01—B07。';});
+  </script>
+</body></html>

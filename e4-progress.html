@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E4磁场与安培力学习进度</title><link rel="stylesheet" href="assets/electric.css"></head>
+<body>
+  <header class="hero"><div class="w"><h1>E4磁场与安培力 · 学习进度与证据</h1><p>A基础 → B拓展 → C强基 · 本机汇总 · 可导出备份</p></div></header>
+  <main class="w">
+    <section class="c notice"><h2>数据说明</h2><p>本页只读取当前浏览器中的E4学习记录，不上传姓名或答案。换设备、无痕模式或清理浏览器数据后无法自动恢复，请定期导出备份。</p><div class="actions"><button class="btn" id="export" type="button">导出E4学习记录</button><span id="export-state"></span></div></section>
+    <section class="c"><h2>当前路线</h2><div class="plan" id="route">正在读取学习证据……</div></section>
+    <section class="c"><h2>三轨证据</h2><div class="track-grid" id="tracks"></div></section>
+    <section class="c"><h2>证据明细</h2><div class="grid" id="evidence"></div></section>
+    <section class="c"><h2>下一步计划</h2><div class="plan" id="plan"></div><p><a href="e4.html">← 返回E4三轨入口</a> · <a href="electric.html">返回电学中心</a></p></section>
+  </main>
+  <script>
+    const items=[
+      {track:'A',label:'A前置诊断',key:'physics-e4-a-diagnostic-v1',href:'e4-a-diagnostic.html',kind:'diagnostic'},
+      {track:'A',label:'A知识卡',key:'physics-e4-a-learning-v1',href:'e4-a.html',kind:'tasks',total:13},
+      {track:'A',label:'A基础模型',key:'physics-e4-a-models-v1',href:'e4-a-models.html',kind:'tasks',total:6},
+      {track:'A',label:'A基础卷',key:'physics-e4-a-exam-v1',href:'e4-a-exam.html',kind:'exam'},
+      {track:'A',label:'A间隔复测',key:'physics-e4-a-retest-v1',href:'e4-a-retest.html',kind:'exam'},
+      {track:'B',label:'B准入诊断',key:'physics-e4-b-diagnostic-v1',href:'e4-b-diagnostic.html',kind:'diagnostic'},
+      {track:'B',label:'B学习包',key:'physics-e4-b-learning-v1',href:'e4-b.html',kind:'tasks',total:8},
+      {track:'B',label:'B模型训练',key:'physics-e4-b-models-v1',href:'e4-b-models.html',kind:'tasks',total:6},
+      {track:'B',label:'B即时检测',key:'physics-e4-b-check-v1',href:'e4-b-check.html',kind:'exam'},
+      {track:'B',label:'B拓展卷',key:'physics-e4-b-exam-v1',href:'e4-b-exam.html',kind:'exam'},
+      {track:'B',label:'B间隔复测',key:'physics-e4-b-retest-v1',href:'e4-b-retest.html',kind:'exam'},
+      {track:'C',label:'C前置诊断',key:'physics-e4-c-diagnostic-v1',href:'e4-c-diagnostic.html',kind:'diagnostic'},
+      {track:'C',label:'C学习包',key:'physics-e4-c-learning-v1',href:'e4-c.html',kind:'tasks',total:8},
+      {track:'C',label:'C模型训练',key:'physics-e4-c-models-v1',href:'e4-c-models.html',kind:'tasks',total:6},
+      {track:'C',label:'C即时检测',key:'physics-e4-c-check-v1',href:'e4-c-check.html',kind:'exam'},
+      {track:'C',label:'C强基卷',key:'physics-e4-c-exam-v1',href:'e4-c-exam.html',kind:'exam'},
+      {track:'C',label:'C间隔复测',key:'physics-e4-c-retest-v1',href:'e4-c-retest.html',kind:'exam'}
+    ];
+    function read(key){try{return JSON.parse(localStorage.getItem(key)||'null');}catch{return null;}}
+    function state(item,data){if(!data)return{label:'未开始',className:'review'};if(item.kind==='tasks'){const count=new Set(data.done||[]).size;return{label:`${count}/${item.total}项`,className:count===item.total?'ready':'evidence'};}if(data.passed===true||data.admitted===true)return{label:'已通过',className:'ready'};if(data.reviewComplete===false)return{label:'待人工审核',className:'evidence'};return{label:'需回补',className:'review'};}
+    const records=items.map(item=>({...item,data:read(item.key)}));
+    const pass=(key,field='passed')=>Boolean(read(key)?.[field]);
+    const aPassed=pass('physics-e4-a-exam-v1'),bPassed=pass('physics-e4-b-exam-v1'),cPassed=pass('physics-e4-c-exam-v1');
+    const summaries={A:aPassed?'基础轨当前通过':'基础轨未出关',B:bPassed?'拓展轨当前通过':'拓展轨未出关',C:cPassed?'强基轨当前通过':'强基轨未出关'};
+    document.getElementById('tracks').innerHTML=['A','B','C'].map(track=>`<article class="track track-${track.toLowerCase()}"><span>${track}轨</span><h2>${summaries[track]}</h2><p>${records.filter(x=>x.track===track&&x.data).length}/${records.filter(x=>x.track===track).length}项已有记录</p></article>`).join('');
+    document.getElementById('evidence').innerHTML=records.map(item=>{const s=state(item,item.data);return`<article class="m"><span class="status ${s.className}">${item.track}轨 · ${s.label}</span><h3>${item.label}</h3><p>${item.data?.submittedAt?`提交：${new Date(item.data.submittedAt).toLocaleString('zh-CN')}`:item.data?.updated?`更新：${new Date(item.data.updated).toLocaleString('zh-CN')}`:'尚无本机记录'}</p><a href="${item.href}">打开任务</a></article>`;}).join('');
+    let route,plan;if(cPassed){route='E4 A/B/C三轨均已有通过证据。C轨通过不替代普通高考复习。';plan='按最近考试的复测日期完成新题验证，并保留C轨书面原稿。';}else if(bPassed){route='B轨已通过；可以选择进入C轨，也可以留在A/B完成校内复习。';plan='<a href="e4-c-diagnostic.html">参加C轨前置诊断</a>，或按学校进度完成B轨间隔复测。';}else if(aPassed){route='A轨已通过；下一步可参加B轨准入诊断。';plan='<a href="e4-b-diagnostic.html">参加B轨准入诊断</a>，不要求重复A轨全部内容。';}else{route='当前应优先取得A轨基础证据。';plan='<a href="e4-a-diagnostic.html">从A轨前置诊断开始</a>；只回补未达标节点。';}
+    document.getElementById('route').textContent=route;document.getElementById('plan').innerHTML=plan;
+    document.getElementById('export').addEventListener('click',()=>{const payload={schema:'wuli-study/e4-progress',version:1,exportedAt:new Date().toISOString(),records:Object.fromEntries(items.map(x=>[x.key,read(x.key)]))};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`e4-progress-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);document.getElementById('export-state').textContent='已导出；请妥善保存文件。';});
+  </script>
+</body></html>
