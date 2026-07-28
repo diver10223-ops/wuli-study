@@ -10,7 +10,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = sorted(ROOT.glob("e1*.html")) + sorted(ROOT.glob("e2-*.html")) + sorted(ROOT.glob("e4*.html")) + [ROOT / "electric.html", ROOT / "index.html"]
+PAGES = sorted(ROOT.glob("e1*.html")) + sorted(ROOT.glob("e2-*.html")) + sorted(ROOT.glob("e4*.html")) + sorted(ROOT.glob("e5*.html")) + [ROOT / "electric.html", ROOT / "index.html"]
 
 
 class PageParser(HTMLParser):
@@ -87,6 +87,13 @@ def main() -> None:
         ROOT / "data/e4-c-exam.js",
     ]
     for script in shared_scripts:
+        result = subprocess.run(
+            ["node", "--check", script], capture_output=True, text=True, check=False
+        )
+        if result.returncode:
+            failures.append(f"{script.relative_to(ROOT)}: JavaScript syntax: {result.stderr.strip()}")
+
+    for script in sorted((ROOT / "data").glob("e5-*.js")):
         result = subprocess.run(
             ["node", "--check", script], capture_output=True, text=True, check=False
         )
@@ -249,6 +256,32 @@ def main() -> None:
     for rule in {"physics-e4-a-exam-v1", "physics-e4-b-exam-v1", "physics-e4-c-exam-v1", "wuli-study/e4-progress", "exportedAt"}:
         if rule not in e4_progress:
             failures.append(f"e4-progress.html: missing evidence rule {rule}")
+
+    e5_source = (ROOT / "e5.html").read_text(encoding="utf-8")
+    for track in "abc":
+        for suffix in {"diagnostic", "models", "check", "exam", "retest"}:
+            link = f"e5-{track}-{suffix}.html"
+            if f'href="{link}"' not in e5_source:
+                failures.append(f"e5.html: missing route {link}")
+        if f'href="e5-{track}.html"' not in e5_source:
+            failures.append(f"e5.html: missing learning route e5-{track}.html")
+        for kind in {"diagnostic", "learning", "models", "check", "exam", "retest"}:
+            data = ROOT / f"data/e5-{track}-{kind}.js"
+            if not data.exists():
+                failures.append(f"E5 {track.upper()}: missing data {data.name}")
+    e5_progress = (ROOT / "e5-progress.html").read_text(encoding="utf-8")
+    for rule in {"physics-e5-a-exam-v1", "physics-e5-b-exam-v1", "physics-e5-c-exam-v1", "wuli-study/e5-progress", "exportedAt"}:
+        if rule not in e5_progress:
+            failures.append(f"e5-progress.html: missing evidence rule {rule}")
+    for track, score in {"a": 80, "b": 75, "c": 70}.items():
+        diagnostic = (ROOT / f"data/e5-{track}-diagnostic.js").read_text(encoding="utf-8")
+        check = (ROOT / f"data/e5-{track}-check.js").read_text(encoding="utf-8")
+        exam = (ROOT / f"data/e5-{track}-exam.js").read_text(encoding="utf-8")
+        for rule in {"failedGates", "guessedGates", "eligible"}:
+            if rule not in diagnostic + check + exam:
+                failures.append(f"E5 {track.upper()}: missing gate rule {rule}")
+        if f"c.score>={score}" not in exam:
+            failures.append(f"E5 {track.upper()} exam: missing score rule {score}")
 
     rules = {
         "e2-a-exam.html": ["score >= 80", "criticalFailures.length === 0"],
