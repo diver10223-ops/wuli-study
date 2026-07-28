@@ -10,7 +10,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = sorted(ROOT.glob("e1*.html")) + sorted(ROOT.glob("e2-*.html")) + sorted(ROOT.glob("e4*.html")) + [ROOT / "electric.html"]
+PAGES = sorted(ROOT.glob("e1*.html")) + sorted(ROOT.glob("e2-*.html")) + sorted(ROOT.glob("e4*.html")) + [ROOT / "electric.html", ROOT / "index.html"]
 
 
 class PageParser(HTMLParser):
@@ -72,6 +72,11 @@ def main() -> None:
         )
         if result.returncode:
             failures.append(f"{script.relative_to(ROOT)}: JavaScript syntax: {result.stderr.strip()}")
+
+    root_entry = (ROOT / "index.html").read_text(encoding="utf-8")
+    for marker in {'url=electric.html', 'href="electric.html"', 'href="e2-r1.html"'}:
+        if marker not in root_entry:
+            failures.append(f"index.html: missing root entry marker {marker}")
 
     expected_links = {
         "e2-a-exam.html",
