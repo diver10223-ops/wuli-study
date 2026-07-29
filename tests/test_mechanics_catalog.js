@@ -3,9 +3,18 @@ const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
 const root = path.resolve(__dirname, '..');
-const modules = ['m1','m2','m3','m4','m5','m6','m7','m8'];
+const allModules = ['m1','m2','m3','m4','m5','m6','m7','m8'];
 const tracks = ['a','b','c'];
 const stages = ['diagnostic','learning','models','check','exam','retest'];
+const moduleFlag = process.argv.indexOf('--module');
+let modules = allModules;
+if (moduleFlag !== -1) {
+  const requested = (process.argv[moduleFlag + 1] || '').toLowerCase();
+  if (!allModules.includes(requested)) {
+    throw new Error(`--module must be one of ${allModules.join(', ')}`);
+  }
+  modules = [requested];
+}
 let checked = 0;
 for (const moduleId of modules) for (const track of tracks) for (const stage of stages) {
   const file = path.join(root, 'data', `${moduleId}-${track}-${stage}.js`);
@@ -21,4 +30,4 @@ for (const moduleId of modules) for (const track of tracks) for (const stage of 
   if ((stage === 'exam' || stage === 'retest') && typeof config.evaluate !== 'function') throw new Error(`${file}: missing evaluation`);
   checked += 1;
 }
-console.log(`OK: validated ${checked} mechanics stage configs, keys and content collections`);
+console.log(`OK: validated ${checked} mechanics stage configs for ${modules.join(', ')}, keys and content collections`);
