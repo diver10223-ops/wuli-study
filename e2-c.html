@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E2/E3 C轨强基学习包</title><link rel="stylesheet" href="assets/electric.css"></head>
+<body>
+  <header class="hero"><div class="w"><h1>E2/E3 · C轨强基拓展</h1><p>模型推导 · 网络方法 · 非理想测量 · 探究论证</p></div></header>
+  <main class="w">
+    <section class="c notice" id="admission"></section>
+    <section class="c"><h2>C轨边界</h2><p>本学习包服务于强基、竞赛衔接或大学先修，不属于普通高考默认任务。所有推导必须写出模型假设；所有实验结论必须说明证据和不确定性。</p><div class="plan">基本规律 → 明确假设 → 建立模型 → 推导/求解 → 极限与反例 → 实验证据 → 结论边界</div></section>
+    <section class="c grid">
+      <article class="m"><span class="status evidence">C01 · E2-K01/K06</span><h3>稳恒电流与连续性思想</h3><p>把“节点电流关系”提升为电荷不在节点持续积累的结果；区分稳态条件与瞬态过程。</p><div class="challenge"><b>推导任务：</b>用一段时间内节点电荷变化量解释为什么稳态时流入与流出电流代数和为零，并指出瞬态时需要增加什么量。</div><label class="task"><input type="checkbox" value="C01">我能从电荷守恒说明节点关系及其稳态边界</label></article>
+
+      <article class="m"><span class="status evidence">C02 · E2-K02/K06</span><h3>节点电势与回路约束</h3><p>先选参考节点，再用元件关系连接节点电势；支路电流方向可以预设，负值用于修正真实方向。</p><div class="challenge"><b>建模任务：</b>对两节点三支路网络，自主定义参考电势和支路方向，写出节点关系并解释方程数量。</div><label class="task"><input type="checkbox" value="C02">我能规范定义节点电势和支路方向并检查独立方程</label></article>
+
+      <article class="m"><span class="status evidence">C03 · E2-K07</span><h3>等效电源与模型适用区间</h3><p>从端口外部的U-I关系理解等效模型，而不是把内部结构真的视为一个电阻和一个理想电源。</p><div class="challenge"><b>论证任务：</b>说明两个内部结构不同的网络为什么可能在指定工作区间具有相同端口特性，并指出等效失效的可能原因。</div><label class="task"><input type="checkbox" value="C03">我能用端口特性说明等效的意义与局限</label></article>
+
+      <article class="m"><span class="status evidence">C04 · E2-K09</span><h3>参数、极限与最大功率</h3><p>在求极值前明确电源模型、可调参数、研究对象和允许范围；极值点不自动等于效率最优点。</p><div class="challenge"><b>推导任务：</b>从P=E²R/(R+r)²出发，用配方、均值不等式或函数方法论证极值条件，并比较该点效率。</div><label class="task"><input type="checkbox" value="C04">我能推导极值条件并区分最大功率与最大效率</label></article>
+
+      <article class="m"><span class="status evidence">C05 · E2-K04</span><h3>工作电阻与局部变化率</h3><p>区分工作点比值U/I与工作点附近变化率ΔU/ΔI；后者只作为强基衔接概念，不反向混入A轨。</p><div class="challenge"><b>图像任务：</b>在一条非线性U-I曲线上分别画出原点割线和工作点切线，解释两种斜率对应的问题为何不同。</div><label class="task"><input type="checkbox" value="C05">我能区分比值与局部变化率并说明使用场景</label></article>
+
+      <article class="m"><span class="status evidence">C06 · E3-K01/K03</span><h3>非理想仪表与系统误差参数化</h3><p>把电流表内阻和电压表有限内阻写进电路方程，比较测量值与真值，而不是只背“偏大/偏小”。</p><div class="challenge"><b>推导任务：</b>任选伏安法一种接法，建立含RA或RV的表达式，推导测得电阻与真实电阻的关系并讨论极限。</div><label class="task"><input type="checkbox" value="C06">我能把仪表纳入模型并从表达式判断误差</label></article>
+
+      <article class="m"><span class="status evidence">C07 · E3-K06</span><h3>多数据参数估计</h3><p>用整体趋势估计参数，同时检查残差、异常点和系统偏离；更多数据不能自动消除系统误差。</p><div class="challenge"><b>数据任务：</b>设计一张包含原始数据、拟合参数、残差和异常点处理依据的记录表，并说明重复测量解决不了哪类误差。</div><label class="task"><input type="checkbox" value="C07">我能用多组数据估计参数并区分随机与系统影响</label></article>
+
+      <article class="m"><span class="status evidence">C08 · E3-K07</span><h3>自主探究与可反驳论证</h3><p>问题必须导出可测量预测；方案要包含变量、控制、量程、重复、数据处理和可能反例。</p><div class="challenge"><b>探究任务：</b>设计“传感器灵敏度是否随工作点变化”的实验，写出假设、可测预测、操作、图像、判据和局限。</div><label class="task"><input type="checkbox" value="C08">我能设计可检验、可反驳并说明局限的探究方案</label></article>
+    </section>
+    <section class="c"><h2>完成检查</h2><p><strong id="count">0</strong>/8项完成</p><progress id="bar" max="8" value="0"></progress><div class="plan" id="plan"></div><p><a href="e2-c-diagnostic.html">重新进行C轨前置诊断</a> · <a href="e2-tracks.html">返回三轨入口</a></p></section>
+    <section class="c"><h2>下一步计划</h2><div class="plan">完成8项推导与探究任务后进入C轨模型训练；通过后再进入正式C强基卷。勾选完成不能替代书面推导和人工审核证据。</div><p><a class="btn-link" href="e2-c-models.html">进入C轨模型训练</a> <a class="btn-link" href="e2-c-exam.html">参加C轨强基卷</a></p></section>
+  </main>
+
+<script src="assets/storage.js"></script><script src="assets/learning.js"></script><script>WuliLearning.runExisting({module:'E2E3',track:'C',storageKey:'physics-e2e3-c-learning-v1',diagnosticKey:'physics-e2e3-c-diagnostic-v1',admission:s=>s.read('physics-e2e3-c-diagnostic-v1',null)?.passed===true||s.read('physics-e2e3-c-diagnostic-v1',null)?.admitted===true,admissionMessage:'<strong>预览：</strong>先完成本轨准入。',completePlan:'<strong>完成：</strong>进入本轨模型训练。'});</script></body></html>

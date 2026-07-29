@@ -1,0 +1,9 @@
+window.M2ALearning=Object.freeze({version:1,module:'M2',track:'A',storageKey:'physics-mechanics-m2-a-learning-v1',diagnosticKey:'physics-mechanics-m2-a-diagnostic-v1',completePlan:'<strong>知识完成：</strong>进入A轨模型训练。',items:[
+{id:'K01',node:'M2-K01',title:'速度变化与加速度',summary:'加速度是速度变化量与时间的比值，既有大小也有方向。',conditions:'先统一正方向；速度大不代表加速度大。',misconception:'加速度为负不一定减速。',example:'比较v与a同向和反向时速度大小变化。',check:'我能区分速度、速度变化量和加速度'},
+{id:'K02',node:'M2-K02',title:'正方向和符号',summary:'速度、加速度、位移的正负都相对选定正方向。',conditions:'列式前明确正方向且全过程保持一致。',misconception:'负号表示方向，不自动表示数值变小。',example:'把同一减速过程分别取两种正方向列式。',check:'我能用符号表达方向'},
+{id:'K03',node:'M2-K03',title:'匀变速模型与速度关系',summary:'加速度恒定时v=v0+at。',conditions:'仅用于同一恒加速度阶段；各量属于同一参考系。',misconception:'“均匀增加位移”不是匀变速。',example:'由初速度、加速度和时间求末速度并检查方向。',check:'我能先判模型再用速度关系'},
+{id:'K04',node:'M2-K04',title:'位移关系与公式选择',summary:'恒加速度阶段x=v0t+at²/2，并可消去时间得到速度位移关系。',conditions:'根据已知量选择最少未知量的关系。',misconception:'位移不是路程，公式中的x带符号。',example:'不用时间求制动距离。',check:'我会根据已知量选择关系'},
+{id:'K05',node:'M2-K05',title:'v-t与x-t图像',summary:'v-t斜率是a、有向面积是位移；x-t斜率是速度。',conditions:'图像不是运动轨迹，面积在时间轴下方为负。',misconception:'不能把x-t曲线形状当空间轨迹。',example:'从分段v-t图求总位移。',check:'我能读取斜率与有向面积'},
+{id:'K06',node:'M2-K06',title:'刹车停止与有效时间',summary:'先求停下时刻，公式只在0到停止时刻有效。',conditions:'题目未说明倒车时，停下后速度保持零。',misconception:'超出有效时间代式会产生虚假倒车。',example:'比较2秒和10秒内的刹车位移。',check:'我会检查停止时刻'},
+{id:'K07',node:'M2-K07',title:'自由落体',summary:'近地面、初速度为零、忽略阻力时以g做匀加速运动。',conditions:'明确正方向和g的符号。',misconception:'不同质量物体在同地同条件下g相同。',example:'上抛后下落不能全程叫自由落体。',check:'我会核验自由落体条件'},
+{id:'K08',node:'M2-K08',title:'分段、追及与实验',summary:'条件改变处分段，段间位置和速度状态衔接；实验由数据求瞬时速度和加速度。',conditions:'每段单独列时间、初态和加速度。',misconception:'多阶段不能共用一个初速度或时间。',example:'画刹车—停留—再启动时间线。',check:'我能建立分段状态表'}]});
