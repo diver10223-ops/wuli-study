@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>E8电磁综合阶段出关卷</title>
+  <link rel="stylesheet" href="assets/electric.css">
+</head>
+<body>
+<header class="hero"><div class="w"><h1>E8 电磁综合阶段出关卷</h1><p>建议40分钟独立完成；覆盖电场、电路、磁场、电磁感应、交变电流与实验。</p></div></header>
+<main class="w">
+  <section class="c">
+    <div class="progress"><span id="progress"></span></div>
+    <p id="timer" class="tag">剩余 40:00</p>
+    <form id="paper"></form>
+    <button id="submit" class="btn" type="button">交卷并生成计划</button>
+    <div id="result" class="plan" aria-live="polite"></div>
+  </section>
+  <section class="c">
+    <h2>出关规则</h2>
+    <ul><li>总分至少 6/8；</li><li>实验题与综合建模题必须答对；</li><li>未通过只回补错题对应模块，完成 1、3、7 天复测。</li></ul>
+    <p><a href="electric.html">返回电学学习中心</a></p>
+  </section>
+</main>
+<script>
+const questions=[
+ {m:'E1 电场',q:'带正电粒子仅受静电力从静止开始沿电场线运动，下列必然正确的是？',o:['电势一定升高','电势能一定降低','加速度一定增大','速度方向一定与场强相反'],a:1},
+ {m:'E2 电路',q:'电源电动势和内阻不变，外电阻增大时，下列正确的是？',o:['路端电压降低','干路电流增大','电源内电压降低','电源效率降低'],a:2},
+ {m:'E4/E5 磁场',q:'带电粒子垂直进入匀强磁场，只将速率变为原来的2倍，则轨道半径和周期如何变化？',o:['半径2倍、周期不变','半径不变、周期2倍','均为2倍','均不变'],a:0},
+ {m:'E6 感应',q:'闭合线圈中的磁通量均匀增大时，下列判断正确的是？',o:['感应电动势逐渐增大','感应电流方向阻碍磁通量变化','感应电流方向由磁场方向单独决定','没有感应电动势'],a:1},
+ {m:'E7 交变电流',q:'理想变压器原、副线圈匝数比为5:1，原线圈接220 V正弦交流电，副线圈电压有效值为？',o:['44 V','110 V','220 V','1100 V'],a:0},
+ {m:'E3 实验',q:'伏安法测小电阻，为减小电流表分压造成的系统误差，通常应采用？',o:['电流表外接法','电流表内接法','滑动变阻器限流法即可消除','交换电表位置'],a:0,required:true},
+ {m:'E6 综合建模',q:'金属棒在匀强磁场中沿导轨匀速切割磁感线。写闭合回路电流时，最完整的建模顺序是？',o:['先算安培力再猜电流','确定对象与方向→求感应电动势→求总电阻→用闭合电路欧姆定律','直接使用I=BLv/R且不检查条件','只用能量守恒'],a:1,required:true},
+ {m:'规范表达',q:'综合计算题的最小充分表达应优先包含？',o:['只有最终数值','原始规律、成立条件、代数过程、单位与方向','大量文字但不列式','只写变形后的结论公式'],a:1}
+];
+const paper=document.getElementById('paper'),progress=document.getElementById('progress'),result=document.getElementById('result');
+questions.forEach((x,i)=>{const box=document.createElement('fieldset');box.className='q';box.innerHTML=`<legend>${i+1}. <span class="tag">${x.m}</span> ${x.q}</legend>`+x.o.map((v,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${String.fromCharCode(65+j)}. ${v}</label>`).join('');paper.appendChild(box)});
+function update(){const done=questions.filter((_,i)=>paper.querySelector(`input[name=q${i}]:checked`)).length;progress.style.width=`${done/questions.length*100}%`}
+paper.addEventListener('change',update);
+let remain=2400;const tick=setInterval(()=>{remain--;document.getElementById('timer').textContent=`剩余 ${String(Math.floor(remain/60)).padStart(2,'0')}:${String(remain%60).padStart(2,'0')}`;if(remain<=0){clearInterval(tick);grade()}},1000);
+function grade(){clearInterval(tick);let score=0,wrong=[],requiredPassed=true;questions.forEach((x,i)=>{const picked=paper.querySelector(`input[name=q${i}]:checked`);const ok=picked&&Number(picked.value)===x.a;if(ok)score++;else{wrong.push(x.m);if(x.required)requiredPassed=false}});const passed=score>=6&&requiredPassed;const reviews=[1,3,7].map(d=>{const t=new Date();t.setDate(t.getDate()+d);return `${d}天后 ${t.toLocaleDateString('zh-CN')}`});const data={score,total:questions.length,passed,wrong,finishedAt:new Date().toISOString(),reviews};localStorage.setItem('e8-exam-result',JSON.stringify(data));result.innerHTML=`<h2>${passed?'已出关':'暂未出关'}：${score}/8</h2><p>${wrong.length?'需回补：'+[...new Set(wrong)].join('、'):'所有能力点通过。'}</p><h3>下一步计划</h3><p>${passed?'进入线下综合卷验证，并保留7天复测。':'只回到上述模块学习页，完成相邻变式后再测；不要整章重学。'}</p><p>复测：${reviews.join('；')}</p>`;result.scrollIntoView({behavior:'smooth'})}
+document.getElementById('submit').addEventListener('click',grade);
+update();
+</script>
+</body>
+</html>
