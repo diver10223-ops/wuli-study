@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>力学M1—M8总进度</title><link rel="stylesheet" href="assets/electric.css"></head>
+<body>
+  <header class="hero"><div class="w"><h1>力学M1—M8总进度</h1><p>模块 · A/B/C轨 · 正式卷 · 间隔复测 · 本机证据</p></div></header>
+  <main class="w">
+    <section class="c notice"><p>本页沿用电学总进度机制，只读取当前浏览器本地记录，不上传数据。未完成开发的模块保持“未通过”，不会生成虚假完成记录。</p><button class="btn" id="export" type="button">导出全力学证据</button> <span id="state"></span></section>
+    <section class="c grid" id="modules"></section>
+    <section class="c"><div class="plan" id="plan"></div><p><a href="mechanics.html">← 返回力学中心</a> · <a href="index.html">返回物理总中心</a></p></section>
+  </main>
+  <script src="assets/storage.js"></script><script src="data/mechanics-course.js"></script><script src="assets/evidence.js"></script><script src="assets/progress.js"></script>
+  <script>WuliProgress.run({course:WuliMechanicsCourse,schema:'wuli-study/mechanics-progress',slug:'mechanics',note:'每个模块均须完成三轨六阶段开发后方可标记为闭环。'});</script>
+</body>
+</html>

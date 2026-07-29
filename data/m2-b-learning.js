@@ -1,0 +1,9 @@
+window.M2BLearning=Object.freeze({version:1,module:'M2',track:'B',storageKey:'physics-mechanics-m2-b-learning-v1',diagnosticKey:'physics-mechanics-m2-b-diagnostic-v1',completePlan:'<strong>迁移学习完成：</strong>进入B轨综合模型。',items:[
+{id:'BK01',node:'M2-BK01',title:'位置方程与相遇条件',summary:'为每个对象建立同一坐标系的位置函数，相遇条件是同一时刻位置相同。',conditions:'统一原点、正方向和计时起点。',misconception:'速度相同只可能是距离极值条件，不等于相遇。',example:'写出含初始间距的两车位置方程。',check:'我能从位置相等建立相遇方程'},
+{id:'BK02',node:'M2-BK02',title:'相对位移与初始距离',summary:'相对位移累计用于消除或增加初始距离。',conditions:'明确“谁相对谁”及符号。',misconception:'相对速度积分不能漏初距。',example:'由v-t图两曲线面积判断是否追上。',check:'我会把初始距离纳入判据'},
+{id:'BK03',node:'M2-BK03',title:'多阶段时间线',summary:'动作、条件或加速度改变时分段，交界状态连续。',conditions:'各段使用自己的局部时间或明确全局时间。',misconception:'不能让后车在反应时间内提前制动。',example:'建立反应—制动—停止三段表。',check:'我能按事件时刻分段'},
+{id:'BK04',node:'M2-BK04',title:'最近距离和临界',summary:'相对速度为零给出距离极值候选，再检查区间和边界。',conditions:'临界相撞常联立距离为零与相对速度为零。',misconception:'极值时刻未必在有效阶段内。',example:'求安全制动最小初距。',check:'我会核验临界条件和区间'},
+{id:'BK05',node:'M2-BK05',title:'多过程图像重构',summary:'斜率读加速度、面积读位移，利用连续性补全分段图像。',conditions:'速度可连续而加速度突变。',misconception:'图像折点不表示位置跳变。',example:'由文字过程画完整v-t图。',check:'我能在图像和过程间双向转换'},
+{id:'BK06',node:'M2-BK06',title:'多解筛选',summary:'代数解必须满足时间非负、阶段区间、方向和题设约束。',conditions:'将每个根代回对应阶段。',misconception:'数学根不自动具有物理意义。',example:'筛除停止后虚假相遇根。',check:'我会逐根做物理核验'},
+{id:'BK07',node:'M2-BK07',title:'实验方案评价',summary:'从目标、可测量量、控制变量、数据处理、误差和结论证据评价。',conditions:'结论强度不能超过数据支持范围。',misconception:'拟合直线不自动证明因果。',example:'比较纸带法和传感器方案。',check:'我能指出证据与局限'},
+{id:'BK08',node:'M2-BK08',title:'陌生规律迁移',summary:'提取题给关系、确定适用区间、分段计算并作极限与单位检查。',conditions:'不擅自把变加速改成匀变速。',misconception:'陌生符号不代表新定律不可用。',example:'按题给分段a-t规律求速度变化。',check:'我能使用题给模型而不越界'}]});
