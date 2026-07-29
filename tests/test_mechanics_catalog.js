@@ -60,7 +60,24 @@ if (modules.includes('m2')) {
     c: new Set(['M2-CK01','M2-CK02','M2-CK03','M2-CK04','M2-CK05','M2-CK06','M2-CK07','M2-CK08']),
   };
   const forbidden = ['任务必须','说明条件并连接物理意义','处理某任务应优先','完成一个对应的推导或数值检验','独立完成建模、推导与边界检查'];
+  const softTemplates = ['比较两种情况','比较v与a同向和反向','由已知量求未知量','给v0、a、t求','画时间线','正确做法是','应如何处理','应使用什么','首先检查什么','写出对应关系','完成建模与核验','完成公式检查'];
+  const requiredFields = ['summary','conditions','misconception','example','check'];
+  const normalizeNearPrompt = text => text
+    .replace(/[甲乙前后小汽车车辆车列车小车滑块质点物体机器人无人车公交车电动车]/g, '对象')
+    .replace(/-?\d+(?:\.\d+)?(?:\/\d+)?/g, '#')
+    .replace(/m\/s²|m\/s|cm|ms|m|s|SI/g, '单位')
+    .replace(/[，。；：、“”‘’（）()\s]/g, '');
+  const bigrams = text => {
+    const normalized = text.replace(/[，。；：、“”‘’（）()\s]/g, '');
+    return new Set(Array.from({ length: Math.max(0, normalized.length - 1) }, (_, index) => normalized.slice(index, index + 2)));
+  };
+  const similarity = (left, right) => {
+    const a = bigrams(left), b = bigrams(right);
+    const intersection = [...a].filter(token => b.has(token)).length;
+    return intersection / Math.max(1, a.size + b.size - intersection);
+  };
   const questionTexts = new Map();
+  const assessmentPrompts = [];
   for (const track of tracks) {
     const configs = {};
     for (const stage of stages) {
@@ -73,15 +90,44 @@ if (modules.includes('m2')) {
       configs[stage] = config;
       for (const item of config.questions || config.items) {
         if (!matrices[track].has(item.node)) throw new Error(`${file}: ${item.id} has unmapped node ${item.node}`);
+        if (stage === 'learning' || stage === 'models') {
+          for (const field of requiredFields) if (typeof item[field] !== 'string' || !item[field].trim()) {
+            throw new Error(`${file}: ${item.id} missing non-empty ${field}`);
+          }
+          for (const phrase of softTemplates) if (requiredFields.some(field => item[field].includes(phrase))) {
+            throw new Error(`${file}: ${item.id} contains soft template phrase: ${phrase}`);
+          }
+          if (item.summary.trim() === item.example.trim() || similarity(item.summary, item.example) >= 0.72) {
+            throw new Error(`${file}: ${item.id} summary and example duplicate or near-duplicate duties`);
+          }
+          if (!/[\d=<>≤≥]|是否|判断|结论|支持|不能/.test(item.example)) {
+            throw new Error(`${file}: ${item.id} example lacks a concrete value, relation, or verifiable conclusion`);
+          }
+          if (/^注意|我能|我会|完成核验|完成检查/.test(item.check)) {
+            throw new Error(`${file}: ${item.id} check is not an executable student action`);
+          }
+        }
         if (!item.text) continue;
         const normalized = item.text.replace(/\s+/g, '');
         if (questionTexts.has(normalized)) throw new Error(`${file}: repeats question text from ${questionTexts.get(normalized)}`);
         questionTexts.set(normalized, `${track}-${stage}-${item.id}`);
+        if (['check','exam','retest'].includes(stage)) assessmentPrompts.push({ track, stage, id: item.id, text: item.text });
+        if (stage === 'exam' && item.task !== item.node.replace(/^M2-/, '')) {
+          throw new Error(`${file}: ${item.id} task ${item.task} does not match node ${item.node}`);
+        }
       }
     }
     const examNodes = new Set(configs.exam.questions.map(question => question.node));
     const missing = [...matrices[track]].filter(node => !examNodes.has(node));
     if (missing.length) throw new Error(`M2 ${track.toUpperCase()} exam misses matrix nodes: ${missing.join(', ')}`);
   }
-  console.log('OK: M2 content audit found mapped nodes, full exam coverage, distinct prompts and no generic templates');
+  for (let i = 0; i < assessmentPrompts.length; i++) for (let j = i + 1; j < assessmentPrompts.length; j++) {
+    const left = assessmentPrompts[i], right = assessmentPrompts[j];
+    if (left.stage === right.stage && left.track === right.track) continue;
+    const normalizedLeft = normalizeNearPrompt(left.text), normalizedRight = normalizeNearPrompt(right.text);
+    if (normalizedLeft === normalizedRight || similarity(normalizedLeft, normalizedRight) >= 0.82) {
+      throw new Error(`M2 near-duplicate assessment prompts: ${left.track}-${left.stage}-${left.id} / ${right.track}-${right.stage}-${right.id}`);
+    }
+  }
+  console.log('OK: M2 content audit found mapped nodes, task alignment, full exam coverage, distinct field duties, and no template or near-duplicate prompts');
 }
