@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>E2/E3 B轨拓展学习包</title>
+  <link rel="stylesheet" href="assets/electric.css">
+</head>
+<body>
+  <header class="hero"><div class="w"><h1>E2/E3 · B轨拓展迁移</h1><p>不是增加公式数量，而是在条件变化和陌生情境中独立建模</p></div></header>
+  <main class="w">
+    <section class="c notice" id="admission"></section>
+    <section class="c"><h2>B轨学习地图</h2><div class="plan">条件变化 → 对象与过程 → 等效/能量/图像 → 实验证据 → 论证边界</div><p>每个任务必须先独立回答“研究对象、变化原因、适用规律、结论边界”，再勾选完成。</p></section>
+
+    <section class="c grid">
+      <article class="m"><span class="status review">B01 · E2-K08</span><h3>复杂动态电路</h3><p><strong>方法：</strong>先处理开关或元件变化，再依次判断等效电阻、总电流、内电压、路端电压和局部支路量。</p><div class="challenge"><b>迁移任务：</b>说明为什么“路端电压增大”不能直接推出每条支路电流都增大，并给出一个反例结构。</div><label class="task"><input type="checkbox" value="B01">我能画因果链并解释局部量不能只看总量</label></article>
+
+      <article class="m"><span class="status review">B02 · E2-K04/K05</span><h3>非线性元件与工作点</h3><p><strong>方法：</strong>确认坐标轴和工作状态；用同一组U、I描述工作点，不把整条曲线当作恒定电阻直线。</p><div class="challenge"><b>迁移任务：</b>给定元件伏安曲线和电源约束线，说明交点为什么同时满足元件特性与外电路条件。</div><label class="task"><input type="checkbox" value="B02">我能读取工作点并说明两条约束的物理意义</label></article>
+
+      <article class="m"><span class="status review">B03 · E2-K09</span><h3>能量、效率与参数变化</h3><p><strong>方法：</strong>分别标记电源总功率、内耗、外电路功率，以及非纯电阻用电器的输入、热和有效输出。</p><div class="challenge"><b>迁移任务：</b>电动机负载变化时，不能只凭一个功率公式判断效率；列出必须同步确认的电压、电流、线圈电阻和有效输出。</div><label class="task"><input type="checkbox" value="B03">我能建立完整能量账本并说明效率对象</label></article>
+
+      <article class="m"><span class="status review">B04 · E2-K10</span><h3>故障诊断与证据充分性</h3><p><strong>方法：</strong>提出多个合理假设，预测每个假设下的电表示数，再用新测量排除，而不是看到一个现象就下结论。</p><div class="challenge"><b>迁移任务：</b>设计最少的新增测量，区分“灯泡断路”和“连接点接触不良”，并说明测量结果怎样支持结论。</div><label class="task"><input type="checkbox" value="B04">我能用排除法说明证据为什么充分</label></article>
+
+      <article class="m"><span class="status review">B05 · E3-K03/K06</span><h3>实验方案比较</h3><p><strong>方法：</strong>比较目的、可测量量、仪表影响、系统误差方向、数据处理和器材限制。</p><div class="challenge"><b>迁移任务：</b>对两种测电源E、r方案，写出各自图像的横纵轴、截距、斜率和主要系统误差，不能只说“方案二更准确”。</div><label class="task"><input type="checkbox" value="B05">我能用同一评价框架比较两套实验方案</label></article>
+
+      <article class="m"><span class="status review">B06 · E3-K07</span><h3>传感器定标与开放论证</h3><p><strong>方法：</strong>确定输入量、输出量、工作区间、灵敏度和重复性，再建立定标关系。</p><div class="challenge"><b>迁移任务：</b>若传感器在高端趋于饱和，说明为什么扩大输入范围不一定提升测量能力，并提出改进方案。</div><label class="task"><input type="checkbox" value="B06">我能评价工作区间并给出有依据的改进方案</label></article>
+    </section>
+
+    <section class="c">
+      <h2>完成检查</h2>
+      <p><strong id="count">0</strong>/6项完成</p><progress id="bar" max="6" value="0"></progress>
+      <div class="plan" id="plan"></div>
+      <p><a href="e2-b-diagnostic.html">重新进行B准入诊断</a> · <a href="e2-tracks.html">返回三轨入口</a></p>
+    </section>
+    <section class="c"><h2>下一步计划</h2><div class="plan">六个任务完成后先参加即时检测；通过后进入正式B拓展卷。仅凭勾选不能把B轨标记为通过。</div><p><a class="btn-link" href="e2-b-check.html">参加B轨即时检测</a> <a class="btn-link" href="e2-b-exam.html">参加B轨拓展卷</a></p></section>
+  </main>
+  <script src="assets/module.js"></script>
+  <script>
+    const diagnostic = JSON.parse(localStorage.getItem('physics-e2e3-b-diagnostic-v1') || 'null');
+    const aExam = JSON.parse(localStorage.getItem('physics-e2e3-a-exam-v1') || 'null');
+    const admission = document.getElementById('admission');
+    const admitted = Boolean(diagnostic?.admitted || aExam?.passed);
+    if (diagnostic?.admitted) {
+      admission.innerHTML = `<h2 class="pass">B轨准入已通过</h2><p>诊断${diagnostic.correct}/10。优先关注：${diagnostic.guessed?.join('、') || '无猜对节点'}。</p>`;
+    } else if (aExam?.passed) {
+      admission.innerHTML = '<h2>A轨已通过</h2><p>可以开始B轨，但建议先完成B准入诊断，以确定六个任务的优先顺序。</p>';
+    } else {
+      admission.innerHTML = '<h2 class="fail">尚无B轨准入证据</h2><p>可以预览本页，但正式开始前请先完成A基础卷或B准入诊断。系统不会强制重学整个A轨。</p><p><a class="btn-link" href="e2-b-diagnostic.html">参加B准入诊断</a></p>';
+    }
+    if (admitted) {
+      initModule('physics-e2e3-b-learning-v1');
+    } else {
+      document.querySelectorAll('.task input').forEach(input => input.disabled = true);
+      document.getElementById('count').textContent = '0';
+      document.getElementById('bar').value = 0;
+      document.getElementById('plan').textContent = '预览模式：取得A轨通过或B准入证据后才会启用任务记录。';
+    }
+  </script>
+</body>
+</html>
