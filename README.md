@@ -91,6 +91,8 @@
 - [打开北京高中物理学习总中心](index.html)
 - [打开力学学习中心（M1—M8）](mechanics.html)
 - [查看力学课程机器清单](data/mechanics-course.js)
+- [查看全力学总进度](mechanics-progress.html)
+- [查看物理模块统一开发标准](docs/物理模块统一开发标准.md)
 
 - [北京高中物理学习系统分析与样板章设计](docs/北京高中物理学习系统分析与样板章设计.md)
 - [电学首期建设与样板模块计划](docs/电学首期建设与样板模块计划.md)
