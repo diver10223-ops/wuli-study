@@ -31,3 +31,36 @@ for (const moduleId of modules) for (const track of tracks) for (const stage of 
   checked += 1;
 }
 console.log(`OK: validated ${checked} mechanics stage configs for ${modules.join(', ')}, keys and content collections`);
+
+if (modules.includes('m2')) {
+  const matrices = {
+    a: new Set(['M2-K01','M2-K02','M2-K03','M2-K04','M2-K05','M2-K06','M2-K07','M2-K08']),
+    b: new Set(['M2-BK01','M2-BK02','M2-BK03','M2-BK04','M2-BK05','M2-BK06','M2-BK07','M2-BK08']),
+    c: new Set(['M2-CK01','M2-CK02','M2-CK03','M2-CK04','M2-CK05','M2-CK06','M2-CK07','M2-CK08']),
+  };
+  const forbidden = ['任务必须','说明条件并连接物理意义','处理某任务应优先','完成一个对应的推导或数值检验','独立完成建模、推导与边界检查'];
+  const questionTexts = new Map();
+  for (const track of tracks) {
+    const configs = {};
+    for (const stage of stages) {
+      const file = path.join(root, 'data', `m2-${track}-${stage}.js`);
+      const source = fs.readFileSync(file, 'utf8');
+      for (const phrase of forbidden) if (source.includes(phrase)) throw new Error(`${file}: generic template phrase: ${phrase}`);
+      const window = {};
+      vm.runInNewContext(source, { window, Set }, { filename: file });
+      const config = Object.values(window)[0];
+      configs[stage] = config;
+      for (const item of config.questions || config.items) {
+        if (!matrices[track].has(item.node)) throw new Error(`${file}: ${item.id} has unmapped node ${item.node}`);
+        if (!item.text) continue;
+        const normalized = item.text.replace(/\s+/g, '');
+        if (questionTexts.has(normalized)) throw new Error(`${file}: repeats question text from ${questionTexts.get(normalized)}`);
+        questionTexts.set(normalized, `${track}-${stage}-${item.id}`);
+      }
+    }
+    const examNodes = new Set(configs.exam.questions.map(question => question.node));
+    const missing = [...matrices[track]].filter(node => !examNodes.has(node));
+    if (missing.length) throw new Error(`M2 ${track.toUpperCase()} exam misses matrix nodes: ${missing.join(', ')}`);
+  }
+  console.log('OK: M2 content audit found mapped nodes, full exam coverage, distinct prompts and no generic templates');
+}
