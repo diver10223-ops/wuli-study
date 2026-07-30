@@ -7,7 +7,7 @@ window.M3BLearning = Object.freeze({
   completePlan: "<strong>完成：</strong>进入下一阶段。",
   items: [
     {
-      id: "K01",
+      id: "M3BL01",
       node: "M3-BK01",
       title: "多接触面与叠放体",
       summary:
@@ -22,7 +22,7 @@ window.M3BLearning = Object.freeze({
         "分别列P、Q、P+Q三张受力清单，核对内力成对且整体竖直方程给N_地=35 N≥0。",
     },
     {
-      id: "K02",
+      id: "M3BL02",
       node: "M3-BK02",
       title: "缓慢变化与三力平衡",
       summary:
@@ -36,7 +36,7 @@ window.M3BLearning = Object.freeze({
         "在结点画三力并逐项代回ΣFx=0、ΣFy=0；检查绳拉力为正，杆可以提供推力。",
     },
     {
-      id: "K03",
+      id: "M3BL03",
       node: "M3-BK03",
       title: "摩擦临界与接触切换",
       summary:
@@ -50,7 +50,7 @@ window.M3BLearning = Object.freeze({
         "先写候选N和所需f，再依次检查|f|≤μsN与N≥0；把22.7 N代回两式核对两边均约18.2 N。",
     },
     {
-      id: "K04",
+      id: "M3BL04",
       node: "M3-BK04",
       title: "整体法和隔离法",
       summary:
@@ -65,7 +65,7 @@ window.M3BLearning = Object.freeze({
         "先用整体核对外力和，再隔离A求界面力；最后对B列式确认A对B摩擦向右10 N与地面摩擦向左10 N平衡。",
     },
     {
-      id: "K05",
+      id: "M3BL05",
       node: "M3-BK05",
       title: "绳、杆、弹簧组合约束",
       summary:
@@ -80,7 +80,7 @@ window.M3BLearning = Object.freeze({
         "核对绳T=10 N>0；代回竖直平衡16+8-24=0；再确认0.040 m未超过题设弹性限度0.050 m。",
     },
     {
-      id: "K06",
+      id: "M3BL06",
       node: "M3-BK06",
       title: "测力计与摩擦实验证据",
       summary:

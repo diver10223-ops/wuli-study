@@ -7,7 +7,7 @@ window.M3CModels = Object.freeze({
   completePlan: "<strong>完成：</strong>进入下一阶段。",
   items: [
     {
-      id: "M01",
+      id: "M3CM01",
       node: "M3-CK01",
       title: "平衡参考系边界",
       summary:
@@ -22,7 +22,7 @@ window.M3CModels = Object.freeze({
         "在方程前写明“地面惯性系”；若对象对该系有加速度，就停止使用M3静力平衡模型。",
     },
     {
-      id: "M02",
+      id: "M3CM02",
       node: "M3-CK02",
       title: "分布载荷的合力与作用点",
       summary:
@@ -37,7 +37,7 @@ window.M3CModels = Object.freeze({
         "把两段载荷分别离散为200 N与600 N，核对ΣF=800 N；关于左端验总矩200×1+600×3=2000 N·m，再验800×2.5=2000 N·m。",
     },
     {
-      id: "M03",
+      id: "M3CM03",
       node: "M3-CK03",
       title: "多约束与接触临界",
       summary:
@@ -52,7 +52,7 @@ window.M3CModels = Object.freeze({
         "以物体为对象由ΣFy=N+P-40=0写候选N=40-P，并与N≥0联立得到0≤P≤40 N；P>40 N时删去地面支持力，切换离地模型而非保留负N。",
     },
     {
-      id: "M04",
+      id: "M3CM04",
       node: "M3-CK04",
       title: "复杂共点力矢量几何",
       summary:
@@ -67,7 +67,7 @@ window.M3CModels = Object.freeze({
         "以结点为对象按两已知绳方向作力多边形；用余弦定理核对合力√1900≈43.6 N，第三力取反向，并验20、30、43.6满足三角形不等式且张力为正。",
     },
     {
-      id: "M05",
+      id: "M3CM05",
       node: "M3-CK05",
       title: "参数平衡与存在条件",
       summary:
@@ -82,7 +82,7 @@ window.M3CModels = Object.freeze({
         "先列ΣF垂=0与ΣF沿=0求N与所需f，再作比值|f|/N=tanθ；最后检查N=mg cosθ≥0及|f|≤μsN，超界即切换滑动模型。",
     },
     {
-      id: "M06",
+      id: "M3CM06",
       node: "M3-CK06",
       title: "力矩、支反力与模型边界",
       summary:

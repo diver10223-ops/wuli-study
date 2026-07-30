@@ -7,7 +7,7 @@ window.M3BModels = Object.freeze({
   completePlan: "<strong>完成：</strong>进入下一阶段。",
   items: [
     {
-      id: "M01",
+      id: "M3BM01",
       node: "M3-BK01",
       title: "多接触面与叠放体",
       summary:
@@ -22,7 +22,7 @@ window.M3BModels = Object.freeze({
         "分别隔离A、B及整体并标两个接触面；核对A、B间摩擦成对，代回ΣFx=8-8=0，且各支持力非负，故两个接触模型都保留。",
     },
     {
-      id: "M02",
+      id: "M3BM02",
       node: "M3-BK02",
       title: "缓慢变化与三力平衡",
       summary:
@@ -36,7 +36,7 @@ window.M3BModels = Object.freeze({
         "在结点画三力并逐项代回ΣFx=0、ΣFy=0；检查绳拉力为正，杆可以提供推力。",
     },
     {
-      id: "M03",
+      id: "M3BM03",
       node: "M3-BK03",
       title: "摩擦临界与接触切换",
       summary:
@@ -50,7 +50,7 @@ window.M3BModels = Object.freeze({
         "先写候选N和所需f，再依次检查|f|≤μsN与N≥0；把22.7 N代回两式核对两边均约18.2 N。",
     },
     {
-      id: "M04",
+      id: "M3BM04",
       node: "M3-BK04",
       title: "整体法和隔离法",
       summary:
@@ -65,7 +65,7 @@ window.M3BModels = Object.freeze({
         "先以A+B整体列12-f地=0，再隔离上块列ΣFx=0得界面摩擦候选值0；最后隔离下块核对12-12=0并检查两接触面的N≥0。",
     },
     {
-      id: "M05",
+      id: "M3BM05",
       node: "M3-BK05",
       title: "绳、杆、弹簧组合约束",
       summary:
@@ -80,7 +80,7 @@ window.M3BModels = Object.freeze({
         "隔离重物列T-30=0得候选T=30 N>0；同绳同张力使kx=30 N，核对x=30/600=0.050 m，并确认绳张紧及弹簧未超过题设弹性限度。",
     },
     {
-      id: "M06",
+      id: "M3BM06",
       node: "M3-BK06",
       title: "测力计与摩擦实验证据",
       summary:

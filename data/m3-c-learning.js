@@ -7,7 +7,7 @@ window.M3CLearning = Object.freeze({
   completePlan: "<strong>完成：</strong>进入下一阶段。",
   items: [
     {
-      id: "K01",
+      id: "M3CL01",
       node: "M3-CK01",
       title: "平衡参考系边界",
       summary:
@@ -22,7 +22,7 @@ window.M3CLearning = Object.freeze({
         "在方程前写明“地面惯性系”；若对象对该系有加速度，就停止使用M3静力平衡模型。",
     },
     {
-      id: "K02",
+      id: "M3CL02",
       node: "M3-CK02",
       title: "分布载荷的合力与作用点",
       summary:
@@ -37,7 +37,7 @@ window.M3CLearning = Object.freeze({
         "分别核对ΣF=600 N和关于左端的总力矩1100 N·m；再验600×11/6=1100 N·m。",
     },
     {
-      id: "K03",
+      id: "M3CL03",
       node: "M3-CK03",
       title: "多约束与接触临界",
       summary:
@@ -52,7 +52,7 @@ window.M3CLearning = Object.freeze({
         "把候选N=50-P与N≥0联立写出参数区间；超过50 N时删去接触力而非保留负N。",
     },
     {
-      id: "K04",
+      id: "M3CL04",
       node: "M3-CK04",
       title: "复杂共点力矢量几何",
       summary:
@@ -67,7 +67,7 @@ window.M3CLearning = Object.freeze({
         "用分量或余弦定理算出36.1 N后，核对三边30、40、36.1均满足三角形不等式且张力为正。",
     },
     {
-      id: "K05",
+      id: "M3CL05",
       node: "M3-CK05",
       title: "参数平衡与存在条件",
       summary:
@@ -82,7 +82,7 @@ window.M3CLearning = Object.freeze({
         "先由两个方向平衡求N与所需f，再作比值|f|/N=tanθ；最后检查N=mg cosθ≥0。",
     },
     {
-      id: "K06",
+      id: "M3CL06",
       node: "M3-CK06",
       title: "力矩、支反力与模型边界",
       summary:
