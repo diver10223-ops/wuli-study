@@ -7,7 +7,7 @@ window.M3ALearning = Object.freeze({
   completePlan: "<strong>完成：</strong>进入下一阶段。",
   items: [
     {
-      id: "K01",
+      id: "M3AL01",
       node: "M3-AK01",
       title: "力、重力与重心",
       summary:
@@ -22,7 +22,7 @@ window.M3ALearning = Object.freeze({
         "写出“地球→杆”并标30 N、竖直向下；再核对作用点0.60 m是否来自均匀直杆这一条件。",
     },
     {
-      id: "K02",
+      id: "M3AL02",
       node: "M3-AK02",
       title: "接触弹力与绳拉力",
       summary:
@@ -37,7 +37,7 @@ window.M3ALearning = Object.freeze({
         "只对灯列力：逐项写施力物体；确认绳张紧且T=40 N≥0，不把灯对绳的力列入。",
     },
     {
-      id: "K03",
+      id: "M3AL03",
       node: "M3-AK03",
       title: "弹簧与胡克定律",
       summary:
@@ -52,7 +52,7 @@ window.M3ALearning = Object.freeze({
         "先计算0.25-0.30=-0.05 m，再用“恢复原长”判断木块所受力向右，并核对6.0=120×0.05。",
     },
     {
-      id: "K04",
+      id: "M3AL04",
       node: "M3-AK04",
       title: "静摩擦与滑动摩擦",
       summary:
@@ -67,7 +67,7 @@ window.M3ALearning = Object.freeze({
         "先由ΣFx=0求f静=-5.0 N，再算8.0 N检查|f静|≤f静,max；不要先令f静=8.0 N。",
     },
     {
-      id: "K05",
+      id: "M3AL05",
       node: "M3-AK05",
       title: "力的合成、分解与平衡",
       summary:
@@ -82,7 +82,7 @@ window.M3ALearning = Object.freeze({
         "把两根绳的水平、竖直分量分别代回ΣFx和ΣFy；确认两条绳的T均为正且竖直分量和为60 N。",
     },
     {
-      id: "K06",
+      id: "M3AL06",
       node: "M3-AK06",
       title: "受力图与相互作用力",
       summary:

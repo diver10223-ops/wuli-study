@@ -133,6 +133,26 @@ if (modules.includes('m2')) {
 }
 
 if (modules.includes("m3")) {
+  const allM3Ids = new Set();
+  const structureKeys = [
+    "objectType", "contactCount", "forceTypes", "balanceDimension",
+    "takesMoment", "target", "hasParameter", "hasCritical",
+    "hasStateSwitch", "hasExperimentError", "steps",
+  ];
+  const structureSignature = (item, includeTrack = true, track = "") => {
+    const values = structureKeys.map((key) => {
+      const value = item.structure[key];
+      return Array.isArray(value) ? [...value].sort().join("+") : String(value);
+    });
+    return [...(includeTrack ? [track] : []), item.node.slice(-3), ...values].join("|");
+  };
+  const maxAnswerRun = (answers) => answers.reduce(
+    (state, answer, index) => {
+      const run = index && answer === answers[index - 1] ? state.run + 1 : 1;
+      return { run, max: Math.max(state.max, run) };
+    },
+    { run: 0, max: 0 },
+  ).max;
   const matrices = Object.fromEntries(
     tracks.map((track) => [
       track,
@@ -217,6 +237,9 @@ if (modules.includes("m3")) {
           `${file}: A diagnostic must not be compensated by another track`,
         );
       collection.forEach((item) => {
+        if (allM3Ids.has(item.id))
+          throw new Error(`${file}: duplicate M3 id ${item.id}`);
+        allM3Ids.add(item.id);
         if (!matrices[track].has(item.node))
           throw new Error(`${file}: ${item.id} has unmapped node ${item.node}`);
         if (["learning", "models"].includes(stage)) {
@@ -270,18 +293,32 @@ if (modules.includes("m3")) {
               );
           }
         } else {
+          if (!Array.isArray(item.options) || item.options.length < 3)
+            throw new Error(`${file}: ${item.id} needs at least three options`);
+          if (new Set(item.options).size !== item.options.length)
+            throw new Error(`${file}: ${item.id} has duplicate option text`);
           if (
             !Number.isInteger(item.answer) ||
             item.answer < 0 ||
             item.answer >= item.options.length
           )
             throw new Error(`${file}: ${item.id} answer index is invalid`);
+          if (
+            typeof item.skill !== "string" || typeof item.level !== "string" ||
+            typeof item.constraint !== "string" || !item.structure ||
+            structureKeys.some((key) => !(key in item.structure)) ||
+            !Number.isInteger(item.structure.contactCount) ||
+            !Number.isInteger(item.structure.steps) ||
+            !Array.isArray(item.structure.forceTypes)
+          )
+            throw new Error(`${file}: ${item.id} lacks reviewable M3 physical metadata`);
           if (["check", "exam", "retest"].includes(stage))
             assessmentPrompts.push({
               track,
               stage,
               id: item.id,
               text: item.text,
+              item,
             });
           if (
             ["check", "exam", "retest"].includes(stage) &&
@@ -342,11 +379,39 @@ if (modules.includes("m3")) {
       const answers = configs[stage].questions.map(
         (question) => question.answer,
       );
-      if (new Set(answers).size < 2 || answers.every((answer) => answer === 0))
+      const counts = [0, 1, 2].map(
+        (answer) => answers.filter((value) => value === answer).length,
+      );
+      const limits = answers.length === 6 ? [1, 3]
+        : answers.length === 8 ? [2, 3]
+          : answers.length === 12 ? [3, 5] : null;
+      if (!limits || counts.some((count) => count < limits[0] || count > limits[1]))
         throw new Error(
-          `M3 ${track.toUpperCase()} ${stage} answer positions are not distributed`,
+          `M3 ${track.toUpperCase()} ${stage} answer distribution ${counts.join("/")} violates ${answers.length}-item limits`,
         );
+      if (maxAnswerRun(answers) > 2)
+        throw new Error(`M3 ${track.toUpperCase()} ${stage} repeats one answer position more than twice`);
     }
+    for (const node of matrices[track]) {
+      const pair = configs.exam.questions.filter((question) => question.node === node);
+      if (pair.length !== 2)
+        throw new Error(`M3 ${track.toUpperCase()} exam ${node} must contain exactly two questions`);
+      if (pair[0].answer === pair[1].answer)
+        throw new Error(`M3 ${track.toUpperCase()} exam ${node} repeats its answer position`);
+      if (pair[0].level === pair[1].level)
+        throw new Error(`M3 ${track.toUpperCase()} exam ${node} lacks a cognitive-level contrast`);
+      if (structureSignature(pair[0], false) === structureSignature(pair[1], false))
+        throw new Error(`M3 ${track.toUpperCase()} exam ${node} repeats one physical structure`);
+    }
+    if (track === "b" && !configs.exam.questions.some((item) =>
+      item.structure.contactCount >= 2 || item.structure.hasStateSwitch || item.structure.hasExperimentError))
+      throw new Error("M3 B exam lacks multi-contact, constraint, or experiment transfer");
+    if (track === "c" && !configs.exam.questions.some((item) =>
+      item.structure.hasParameter || item.structure.takesMoment || item.structure.forceTypes.includes("distributed-load")))
+      throw new Error("M3 C exam lacks parameter, distributed-load, vector, or moment modeling");
+    if (track === "a" && [...Object.values(configs)].some((config) =>
+      (config.questions || config.items).some((item) => /加速度|牛顿第二定律|向心|超重|失重|惯性力/.test(JSON.stringify(item)))))
+      throw new Error("M3 A crosses into dynamics or non-inertial modeling");
     if (
       configs.exam.prerequisites[0]?.key !==
         `physics-mechanics-m3-${track}-check-v1` ||
@@ -376,8 +441,14 @@ if (modules.includes("m3")) {
         throw new Error(
           `M3 near-duplicate prompts: ${left.track}-${left.stage}-${left.id} / ${right.track}-${right.stage}-${right.id}`,
         );
+      const sameStructure = structureSignature(left.item, false) ===
+        structureSignature(right.item, false);
+      if (sameStructure && similarity(a, b) >= 0.55)
+        throw new Error(
+          `M3 structural near-duplicate prompts: ${left.track}-${left.stage}-${left.id} / ${right.track}-${right.stage}-${right.id}`,
+        );
     }
   console.log(
-    "OK: M3 content audit found real tri-track fields, valid answers, mapped tasks, full exam coverage, prerequisites, and distinct assessment prompts",
+    "OK: M3 content audit found balanced answers, physical signatures, contrasting exam pairs, valid ids/options, prerequisites, and distinct prompts",
   );
 }

@@ -7,7 +7,7 @@ window.M3AModels = Object.freeze({
   completePlan: "<strong>完成：</strong>进入下一阶段。",
   items: [
     {
-      id: "M01",
+      id: "M3AM01",
       node: "M3-AK01",
       title: "力、重力与重心",
       summary:
@@ -22,7 +22,7 @@ window.M3AModels = Object.freeze({
         "隔离木块并写“地球→木块、斜面→木块”；代回ΣF沿=24-40sin37°=0、ΣF垂=32-40cos37°=0，再验24 N≤0.80×32 N，故无需切换滑动模型。",
     },
     {
-      id: "M02",
+      id: "M3AM02",
       node: "M3-AK02",
       title: "接触弹力与绳拉力",
       summary:
@@ -37,7 +37,7 @@ window.M3AModels = Object.freeze({
         "只对木块列重力、桌面支持、拉力和摩擦；代回ΣFy=14+10sin37°-20=0、ΣFx=10cos37°-8=0，并验N=14 N≥0、接触仍存在。",
     },
     {
-      id: "M03",
+      id: "M3AM03",
       node: "M3-AK03",
       title: "弹簧与胡克定律",
       summary:
@@ -52,7 +52,7 @@ window.M3AModels = Object.freeze({
         "以木块为对象标弹簧和外拉力；算x=0.46-0.40=0.060 m，核对6.0=100×0.060，并确认弹簧力指向固定端且形变未超题设弹性限度。",
     },
     {
-      id: "M04",
+      id: "M3AM04",
       node: "M3-AK04",
       title: "静摩擦与滑动摩擦",
       summary:
@@ -67,7 +67,7 @@ window.M3AModels = Object.freeze({
         "先由ΣFx=0求f静=-5.0 N，再算8.0 N检查|f静|≤f静,max；不要先令f静=8.0 N。",
     },
     {
-      id: "M05",
+      id: "M3AM05",
       node: "M3-AK05",
       title: "力的合成、分解与平衡",
       summary:
@@ -82,7 +82,7 @@ window.M3AModels = Object.freeze({
         "把两根绳的水平、竖直分量分别代回ΣFx和ΣFy；确认两条绳的T均为正且竖直分量和为60 N。",
     },
     {
-      id: "M06",
+      id: "M3AM06",
       node: "M3-AK06",
       title: "受力图与相互作用力",
       summary:

@@ -69,7 +69,10 @@ def main():
                 require(exam_path.read_text(encoding="utf-8"), markers, f"M2 {track} exam")
         else:
             spec = ROOT / "docs" / f"{module_id}三轨知识矩阵与质量审计.md"
-            require(spec.read_text(encoding="utf-8"), ["A轨", "B轨", "C轨", "正式卷门槛", "自动验收"], spec.name)
+            markers = ["A轨", "B轨", "C轨", "正式卷门槛", "自动验收"]
+            if module_id == "M3":
+                markers += ["编写者独立复算", "教师审校", "真实学生验证", "结构签名"]
+            require(spec.read_text(encoding="utf-8"), markers, spec.name)
 
     for relative in [
         "运动和力/物理笔记-运动的描述.html",
