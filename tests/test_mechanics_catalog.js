@@ -139,6 +139,22 @@ if (modules.includes("m3")) {
     "takesMoment", "target", "hasParameter", "hasCritical",
     "hasStateSwitch", "hasExperimentError", "steps",
   ];
+  const allowedObjectTypes = new Set([
+    "ball", "beam", "block", "book", "experiment-system",
+    "force-representation", "joint", "rod", "spring-system",
+    "stacked-system", "suspended-object",
+  ]);
+  const allowedForceTypes = new Set([
+    "applied-force", "distributed-load", "friction", "gravity",
+    "hinge-reaction", "normal", "rod-force", "spring", "tension",
+  ]);
+  const allowedBalanceDimensions = new Set([
+    "one-axis-force", "planar-force", "planar-force-and-moment",
+  ]);
+  const booleanStructureKeys = [
+    "takesMoment", "hasParameter", "hasCritical", "hasStateSwitch",
+    "hasExperimentError",
+  ];
   const structureSignature = (item, includeTrack = true, track = "") => {
     const values = structureKeys.map((key) => {
       const value = item.structure[key];
@@ -312,7 +328,24 @@ if (modules.includes("m3")) {
             !Array.isArray(item.structure.forceTypes)
           )
             throw new Error(`${file}: ${item.id} lacks reviewable M3 physical metadata`);
-          if (["check", "exam", "retest"].includes(stage))
+          if (!allowedObjectTypes.has(item.structure.objectType))
+            throw new Error(`${file}: ${item.id} has an invalid physical objectType`);
+          if (!allowedBalanceDimensions.has(item.structure.balanceDimension))
+            throw new Error(`${file}: ${item.id} has an invalid balanceDimension`);
+          if (item.structure.contactCount < 0 || item.structure.steps < 0)
+            throw new Error(`${file}: ${item.id} has a negative contactCount or steps`);
+          if (!item.structure.forceTypes.length ||
+            new Set(item.structure.forceTypes).size !== item.structure.forceTypes.length ||
+            item.structure.forceTypes.some((type) => !allowedForceTypes.has(type)))
+            throw new Error(`${file}: ${item.id} has empty, duplicate, or invalid forceTypes`);
+          if (booleanStructureKeys.some((key) => typeof item.structure[key] !== "boolean"))
+            throw new Error(`${file}: ${item.id} has a non-boolean structure flag`);
+          if (typeof item.structure.target !== "string" || !item.structure.target.trim())
+            throw new Error(`${file}: ${item.id} has no physical target`);
+          if (item.structure.takesMoment !==
+            (item.structure.balanceDimension === "planar-force-and-moment"))
+            throw new Error(`${file}: ${item.id} has inconsistent moment metadata`);
+          if (["diagnostic", "check", "exam", "retest"].includes(stage))
             assessmentPrompts.push({
               track,
               stage,
@@ -422,6 +455,22 @@ if (modules.includes("m3")) {
         `M3 ${track.toUpperCase()} assessment evidence chain is not track-local`,
       );
   }
+  // A whitelist is intentionally explicit: every future entry must name the two
+  // question IDs and give a physical reason; lowering similarity thresholds is
+  // not an acceptable substitute.
+  const structuralReuseWhitelist = new Map([
+  ]);
+  for (const [pair, reason] of structuralReuseWhitelist) {
+    if (!/^M3\w+\/M3\w+$/.test(pair) || typeof reason !== "string" || reason.length < 12)
+      throw new Error(`M3 invalid structural-reuse whitelist entry: ${pair}`);
+  }
+  const signatureGroups = new Map();
+  assessmentPrompts.forEach((prompt) => {
+    const signature = structureSignature(prompt.item, false);
+    if (!signatureGroups.has(signature)) signatureGroups.set(signature, []);
+    signatureGroups.get(signature).push(`${prompt.track}-${prompt.stage}-${prompt.id}`);
+  });
+  const repeatedSignatureGroups = [...signatureGroups.values()].filter((ids) => ids.length > 1);
   const seen = new Map();
   assessmentPrompts.forEach((prompt) => {
     const key = normalize(prompt.text);
@@ -443,11 +492,17 @@ if (modules.includes("m3")) {
         );
       const sameStructure = structureSignature(left.item, false) ===
         structureSignature(right.item, false);
-      if (sameStructure && similarity(a, b) >= 0.55)
-        throw new Error(
-          `M3 structural near-duplicate prompts: ${left.track}-${left.stage}-${left.id} / ${right.track}-${right.stage}-${right.id}`,
-        );
+      if (sameStructure && similarity(a, b) >= 0.55) {
+        const pairKey = [left.id, right.id].sort().join("/");
+        if (!structuralReuseWhitelist.has(pairKey))
+          throw new Error(
+            `M3 structural near-duplicate prompts: ${left.track}-${left.stage}-${left.id} / ${right.track}-${right.stage}-${right.id}`,
+          );
+      }
     }
+  console.log(
+    `OK: M3 signature report found ${repeatedSignatureGroups.length} cross-stage/cross-track same-signature groups; none also crossed the near-text threshold without an ID-and-reason whitelist`,
+  );
   console.log(
     "OK: M3 content audit found balanced answers, physical signatures, contrasting exam pairs, valid ids/options, prerequisites, and distinct prompts",
   );
