@@ -1,1 +1,59 @@
-window.M3ADiagnostic=Object.freeze({"version":1,"module":"M3","track":"A","storageKey":"physics-mechanics-m3-a-diagnostic-v1","passCorrect":5,"prerequisites":[],"passTitle":"A轨诊断通过","failTitle":"需回补前置","initialPlan":"提交后生成节点路线。","passPlan":"<strong>下一步：</strong>进入知识学习。","failPlan":d=>`<strong>回补：</strong>${d.weak.join("、")||d.failedGates.join("、")}。`,"questions":[{"id":"M3AD01","node":"M3-AK01","gate":"核心边界","text":"质量2.0 kg物体在地面附近，取g=10 N/kg，其重力大小和方向是？","options":["20 N，竖直向下","2 N，竖直向上","20 N，沿地面"],"answer":0},{"id":"M3AD02","node":"M3-AK02","text":"静止木块只与水平桌面接触；桌面对木块的弹力方向是？","options":["垂直桌面向上","沿桌面向左","竖直向下"],"answer":0},{"id":"M3AD03","node":"M3-AK03","text":"原长0.30 m弹簧现长0.35 m，形变量是？","options":["0.05 m","0.35 m","0.65 m"],"answer":0},{"id":"M3AD04","node":"M3-AK04","text":"水平向右推静止木箱3 N且未滑动，水平方向静摩擦力是？","options":["3 N向左","3 N向右","一定等于最大静摩擦力"],"answer":0},{"id":"M3AD05","node":"M3-AK05","text":"同一点受3 N向东和4 N向北两力，合力大小是？","options":["5 N","7 N","1 N"],"answer":0},{"id":"M3AD06","node":"M3-AK06","text":"人用50 N推墙时，墙对人的力是？","options":["50 N，方向与人推墙相反","0 N","100 N且同向"],"answer":0}]});
+window.M3ADiagnostic = Object.freeze({
+  version: 1,
+  module: "M3",
+  track: "A",
+  storageKey: "physics-mechanics-m3-a-diagnostic-v1",
+  passCorrect: 5,
+  prerequisites: [],
+  passTitle: "A轨诊断通过",
+  failTitle: "需回补前置",
+  initialPlan: "提交后生成节点路线。",
+  passPlan: "<strong>下一步：</strong>进入知识学习。",
+  failPlan: (d) =>
+    `<strong>回补：</strong>${d.weak.join("、") || d.failedGates.join("、")}。`,
+  questions: [
+    {
+      id: "M3AD01",
+      node: "M3-AK01",
+      gate: "核心边界",
+      text: "质量2.0 kg物体在地面附近，取g=10 N/kg，其重力大小和方向是？",
+      options: ["20 N，竖直向下", "2 N，竖直向上", "20 N，沿地面"],
+      answer: 0,
+    },
+    {
+      id: "M3AD02",
+      node: "M3-AK02",
+      text: "静止木块只与水平桌面接触；桌面对木块的弹力方向是？",
+      options: ["沿桌面向左", "垂直桌面向上", "竖直向下"],
+      answer: 1,
+    },
+    {
+      id: "M3AD03",
+      node: "M3-AK03",
+      text: "原长0.30 m弹簧现长0.35 m，形变量是？",
+      options: ["0.05 m", "0.35 m", "0.65 m"],
+      answer: 0,
+    },
+    {
+      id: "M3AD04",
+      node: "M3-AK04",
+      text: "水平向右推静止木箱3 N且未滑动，水平方向静摩擦力是？",
+      options: ["3 N向左", "3 N向右", "一定等于最大静摩擦力"],
+      answer: 0,
+    },
+    {
+      id: "M3AD05",
+      node: "M3-AK05",
+      text: "同一点受3 N向东和4 N向北两力，合力大小是？",
+      options: ["5 N", "7 N", "1 N"],
+      answer: 0,
+    },
+    {
+      id: "M3AD06",
+      node: "M3-AK06",
+      text: "人用50 N推墙时，墙对人的力是？",
+      options: ["50 N，方向与人推墙相反", "0 N", "100 N且同向"],
+      answer: 0,
+    },
+  ],
+});
