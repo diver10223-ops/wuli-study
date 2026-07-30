@@ -131,3 +131,52 @@ if (modules.includes('m2')) {
   }
   console.log('OK: M2 content audit found mapped nodes, task alignment, full exam coverage, distinct field duties, and no template or near-duplicate prompts');
 }
+
+if (modules.includes('m3')) {
+  const matrices = Object.fromEntries(tracks.map(track => [track, new Set(Array.from({ length: 6 }, (_, index) => `M3-${track.toUpperCase()}K0${index + 1}`))]));
+  const requiredFields = ['summary', 'conditions', 'misconception', 'example', 'check'];
+  const forbidden = ['围绕', '建立对象—过程—条件—规律—检验链', '明确适用范围、方向、单位和阶段', '完成一个正例、一个反例和一道迁移任务', '我能解释条件并独立建模', '处理重力任务应优先'];
+  const selfClaims = /^(我能|我会|完成|检查条件|判断结果是否合理)/;
+  const normalize = text => text.replace(/\d+(?:\.\d+)?/g, '#').replace(/[，。；：、“”‘’（）()\s]/g, '');
+  const assessmentPrompts = [];
+  for (const track of tracks) {
+    const configs = {};
+    for (const stage of stages) {
+      const file = path.join(root, 'data', `m3-${track}-${stage}.js`);
+      const source = fs.readFileSync(file, 'utf8');
+      for (const phrase of forbidden) if (source.includes(phrase)) throw new Error(`${file}: generic M3 template remains: ${phrase}`);
+      const window = {};
+      vm.runInNewContext(source, { window, Set }, { filename: file });
+      const config = Object.values(window)[0];
+      configs[stage] = config;
+      const collection = config.questions || config.items;
+      collection.forEach(item => {
+        if (!matrices[track].has(item.node)) throw new Error(`${file}: ${item.id} has unmapped node ${item.node}`);
+        if (['learning', 'models'].includes(stage)) {
+          requiredFields.forEach(field => {
+            if (typeof item[field] !== 'string' || !item[field].trim()) throw new Error(`${file}: ${item.id} missing ${field}`);
+          });
+          if (normalize(item.summary) === normalize(item.example)) throw new Error(`${file}: ${item.id} repeats summary as example`);
+          if (!/\d/.test(item.example) || !/(N|kg|m|°|N\/m|m\/s²)/.test(item.example) || !/(=|≈|≤|≥|得|为|故|不能|范围|临界|支持|弹力|摩擦|张力|合力|反力)/.test(item.example)) {
+            throw new Error(`${file}: ${item.id} example lacks a value, unit, target, or verifiable conclusion`);
+          }
+          if (selfClaims.test(item.check)) throw new Error(`${file}: ${item.id} check is a self-claim rather than an action`);
+        } else {
+          if (!Number.isInteger(item.answer) || item.answer < 0 || item.answer >= item.options.length) throw new Error(`${file}: ${item.id} answer index is invalid`);
+          if (['check', 'exam', 'retest'].includes(stage)) assessmentPrompts.push({ track, stage, id: item.id, text: item.text });
+          if (stage === 'exam' && item.task !== item.node.slice(-3)) throw new Error(`${file}: ${item.id} task does not match node`);
+        }
+      });
+    }
+    const missing = [...matrices[track]].filter(node => !new Set(configs.exam.questions.map(question => question.node)).has(node));
+    if (missing.length) throw new Error(`M3 ${track.toUpperCase()} exam misses matrix nodes: ${missing.join(', ')}`);
+    if (track !== 'a' && configs.diagnostic.prerequisites[0]?.key !== `physics-mechanics-m3-${track === 'b' ? 'a' : 'b'}-exam-v1`) throw new Error(`M3 ${track.toUpperCase()} has wrong track prerequisite`);
+  }
+  const seen = new Map();
+  assessmentPrompts.forEach(prompt => {
+    const key = normalize(prompt.text);
+    if (seen.has(key)) throw new Error(`M3 duplicate or number-only assessment prompts: ${seen.get(key)} / ${prompt.track}-${prompt.stage}-${prompt.id}`);
+    seen.set(key, `${prompt.track}-${prompt.stage}-${prompt.id}`);
+  });
+  console.log('OK: M3 content audit found real tri-track fields, valid answers, mapped tasks, full exam coverage, prerequisites, and distinct assessment prompts');
+}
