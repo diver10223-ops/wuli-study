@@ -52,7 +52,7 @@ window.M3BRetest = Object.freeze({
       novel: true,
       skill: "friction-contact-limit",
       level: "迁移复核",
-      structure: {"objectType":"force-representation","contactCount":0,"forceTypes":["applied-force"],"balanceDimension":"one-axis-force","takesMoment":false,"target":"contact-or-friction-state","hasParameter":false,"hasCritical":true,"hasStateSwitch":true,"hasExperimentError":false,"steps":3},
+      structure: {"objectType":"force-representation","contactCount":1,"forceTypes":["gravity","normal","friction","applied-force"],"balanceDimension":"one-axis-force","takesMoment":false,"target":"contact-or-friction-state","hasParameter":false,"hasCritical":true,"hasStateSwitch":true,"hasExperimentError":false,"steps":3},
       constraint: "候选解后核对接触、非负性与适用条件",
       text: "候选支持力N=-2 N应解释为？",
       options: ["仍可静止接触", "支持力向下2 N", "接触已失效"],
@@ -102,7 +102,7 @@ window.M3BRetest = Object.freeze({
       novel: true,
       skill: "experiment-error",
       level: "迁移复核",
-      structure: {"objectType":"experiment-system","contactCount":0,"forceTypes":["applied-force"],"balanceDimension":"planar-force","takesMoment":false,"target":"experimental-result-or-error","hasParameter":false,"hasCritical":false,"hasStateSwitch":false,"hasExperimentError":true,"steps":2},
+      structure: {"objectType":"experiment-system","contactCount":1,"forceTypes":["gravity","normal","friction","applied-force"],"balanceDimension":"planar-force","takesMoment":false,"target":"experimental-result-or-error","hasParameter":false,"hasCritical":false,"hasStateSwitch":false,"hasExperimentError":true,"steps":2},
       constraint: "核对受力对象、方向、平衡方程与单位",
       text: "用斜向上测力计匀速拉样品，读数5.0 N。若直接用μ=5.0/mg，主要证据缺陷是？",
       options: [

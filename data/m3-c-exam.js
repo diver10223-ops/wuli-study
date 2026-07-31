@@ -42,7 +42,7 @@ window.M3CExam = Object.freeze({
       novel: true,
       skill: "distributed-load",
       level: "基础判别",
-      structure: {"objectType":"force-representation","contactCount":0,"forceTypes":["distributed-load"],"balanceDimension":"planar-force-and-moment","takesMoment":true,"target":"equivalent-resultant","hasParameter":false,"hasCritical":false,"hasStateSwitch":false,"hasExperimentError":false,"steps":3},
+      structure: {"objectType":"beam","contactCount":0,"forceTypes":["distributed-load"],"balanceDimension":"planar-force-and-moment","takesMoment":true,"target":"equivalence-criterion","hasParameter":false,"hasCritical":false,"hasStateSwitch":false,"hasExperimentError":false,"steps":3},
       constraint: "核对研究对象、真实力、模型条件与存在性判据",
       text: "把一段分布载荷等效为集中力时，等效模型必须同时保持什么？",
       options: [
@@ -164,7 +164,7 @@ window.M3CExam = Object.freeze({
       novel: true,
       skill: "unilateral-constraint",
       level: "综合建模",
-      structure: {"objectType":"force-representation","contactCount":1,"forceTypes":["gravity","normal","applied-force"],"balanceDimension":"one-axis-force","takesMoment":false,"target":"constraint-existence","hasParameter":true,"hasCritical":true,"hasStateSwitch":false,"hasExperimentError":false,"steps":3},
+      structure: {"objectType":"block","contactCount":1,"forceTypes":["gravity","normal","applied-force"],"balanceDimension":"one-axis-force","takesMoment":false,"target":"constraint-existence","hasParameter":true,"hasCritical":true,"hasStateSwitch":false,"hasExperimentError":false,"steps":3},
       constraint: "候选解后核对接触、非负性与适用条件",
       text: "重30 N物体在地板上，另受竖直向上参数力P。接触模型存在的P范围是？",
       options: ["0≤P≤30 N", "P≤0", "P≥30 N"],

@@ -72,7 +72,7 @@ window.M3CDiagnostic = Object.freeze({
       node: "M3-CK05",
       skill: "parameter-friction-limit",
       level: "前置识别",
-      structure: {"objectType":"force-representation","contactCount":1,"forceTypes":["gravity","normal"],"balanceDimension":"planar-force","takesMoment":false,"target":"equilibrium-range","hasParameter":true,"hasCritical":true,"hasStateSwitch":false,"hasExperimentError":false,"steps":3},
+      structure: {"objectType":"force-representation","contactCount":1,"forceTypes":["gravity","normal","friction"],"balanceDimension":"planar-force","takesMoment":false,"target":"equilibrium-range","hasParameter":true,"hasCritical":true,"hasStateSwitch":false,"hasExperimentError":false,"steps":3},
       constraint: "候选解后核对接触、非负性与适用条件",
       text: "斜面静止块由平衡求得f/N=tanθ，静止范围还需比较什么？",
       options: ["tanθ=μs恒成立", "tanθ≤μs", "N=mg恒成立"],
