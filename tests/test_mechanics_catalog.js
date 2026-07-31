@@ -531,8 +531,12 @@ if (modules.includes("m4")) {
     new Set(Array.from({ length: 6 }, (_, i) => `M4-${track.toUpperCase()}K0${i + 1}`))]));
   const required = ["summary","conditions","misconception","example","check"];
   const structureKeys = ["objectType","bodyCount","forceTypes","balanceDimension","referenceFrame","target","hasParameter","hasCritical","hasStateSwitch","hasExperimentError","steps"];
-  const leak = /错误路径|错误：|漏掉|混淆|违反约束|改变参考系却/;
-  const placeholder = /题设对象|题设参考系|题干所列真实力|按节点规律列方程|核对相关约束|答案唯一/;
+  const leak = /错误路径|错误：|漏掉|混淆|违反约束|改变参考系却|认为|把.+当作|未计入|误认|模型判断：|计算结果：/;
+  const placeholder = /题设对象|题设参考系|题干所列真实力|按节点规律列方程|核对相关约束|答案唯一|先备能力判断/;
+  const genericWrongEquation = /与选项\d相符|与正确关系不相容|错误关系导向/;
+  const genericWrongSubstitution = /错误符号或错误单位|按错误符号或单位/;
+  const genericConflict = /该结果不满足题目约束|不满足正确关系或条件/;
+  const forceMap = new Map([["重力","gravity"],["支持力","normal"],["水平外加力","applied"],["外加力","applied"],["拉力","tension"],["推力","thrust"],["驱动力","applied"],["水平阻力","resistance"],["阻力","resistance"],["摩擦力","friction"],["静摩擦力","friction"],["滑动摩擦力","friction"],["张力","tension"],["弹簧弹力","spring"],["速度相关阻力","drag"],["题设合外力","resultant"]]);
   const normalize = text => text.replace(/\d+(?:\.\d+)?/g,"#").replace(/[甲乙小车物块物体箱子滑块包裹乘客雪橇]/g,"对象").replace(/kg|N·s\/m|N|m\/s²|m\/s|s/g,"单位").replace(/[，。；：、“”‘’（）()\s]/g,"");
   const signature = q => structureKeys.map(k => Array.isArray(q.structure[k]) ? [...q.structure[k]].sort().join('+') : String(q.structure[k])).join('|');
   const maxRun = a => a.reduce((s,v,i)=>{const run=i&&a[i-1]===v?s.run+1:1;return {run,max:Math.max(s.max,run)}},{run:0,max:0}).max;
@@ -553,18 +557,27 @@ if (modules.includes("m4")) {
         else {
           if(item.task!==item.node.slice(-3)||new Set(item.options).size!==item.options.length||!item.options[item.answer]) throw new Error(`${file}: ${item.id} invalid task/options/answer`);
           if(item.options.some(o=>leak.test(o))) throw new Error(`${file}: ${item.id} leaks answer in options`);
-          if(structureKeys.some(k=>!(k in item.structure))||!Number.isInteger(item.structure.bodyCount)||item.structure.bodyCount<1||!Array.isArray(item.structure.forceTypes)||!item.structure.forceTypes.length||!Number.isInteger(item.structure.steps)||item.structure.steps<1) throw new Error(`${file}: ${item.id} invalid structure types`);
+          if(structureKeys.some(k=>!(k in item.structure))||!Number.isInteger(item.structure.bodyCount)||item.structure.bodyCount<1||!Array.isArray(item.structure.forceTypes)||!item.structure.forceTypes.length||new Set(item.structure.forceTypes).size!==item.structure.forceTypes.length||!Number.isInteger(item.structure.steps)||item.structure.steps<1) throw new Error(`${file}: ${item.id} invalid structure types`);
+          if(item.structure.objectType==="multi-body"&&item.structure.bodyCount<2) throw new Error(`${file}: ${item.id} multi-body object has bodyCount < 2`);
           for(const k of ["hasParameter","hasCritical","hasStateSwitch","hasExperimentError"]) if(typeof item.structure[k]!=="boolean") throw new Error(`${file}: ${item.id} ${k} not boolean`);
           const r=item.review;if(!r||r.answerIndex!==item.answer||placeholder.test(JSON.stringify(r))||!Array.isArray(r.forces)||!r.forces.length) throw new Error(`${file}: ${item.id} review incomplete or placeholder`);
           if(!Array.isArray(r.distractors)||r.distractors.length!==item.options.length-1) throw new Error(`${file}: ${item.id} distractor count`);
-          const wrong=item.options.filter((_,i)=>i!==item.answer); for(const d of r.distractors) if(!wrong.includes(d.option)||!(d.wrongEquation||d.wrongGeneration)||!d.wrongResult||!d.conflict) throw new Error(`${file}: ${item.id} distractor is not option-bound`);
-          prompts.push({track,stage,id:item.id,text:item.text,n:normalize(item.text)});
+          const mapped=r.forces.map(force=>forceMap.get(force));
+          if(mapped.some(type=>!type)||mapped.sort().join("|")!==[...item.structure.forceTypes].sort().join("|")) throw new Error(`${file}: ${item.id} review.forces disagrees with structure.forceTypes`);
+          if(item.structure.referenceFrame==="non-inertial"&&item.structure.forceTypes.some(type=>/inertia|fictitious/.test(type))) throw new Error(`${file}: ${item.id} puts inertia force in the real-force set`);
+          const wrong=item.options.filter((_,i)=>i!==item.answer); for(const d of r.distractors) {
+            if(!wrong.includes(d.option)||!(d.wrongEquation||d.wrongCriterion)||!d.wrongResult||!d.conflict) throw new Error(`${file}: ${item.id} distractor is not option-bound`);
+            if(d.option!==d.wrongResult) throw new Error(`${file}: ${item.id} wrongResult differs from its option`);
+            if(d.wrongEquation&&genericWrongEquation.test(d.wrongEquation)||d.wrongSubstitution&&genericWrongSubstitution.test(d.wrongSubstitution)||genericConflict.test(d.conflict)) throw new Error(`${file}: ${item.id} retains a generic distractor chain`);
+            if(!d.wrongSubstitution&&!d.wrongCriterion) throw new Error(`${file}: ${item.id} distractor lacks a concrete substitution or criterion`);
+          }
+          prompts.push({track,stage,id:item.id,text:item.text,n:normalize(item.text),item});
         }
       }
     }
     for(const stage of ["check","retest"]){const q=configs[stage].questions;for(const node of matrices[track])if(!q.some(x=>x.node===node))throw new Error(`M4 ${track} ${stage} misses ${node}`);}
     const exam=configs.exam.questions;if(exam.length!==12)throw new Error(`M4 ${track} exam must have 12 questions`);
-    for(const node of matrices[track]){const pair=exam.filter(q=>q.node===node);if(pair.length!==2||pair[0].level===pair[1].level||pair[0].answer===pair[1].answer||signature(pair[0])===signature(pair[1]))throw new Error(`M4 ${track} ${node} lacks two contrasting exam layers`);}
+    for(const node of matrices[track]){const pair=exam.filter(q=>q.node===node);if(pair.length!==2||pair[0].level===pair[1].level||pair[0].answer===pair[1].answer||signature(pair[0])===signature(pair[1]))throw new Error(`M4 ${track} ${node} lacks two contrasting exam layers`);if(pair[0].review.object===pair[1].review.object&&pair[0].review.equation===pair[1].review.equation)throw new Error(`M4 ${track} ${node} differs only in declared metadata`);}
     for(const stage of ["check","exam","retest"]){const a=configs[stage].questions.map(q=>q.answer), counts=[0,1,2].map(v=>a.filter(x=>x===v).length), expected=a.length/3;if(counts.some(x=>x!==expected)||maxRun(a)>2)throw new Error(`M4 ${track} ${stage} answer distribution ${counts}`);}
     const learning=new Set(configs.learning.items.map(x=>normalize(x.example))), models=new Set(configs.models.items.map(x=>normalize(x.example)));
     if(configs.check.questions.some(q=>learning.has(normalize(q.text))))throw new Error(`M4 ${track} check repeats learning example`);
@@ -573,5 +586,6 @@ if (modules.includes("m4")) {
     if(configs.exam.prerequisites[0]?.key!==`physics-mechanics-m4-${track}-check-v1`||configs.retest.prerequisites[0]?.key!==`physics-mechanics-m4-${track}-exam-v1`)throw new Error(`M4 ${track} broken evidence chain`);
   }
   for(let i=0;i<prompts.length;i++)for(let j=i+1;j<prompts.length;j++)if(prompts[i].text===prompts[j].text||prompts[i].n===prompts[j].n)throw new Error(`M4 duplicate/number-only prompts: ${prompts[i].id}/${prompts[j].id}`);
-  console.log("OK: M4 audit proves typed fields, 12-item/two-layer exams, mapping, answer distribution, evidence chains, option/review hygiene and text-distinctness; it cannot prove physical correctness or uniqueness, replace author recalculation or teacher review, or substitute for real-student validation");
+  for(const field of ["equation","wrongEquation","wrongSubstitution","conflict"]){const groups=new Map();for(const p of prompts){const values=field==="equation"?[p.item?.review?.equation]:p.item?.review?.distractors?.map(d=>d[field]);for(const value of values||[])if(value)groups.set(value,[...(groups.get(value)||[]),p.id]);}for(const [value,group] of groups)if(group.length>1)console.log(`REPORT: M4 repeated review.${field}: ${group.join("/")} :: ${value}`);}
+  console.log("OK: M4 audit proves typed fields, 12-item/two-layer exams, mapping, answer distribution, evidence chains, option/review hygiene and text-distinctness; it cannot prove physical correctness or uniqueness, replace author per-question recalculation, or substitute for teacher review or real-student validation; teacher review and real-student validation were not performed in this round");
 }
