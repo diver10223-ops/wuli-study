@@ -1,0 +1,14 @@
+window.M2BExam=Object.freeze({version:1,module:'M2',track:'B',storageKey:'physics-mechanics-m2-b-exam-v1',durationSeconds:3600,reviewDays:7,passTitle:'M2 B轨当前通过',failTitle:'M2 B轨暂未通过',prerequisites:[{key:'physics-mechanics-m2-b-check-v1',label:'B轨即时检测未通过',test:v=>v?.passed===true}],questions:[
+{"id":"M2BE01","section":"综合迁移","task":"BK01","node":"M2-BK01","text":"甲从原点以6 m/s匀速，乙在前方24 m处以2 m/s同向匀速，甲追上乙需？","options":["6 s","4 s","12 s"],"answer":0,"gate":"位置关系"},
+{"id":"M2BE02","section":"综合迁移","task":"BK02","node":"M2-BK02","text":"两车相向运动，初距90 m，速度分别10、20 m/s，相遇时间？","options":["3 s","4.5 s","9 s"],"answer":0},
+{"id":"M2BE03","section":"综合迁移","task":"BK03","node":"M2-BK03","text":"汽车18 m/s行驶，反应1 s后以3 m/s²制动至停，总停车距离？","options":["72 m","54 m","18 m"],"answer":0,"gate":"分段状态"},
+{"id":"M2BE04","section":"综合迁移","task":"BK04","node":"M2-BK04","text":"前车10 m/s匀速，后车从静止以2 m/s²加速，初距25 m；两车距离由增大转为减小的时刻？","options":["5 s","2.5 s","10 s"],"answer":0,"gate":"临界条件"},
+{"id":"M2BE05","section":"综合迁移","task":"BK05","node":"M2-BK05","text":"0—3 s后车速度比前车始终大2 m/s，两v-t线间面积表示后车缩短距离？","options":["6 m","2 m","9 m"],"answer":0},
+{"id":"M2BE06","section":"综合迁移","task":"BK06","node":"M2-BK06","text":"竖直上抛到同一高度得到t=1 s和t=5 s，两根的物理意义？","options":["分别对应上升和下降","后一根必舍去","前一根必舍去"],"answer":0},
+{"id":"M2BE07","section":"综合迁移","task":"BK07","node":"M2-BK07","text":"相等时间位移为5.1、7.0、9.1、11.0 cm，最能支持？","options":["位移差约恒定，近似匀加速","速度恒定","加速度逐段翻倍"],"answer":0},
+{"id":"M2BE08","section":"综合迁移","task":"BK08","node":"M2-BK08","text":"测得v-t拟合斜率2.00 m/s²；时间均偏大1%，斜率测量值相对真值将？","options":["约偏小1%","约偏大1%","不变"],"answer":0},
+{"id":"M2BE09","section":"综合迁移","task":"BK01","node":"M2-BK01","text":"货车由静止以1 m/s²加速4 s后匀速；轿车从同点晚2 s以5 m/s匀速，首次相遇在哪一阶段求解？","options":["先分别列分段位置并检验根所在区间","全程只用货车加速式","令两车速度相等"],"answer":0,"novel":true},
+{"id":"M2BE10","section":"综合迁移","task":"BK03","node":"M2-BK03","text":"前车先制动，后车0.8 s后制动。判断安全初距必须额外计入？","options":["后车反应段相对位移","两车质量差","道路长度"],"answer":0,"novel":true},
+{"id":"M2BE11","section":"综合迁移","task":"BK05","node":"M2-BK05","text":"两对象v-t图在t=3 s相交，此刻可确定？","options":["相对距离取得极值候选","两车必相遇","两车位置都为零"],"answer":0,"novel":true},
+{"id":"M2BE12","section":"综合迁移","task":"BK07","node":"M2-BK07","text":"用光电门测加速度，挡光片宽度不可忽略。减小宽度并重复实验主要用于？","options":["减小有限时间窗造成的瞬时速度近似误差","增大重力加速度","消除所有随机误差"],"answer":0,"novel":true}
+],evaluate:c=>{const sectionsPassed=Object.values(c.sections).every(v=>v.correct/v.total>=.5),gatesPassed=!c.failedGates.length&&!c.guessedGates.length,novelIndependent=Object.entries(c.response.states).some(([id,state])=>id.startsWith('M2BE')&&Number(id.slice(4))>=9&&state==='独立完成');return{sectionsPassed,gatesPassed,novelIndependent,passed:c.eligible&&c.score>=75&&sectionsPassed&&gatesPassed&&novelIndependent}},passPlan:d=>`<strong>通过：</strong>${d.reviewDate}完成B轨新情境复测。`,failPlan:()=>'<strong>修复：</strong>只返回失败门槛和分项。'});

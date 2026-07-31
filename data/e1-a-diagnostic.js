@@ -1,0 +1,17 @@
+window.E1ADiagnostic=Object.freeze({module:'E1',track:'A',storageKey:'physics-e1-a-diagnostic-v1',passCorrect:0,questions:[
+      {id:'E1D01',node:'E1-K01',text:'两个完全相同的金属小球，一个带电、一个不带电，接触前后系统总电荷如何？',options:['守恒','一定增加','一定变为零'],answer:0},
+      {id:'E1D02',node:'E1-K01',text:'摩擦起电的本质更接近？',options:['产生新电荷','电子在物体间转移','质子在固体中自由移动'],answer:1},
+      {id:'E1D03',node:'E1-K02',text:'使用库仑定律处理两个带电体前，首先要检查？',options:['能否视为点电荷及环境条件','质量是否相同','速度是否为零'],answer:0},
+      {id:'E1D04',node:'E1-K02',text:'两个异种点电荷之间的库仑力方向是？',options:['相互吸引，沿两电荷连线','相互排斥，垂直连线','与连线无关'],answer:0},
+      {id:'E1D05',node:'E1-K03',gate:'场强方向',text:'某点电场强度的方向定义为？',options:['正检验电荷在该点的受力方向','负检验电荷在该点的受力方向','任意电荷速度方向'],answer:0},
+      {id:'E1D06',node:'E1-K03',text:'某点场强为E，放入电荷量为-q的粒子，其电场力方向？',options:['与E同向','与E反向','一定为零'],answer:1},
+      {id:'E1D07',node:'E1-K04',text:'关于静电场中的电场线，下列正确的是？',options:['电场线可以相交','切线方向表示该点场强方向','电场线就是粒子实际轨迹'],answer:1},
+      {id:'E1D08',node:'E1-K05',text:'选择不同的电势零点后，不变的是？',options:['每点电势数值','两点间电势差','所有电势都必须为正'],answer:1},
+      {id:'E1D09',node:'E1-K06',gate:'符号与能量',text:'正电荷从高电势移动到低电势，电势能变化为？',options:['减小','增大','只由路径决定'],answer:0},
+      {id:'E1D10',node:'E1-K06',text:'电场力对电荷做正功时，电势能如何变化？',options:['减小','增大','不变'],answer:0},
+      {id:'E1D11',node:'E1-K07',text:'平行板间用E=U/d时，主要前提是？',options:['板间区域可近似为匀强电场且d为沿场方向距离','任何电场都适用','U必须为正'],answer:0},
+      {id:'E1D12',node:'E1-K09',gate:'电容器状态',text:'平行板电容器充电后与电源断开，再增大板间距离，首先保持不变的是？',options:['电荷量Q','电压U','电容C'],answer:0},
+      {id:'E1D13',node:'E1-K08',text:'电容C=Q/U描述的是？',options:['电容器容纳电荷本领的属性关系','任何情况下C随Q增加而增加','电荷产生电压的速度'],answer:0},
+      {id:'E1D14',node:'E1-K10',text:'带电粒子在匀强电场中只受电场力时，分析顺序应优先是？',options:['明确电性、场方向和受力，再选运动或能量规律','直接套位移公式','忽略粒子电性'],answer:0},
+      {id:'E1D15',node:'E1-K11',text:'静电屏蔽的常见应用依据是？',options:['导体静电平衡时内部场的特征及表面电荷重新分布','绝缘体内永远没有电场','所有金属都能屏蔽任意变化的场且无条件'],answer:0}
+    ],evaluate:c=>({passed:true,admitted:true}),passPlan:()=>'<strong>下一步：</strong>进入A轨知识学习；诊断只调整优先顺序。',failPlan:()=>''});

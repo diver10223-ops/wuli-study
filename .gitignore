@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build and coverage output
+dist/
+build/
+coverage/
+generated/
+.site/
+
+# Tool and framework caches
+.cache/
+.vite/
+.next/
+.nuxt/
+__pycache__/
+*.py[cod]
+
+# Logs, temporary files, and editor metadata
+*.log
+*.tmp
+*.temp
+*.swp
+.DS_Store
+Thumbs.db
+
+# Local environment files
+.env
+.env.*
+!.env.example

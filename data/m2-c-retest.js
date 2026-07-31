@@ -1,0 +1,8 @@
+window.M2CRetest=Object.freeze({version:1,module:'M2',track:'C',storageKey:'physics-mechanics-m2-c-retest-v1',passTitle:'C轨复测通过',failTitle:'C轨复测未通过',reviewDays:14,prerequisites:[{key:'physics-mechanics-m2-c-exam-v1',label:'C正式卷未通过',test:v=>v?.passed===true}],questions:[
+{"id":"M2CR01","section":"一般变速","task":"CK02","node":"M2-CK02","text":"新测得滑块x=0.5t⁴（m），t=1 s的速度为？","options":["2 m/s","0.5 m/s","4 m/s"],"answer":0,"gate":"导数意义","novel":true},
+{"id":"M2CR02","section":"一般变速","task":"CK03","node":"M2-CK03","text":"传送带速度v=2-t（m/s），0—4 s的位移为？","options":["0 m","4 m","-4 m"],"answer":0,"gate":"积分有向累积","novel":true},
+{"id":"M2CR03","section":"一般变速","task":"CK04","node":"M2-CK04","text":"机器人a=t（m/s²）、v(0)=0，前2 s位移为？","options":["4/3 m","2 m","8/3 m"],"answer":0,"novel":true},
+{"id":"M2CR04","section":"一般变速","task":"CK06","node":"M2-CK06","text":"等间隔速度0、2、6 m/s，步长1 s，梯形法估算前2 s位移为？","options":["5 m","8 m","4 m"],"answer":0,"novel":true},
+{"id":"M2CR05","section":"一般变速","task":"CK07","node":"M2-CK07","text":"d=t²-6t+11（m），只允许0≤t≤2，最小值出现在哪里？","options":["t=2 s边界","t=3 s","t=0"],"answer":0,"novel":true},
+{"id":"M2CR06","section":"一般变速","task":"CK08","node":"M2-CK08","text":"分段位置函数在t=2 s连续但左右导数分别为1、3 m/s，这一时刻速度应怎样描述？","options":["发生速度突变，普通导数不存在","速度为2 m/s","速度为0"],"answer":0,"gate":"工具适用边界","novel":true}
+],evaluate:c=>{const independent=Object.values(c.response.states).every(v=>v==='独立完成'),gatesPassed=!c.failedGates.length&&!c.guessedGates.length;return{independent,gatesPassed,passed:c.eligible&&c.score>=80&&independent&&gatesPassed}},passPlan:()=>'<strong>稳定：</strong>C轨工具在新运动情境中保持。',failPlan:()=>'<strong>回补：</strong>按节点返回函数、有效域和近似误差。'});
