@@ -528,73 +528,50 @@ if (modules.includes("m3")) {
 
 if (modules.includes("m4")) {
   const matrices = Object.fromEntries(tracks.map(track => [track,
-    new Set(Array.from({ length: 6 }, (_, index) => `M4-${track.toUpperCase()}K0${index + 1}`))]));
-  const forbidden = ["学习某知识前最重要的是", "明确对象、条件与物理意义", "只记结论",
-    "忽略单位与方向", "明确条件并完成物理检验", "建立对象—过程—条件—规律—检验链",
-    "完成一个正例、一个反例"];
-  const requiredFields = ["summary", "conditions", "misconception", "example", "check"];
-  const structureKeys = ["objectType", "bodyCount", "forceTypes", "balanceDimension", "referenceFrame",
-    "target", "hasParameter", "hasCritical", "hasStateSwitch", "hasExperimentError", "steps"];
-  const ids = new Set(), exports = new Set(), storageKeys = new Set(), prompts = [];
-  const normalize = text => text.replace(/\d+(?:\.\d+)?/g, "#")
-    .replace(/[甲乙小车物块物体箱子滑块包裹乘客雪橇]/g, "对象")
-    .replace(/kg|N·s\/m|N|m\/s²|m\/s|s/g, "单位").replace(/[，。；：、“”‘’（）()\s]/g, "");
-  const maxRun = answers => answers.reduce((state, value, index) => {
-    const run = index && answers[index - 1] === value ? state.run + 1 : 1;
-    return { run, max: Math.max(state.max, run) };
-  }, { run: 0, max: 0 }).max;
+    new Set(Array.from({ length: 6 }, (_, i) => `M4-${track.toUpperCase()}K0${i + 1}`))]));
+  const required = ["summary","conditions","misconception","example","check"];
+  const structureKeys = ["objectType","bodyCount","forceTypes","balanceDimension","referenceFrame","target","hasParameter","hasCritical","hasStateSwitch","hasExperimentError","steps"];
+  const leak = /错误路径|错误：|漏掉|混淆|违反约束|改变参考系却/;
+  const placeholder = /题设对象|题设参考系|题干所列真实力|按节点规律列方程|核对相关约束|答案唯一/;
+  const normalize = text => text.replace(/\d+(?:\.\d+)?/g,"#").replace(/[甲乙小车物块物体箱子滑块包裹乘客雪橇]/g,"对象").replace(/kg|N·s\/m|N|m\/s²|m\/s|s/g,"单位").replace(/[，。；：、“”‘’（）()\s]/g,"");
+  const signature = q => structureKeys.map(k => Array.isArray(q.structure[k]) ? [...q.structure[k]].sort().join('+') : String(q.structure[k])).join('|');
+  const maxRun = a => a.reduce((s,v,i)=>{const run=i&&a[i-1]===v?s.run+1:1;return {run,max:Math.max(s.max,run)}},{run:0,max:0}).max;
+  const ids=new Set(), exports=new Set(), keys=new Set(), prompts=[];
   for (const track of tracks) {
-    const configs = {};
+    const configs={};
     for (const stage of stages) {
-      const file = path.join(root, "data", `m4-${track}-${stage}.js`);
-      const source = fs.readFileSync(file, "utf8");
-      forbidden.forEach(phrase => { if (source.includes(phrase)) throw new Error(`${file}: M4 template remains: ${phrase}`); });
-      const window = {};
-      vm.runInNewContext(source, { window, Set }, { filename: file });
-      const names = Object.keys(window);
-      if (names.length !== 1 || exports.has(names[0])) throw new Error(`${file}: duplicate or missing global export`);
-      exports.add(names[0]);
-      const config = Object.values(window)[0]; configs[stage] = config;
-      if (storageKeys.has(config.storageKey)) throw new Error(`${file}: duplicate storageKey`);
-      storageKeys.add(config.storageKey);
-      const collection = config.questions || config.items;
-      if (collection.some(item => !item)) throw new Error(`${file}: sparse array`);
-      collection.forEach(item => {
-        if (ids.has(item.id)) throw new Error(`${file}: duplicate ID ${item.id}`); ids.add(item.id);
-        if (!matrices[track].has(item.node)) throw new Error(`${file}: illegal node ${item.node}`);
-        if (["learning", "models"].includes(stage)) {
-          requiredFields.forEach(field => { if (!item[field]?.trim()) throw new Error(`${file}: ${item.id} missing ${field}`); });
-          if (!/\d/.test(item.example) || !/(kg|N|m\/s|m\/s²|s)/.test(item.example) || !/(=|得|结论|故|成立|切换|需)/.test(item.example))
-            throw new Error(`${file}: ${item.id} example is not verifiable`);
-          if (!/(画|写|列|算|复算|代回|核对)/.test(item.check)) throw new Error(`${file}: ${item.id} check is not executable`);
-        } else {
-          if (new Set(item.options).size !== item.options.length || !Number.isInteger(item.answer) || !item.options[item.answer])
-            throw new Error(`${file}: ${item.id} invalid options/answer`);
-          if (item.task !== item.node.slice(-3)) throw new Error(`${file}: ${item.id} task/node mismatch`);
-          if (!item.review || item.review.answerIndex !== item.answer || item.review.distractors?.length !== item.options.length - 1)
-            throw new Error(`${file}: ${item.id} lacks per-item physical review`);
-          if (structureKeys.some(key => !(key in item.structure))) throw new Error(`${file}: ${item.id} incomplete structure`);
-          prompts.push({ id: item.id, text: item.text, normalized: normalize(item.text), track, stage });
+      const file=path.join(root,"data",`m4-${track}-${stage}.js`), source=fs.readFileSync(file,"utf8"), window={};
+      vm.runInNewContext(source,{window,Set},{filename:file}); const names=Object.keys(window);
+      if(names.length!==1||exports.has(names[0])) throw new Error(`${file}: export not unique`); exports.add(names[0]);
+      const config=Object.values(window)[0]; configs[stage]=config;
+      if(keys.has(config.storageKey)) throw new Error(`${file}: storageKey not unique`); keys.add(config.storageKey);
+      const items=config.questions||config.items; if(items.some(x=>!x)) throw new Error(`${file}: sparse array`);
+      for(const item of items){
+        if(ids.has(item.id)) throw new Error(`${file}: duplicate ${item.id}`); ids.add(item.id);
+        if(!matrices[track].has(item.node)) throw new Error(`${file}: bad node ${item.node}`);
+        if(["learning","models"].includes(stage)){for(const field of required) if(typeof item[field]!=="string"||!item[field].trim()) throw new Error(`${file}: ${item.id} missing ${field}`);}
+        else {
+          if(item.task!==item.node.slice(-3)||new Set(item.options).size!==item.options.length||!item.options[item.answer]) throw new Error(`${file}: ${item.id} invalid task/options/answer`);
+          if(item.options.some(o=>leak.test(o))) throw new Error(`${file}: ${item.id} leaks answer in options`);
+          if(structureKeys.some(k=>!(k in item.structure))||!Number.isInteger(item.structure.bodyCount)||item.structure.bodyCount<1||!Array.isArray(item.structure.forceTypes)||!item.structure.forceTypes.length||!Number.isInteger(item.structure.steps)||item.structure.steps<1) throw new Error(`${file}: ${item.id} invalid structure types`);
+          for(const k of ["hasParameter","hasCritical","hasStateSwitch","hasExperimentError"]) if(typeof item.structure[k]!=="boolean") throw new Error(`${file}: ${item.id} ${k} not boolean`);
+          const r=item.review;if(!r||r.answerIndex!==item.answer||placeholder.test(JSON.stringify(r))||!Array.isArray(r.forces)||!r.forces.length) throw new Error(`${file}: ${item.id} review incomplete or placeholder`);
+          if(!Array.isArray(r.distractors)||r.distractors.length!==item.options.length-1) throw new Error(`${file}: ${item.id} distractor count`);
+          const wrong=item.options.filter((_,i)=>i!==item.answer); for(const d of r.distractors) if(!wrong.includes(d.option)||!(d.wrongEquation||d.wrongGeneration)||!d.wrongResult||!d.conflict) throw new Error(`${file}: ${item.id} distractor is not option-bound`);
+          prompts.push({track,stage,id:item.id,text:item.text,n:normalize(item.text)});
         }
-      });
+      }
     }
-    for (const stage of ["check", "exam", "retest"]) {
-      const questions = configs[stage].questions;
-      const missing = [...matrices[track]].filter(node => !questions.some(question => question.node === node));
-      if (missing.length) throw new Error(`M4 ${track.toUpperCase()} ${stage} misses ${missing.join(", ")}`);
-      const counts = [0, 1, 2].map(answer => questions.filter(question => question.answer === answer).length);
-      if (counts.some(count => count !== 2) || maxRun(questions.map(question => question.answer)) > 2)
-        throw new Error(`M4 ${track.toUpperCase()} ${stage} unbalanced answers: ${counts.join("/")}`);
-    }
-    if (track !== "a" && configs.diagnostic.prerequisites[0]?.key !==
-      `physics-mechanics-m4-${track === "b" ? "a" : "b"}-exam-v1`) throw new Error(`M4 ${track} wrong prerequisite`);
-    if (configs.exam.prerequisites[0]?.key !== `physics-mechanics-m4-${track}-check-v1` ||
-      configs.retest.prerequisites[0]?.key !== `physics-mechanics-m4-${track}-exam-v1`)
-      throw new Error(`M4 ${track} broken exam/retest evidence chain`);
+    for(const stage of ["check","retest"]){const q=configs[stage].questions;for(const node of matrices[track])if(!q.some(x=>x.node===node))throw new Error(`M4 ${track} ${stage} misses ${node}`);}
+    const exam=configs.exam.questions;if(exam.length!==12)throw new Error(`M4 ${track} exam must have 12 questions`);
+    for(const node of matrices[track]){const pair=exam.filter(q=>q.node===node);if(pair.length!==2||pair[0].level===pair[1].level||pair[0].answer===pair[1].answer||signature(pair[0])===signature(pair[1]))throw new Error(`M4 ${track} ${node} lacks two contrasting exam layers`);}
+    for(const stage of ["check","exam","retest"]){const a=configs[stage].questions.map(q=>q.answer), counts=[0,1,2].map(v=>a.filter(x=>x===v).length), expected=a.length/3;if(counts.some(x=>x!==expected)||maxRun(a)>2)throw new Error(`M4 ${track} ${stage} answer distribution ${counts}`);}
+    const learning=new Set(configs.learning.items.map(x=>normalize(x.example))), models=new Set(configs.models.items.map(x=>normalize(x.example)));
+    if(configs.check.questions.some(q=>learning.has(normalize(q.text))))throw new Error(`M4 ${track} check repeats learning example`);
+    if(exam.some(q=>models.has(normalize(q.text))))throw new Error(`M4 ${track} exam repeats model example`);
+    if(track!=="a"&&configs.diagnostic.prerequisites[0]?.key!==`physics-mechanics-m4-${track==="b"?"a":"b"}-exam-v1`)throw new Error(`M4 ${track} wrong prerequisite`);
+    if(configs.exam.prerequisites[0]?.key!==`physics-mechanics-m4-${track}-check-v1`||configs.retest.prerequisites[0]?.key!==`physics-mechanics-m4-${track}-exam-v1`)throw new Error(`M4 ${track} broken evidence chain`);
   }
-  for (let left = 0; left < prompts.length; left++) for (let right = left + 1; right < prompts.length; right++) {
-    if (prompts[left].text === prompts[right].text || prompts[left].normalized === prompts[right].normalized)
-      throw new Error(`M4 duplicate/number-only prompts: ${prompts[left].id}/${prompts[right].id}`);
-  }
-  console.log("OK: M4 automated audit proves configuration, mapping, distribution, coverage, evidence-chain and text-distinctness checks; it does not prove physical correctness");
+  for(let i=0;i<prompts.length;i++)for(let j=i+1;j<prompts.length;j++)if(prompts[i].text===prompts[j].text||prompts[i].n===prompts[j].n)throw new Error(`M4 duplicate/number-only prompts: ${prompts[i].id}/${prompts[j].id}`);
+  console.log("OK: M4 audit proves typed fields, 12-item/two-layer exams, mapping, answer distribution, evidence chains, option/review hygiene and text-distinctness; it cannot prove physical correctness or uniqueness, replace author recalculation or teacher review, or substitute for real-student validation");
 }

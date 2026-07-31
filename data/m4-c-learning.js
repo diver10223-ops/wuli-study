@@ -42,7 +42,7 @@ window.M4CLearning=Object.freeze({
       "title": "变质量系统与动量流",
       "summary": "开放系统不能直接写F外=m(t)a，必须计入跨边界动量流",
       "conditions": "声明控制体、相对喷射速度和质量变化率符号",
-      "misconception": "漏掉推力项，或把质量变化本身当外力",
+      "misconception": "未计入推力项，或把质量变化本身当外力",
       "example": "火箭向后喷气u=20 m/s，-dm/dt=0.50 kg/s，推力u(-dm/dt)=10 N向前",
       "check": "画或写出变质量系统与动量流的对象、正方向与真实力，列方程复算数值并代回约束。"
     },
@@ -52,7 +52,7 @@ window.M4CLearning=Object.freeze({
       "title": "一阶动力学微分方程",
       "summary": "m dv/dt=F(v,t)表示当前状态决定瞬时斜率，初值选定物理解",
       "conditions": "质量恒定、惯性系、给定力模型区间与初值",
-      "misconception": "把dv/dt当速度，或漏掉非齐次驱动力",
+      "misconception": "把dv/dt当速度，或未计入非齐次驱动力",
       "example": "dv/dt=4-2v且v0=0时初始a=4 m/s²，平衡速度2 m/s，斜率逐渐减小",
       "check": "画或写出一阶动力学微分方程的对象、正方向与真实力，列方程复算数值并代回约束。"
     },
