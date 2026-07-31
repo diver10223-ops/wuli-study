@@ -1,1 +1,70 @@
-window.M4CModels=Object.freeze({version:1,module:'M4',track:'C',storageKey:'physics-mechanics-m4-c-models-v1',diagnosticKey:'physics-mechanics-m4-c-diagnostic-v1',completePlan:'<strong>完成：</strong>进入下一阶段。',items:[{id:'M01',node:'M4-CK01',title:'非惯性参考系',summary:'围绕非惯性参考系建立对象—过程—条件—规律—检验链。',conditions:'明确适用范围、方向、单位和阶段。',misconception:'不能用孤立口诀替代条件判断。',example:'完成一个正例、一个反例和一道迁移任务。',check:'我能解释条件并独立建模'},{id:'M02',node:'M4-CK02',title:'惯性力',summary:'围绕惯性力建立对象—过程—条件—规律—检验链。',conditions:'明确适用范围、方向、单位和阶段。',misconception:'不能用孤立口诀替代条件判断。',example:'完成一个正例、一个反例和一道迁移任务。',check:'我能解释条件并独立建模'},{id:'M03',node:'M4-CK03',title:'变质量初步',summary:'围绕变质量初步建立对象—过程—条件—规律—检验链。',conditions:'明确适用范围、方向、单位和阶段。',misconception:'不能用孤立口诀替代条件判断。',example:'完成一个正例、一个反例和一道迁移任务。',check:'我能解释条件并独立建模'},{id:'M04',node:'M4-CK04',title:'阻力模型',summary:'围绕阻力模型建立对象—过程—条件—规律—检验链。',conditions:'明确适用范围、方向、单位和阶段。',misconception:'不能用孤立口诀替代条件判断。',example:'完成一个正例、一个反例和一道迁移任务。',check:'我能解释条件并独立建模'},{id:'M05',node:'M4-CK05',title:'微分方程形式',summary:'围绕微分方程形式建立对象—过程—条件—规律—检验链。',conditions:'明确适用范围、方向、单位和阶段。',misconception:'不能用孤立口诀替代条件判断。',example:'完成一个正例、一个反例和一道迁移任务。',check:'我能解释条件并独立建模'},{id:'M06',node:'M4-CK06',title:'数值动力学',summary:'围绕数值动力学建立对象—过程—条件—规律—检验链。',conditions:'明确适用范围、方向、单位和阶段。',misconception:'不能用孤立口诀替代条件判断。',example:'完成一个正例、一个反例和一道迁移任务。',check:'我能解释条件并独立建模'}]});
+window.M4CModels=Object.freeze({
+  "version": 1,
+  "module": "M4",
+  "track": "C",
+  "storageKey": "physics-mechanics-m4-c-models-v1",
+  "diagnosticKey": "physics-mechanics-m4-c-diagnostic-v1",
+  "completePlan": "完成后进入下一阶段。",
+  "items": [
+    {
+      "id": "M4CM01",
+      "node": "M4-CK01",
+      "title": "非惯性系与惯性力边界",
+      "summary": "完整模型链以非惯性系与惯性力边界的对象、参考系和真实力为起点，候选解须通过状态条件。",
+      "conditions": "必须声明非惯性参考系，只处理平动随动系",
+      "misconception": "在地面系添加惯性力，或给惯性力找施力者",
+      "example": "对象为2.0 kg箱；向右加速3.0 m/s²的车厢系、向右正；真实静摩擦6.0 N向右，加惯性力-6.0 N，ΣF*=0；惯性力仅是随动系工具",
+      "check": "画或写出非惯性系与惯性力边界的对象、正方向与真实力，列方程复算数值并代回约束。"
+    },
+    {
+      "id": "M4CM02",
+      "node": "M4-CK02",
+      "title": "参数动力学与存在区间",
+      "summary": "完整模型链以参数动力学与存在区间的对象、参考系和真实力为起点，候选解须通过状态条件。",
+      "conditions": "质量为正且所有单侧约束成立",
+      "misconception": "只给代数解不写区间，或保留负接触力",
+      "example": "对象为m>0乘客；地面系向上正；N-mg=ma得N=m(g+a)；接触要求N≥0，故候选仅在a≥-g存在，a=-g为边界",
+      "check": "画或写出参数动力学与存在区间的对象、正方向与真实力，列方程复算数值并代回约束。"
+    },
+    {
+      "id": "M4CM03",
+      "node": "M4-CK03",
+      "title": "速度阻力与终端速度",
+      "summary": "完整模型链以速度阻力与终端速度的对象、参考系和真实力为起点，候选解须通过状态条件。",
+      "conditions": "下落取正，k恒定且模型只在给定速度范围内",
+      "misconception": "把阻力当恒力，或认为终端速度时重力消失",
+      "example": "对象为0.10 kg小球；地面系向下正；真实力mg与-kv；0.10dv/dt=1.0-0.25v，候选vt=4.0 m/s使合力0，单位核对通过且不外推到高速区",
+      "check": "画或写出速度阻力与终端速度的对象、正方向与真实力，列方程复算数值并代回约束。"
+    },
+    {
+      "id": "M4CM04",
+      "node": "M4-CK04",
+      "title": "变质量系统与动量流",
+      "summary": "完整模型链以变质量系统与动量流的对象、参考系和真实力为起点，候选解须通过状态条件。",
+      "conditions": "声明控制体、相对喷射速度和质量变化率符号",
+      "misconception": "漏掉推力项，或把质量变化本身当外力",
+      "example": "对象取火箭本体开放系统；地面系向前正；m=5.0 kg、u=30 m/s、dm/dt=-0.20 kg/s，ma=u(-dm/dt)=6.0 N，候选a=1.2 m/s²",
+      "check": "画或写出变质量系统与动量流的对象、正方向与真实力，列方程复算数值并代回约束。"
+    },
+    {
+      "id": "M4CM05",
+      "node": "M4-CK05",
+      "title": "一阶动力学微分方程",
+      "summary": "完整模型链以一阶动力学微分方程的对象、参考系和真实力为起点，候选解须通过状态条件。",
+      "conditions": "质量恒定、惯性系、给定力模型区间与初值",
+      "misconception": "把dv/dt当速度，或漏掉非齐次驱动力",
+      "example": "对象为2.0 kg滑块；地面系向右正；真实驱动力6.0 N、阻力v N；2dv/dt=6-v，候选稳态v=6 m/s，代回斜率0且v<6时加速",
+      "check": "画或写出一阶动力学微分方程的对象、正方向与真实力，列方程复算数值并代回约束。"
+    },
+    {
+      "id": "M4CM06",
+      "node": "M4-CK06",
+      "title": "欧拉法数值动力学",
+      "summary": "完整模型链以欧拉法数值动力学的对象、参考系和真实力为起点，候选解须通过状态条件。",
+      "conditions": "每步用当前状态算力，Δt单位为s且足够小",
+      "misconception": "更新漏乘Δt，或用一次大步宣称模型正确",
+      "example": "对象为1.0 kg小球；地面系向下正；a=10-2v，由v0=1.0 m/s、Δt=0.20 s得v1=1.0+8.0×0.20=2.6 m/s；用0.10 s两步比较步长误差",
+      "check": "画或写出欧拉法数值动力学的对象、正方向与真实力，列方程复算数值并代回约束。"
+    }
+  ]
+});
