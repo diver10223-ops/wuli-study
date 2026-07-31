@@ -25,8 +25,8 @@ window.M4BExam=Object.freeze({
       "text": "先取1 kg+3 kg整体；地面系向右正；外力12 N，12=4a得a=3 m/s²；隔离3 kg得N=3a=9 N，N≥0故接触成立 该模型的最终结论是什么？",
       "options": [
         "隔离3 kg得N=3a=9 N，N≥0故接触成立",
-        "模型判断：把内力列入整体式",
-        "模型判断：求内力时不隔离"
+        "内力列入整体式",
+        "求内力时不隔离"
       ],
       "answer": 0,
       "skill": "整体法与隔离法",
@@ -36,6 +36,7 @@ window.M4BExam=Object.freeze({
         "objectType": "multi-body",
         "bodyCount": 2,
         "forceTypes": [
+          "applied",
           "gravity",
           "normal"
         ],
@@ -49,9 +50,10 @@ window.M4BExam=Object.freeze({
         "steps": 4
       },
       "review": {
-        "object": "整体法与隔离法",
+        "object": "先取1 kg+3 kg整体",
         "frame": "地面近似惯性参考系",
         "forces": [
+          "外加力",
           "重力",
           "支持力"
         ],
@@ -62,23 +64,21 @@ window.M4BExam=Object.freeze({
         "constraint": "物体保持共同加速度；整体只列外力",
         "final": "隔离3 kg得N=3a=9 N，N≥0故接触成立",
         "answerIndex": 0,
-        "unique": "只有选项“隔离3 kg得N=3a=9 N，N≥0故接触成立”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“先取1 kg+3 kg整体；地面系向右正；外力12 N，12=4a得a=3 m/s²；隔离3 kg得N=3a=9 N，N≥0故接触成立”只能得到“隔离3 kg得N=3a=9 N，N≥0故接触成立”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "模型判断：把内力列入整体式",
-            "wrongObjectOrForces": "仍取整体法与隔离法，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“先取1 kg+3 kg整体；地面系向右正；外力12 N，12=4a得a=3 m/s²；隔离3 kg得N=3a=9 N，N≥0故接触成立”改成与选项2相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：把内力列入整体式”",
-            "wrongResult": "模型判断：把内力列入整体式",
-            "conflict": "该结果不满足正确关系或条件：物体保持共同加速度；整体只列外力"
+            "option": "内力列入整体式",
+            "wrongObjectOrForces": "研究对象仍为先取1 kg+3 kg整体；真实力应为外加力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "内力列入整体式",
+            "conflict": "“内力列入整体式”与本题正确关系“先取1 kg+3 kg整体；地面系向右正；外力12 N，12=4a得a=3 m/s²；隔离3 kg得N=3a=9 N，N≥0故接触成立”冲突；满足题设的结果是“隔离3 kg得N=3a=9 N，N≥0故接触成立”。",
+            "wrongCriterion": "采用判据“内力列入整体式”而非本题判据“隔离3 kg得N=3a=9 N，N≥0故接触成立”"
           },
           {
-            "option": "模型判断：求内力时不隔离",
-            "wrongObjectOrForces": "仍取整体法与隔离法，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“先取1 kg+3 kg整体；地面系向右正；外力12 N，12=4a得a=3 m/s²；隔离3 kg得N=3a=9 N，N≥0故接触成立”改成与选项3相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：求内力时不隔离”",
-            "wrongResult": "模型判断：求内力时不隔离",
-            "conflict": "该结果不满足正确关系或条件：物体保持共同加速度；整体只列外力"
+            "option": "求内力时不隔离",
+            "wrongObjectOrForces": "研究对象仍为先取1 kg+3 kg整体；真实力应为外加力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "求内力时不隔离",
+            "conflict": "“求内力时不隔离”与本题正确关系“先取1 kg+3 kg整体；地面系向右正；外力12 N，12=4a得a=3 m/s²；隔离3 kg得N=3a=9 N，N≥0故接触成立”冲突；满足题设的结果是“隔离3 kg得N=3a=9 N，N≥0故接触成立”。",
+            "wrongCriterion": "采用判据“求内力时不隔离”而非本题判据“隔离3 kg得N=3a=9 N，N≥0故接触成立”"
           }
         ]
       }
@@ -92,20 +92,21 @@ window.M4BExam=Object.freeze({
       "novel": true,
       "text": "对象为0.50 kg滑块；地面系向右正；弹簧k=40 N/m伸长0.10 m，真实弹力4.0 N向左；-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内 该模型的最终结论是什么？",
       "options": [
-        "计算结果：保留负张力",
+        "保留负张力",
         "-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内",
-        "模型判断：把弹簧两端加速度强制相同"
+        "弹簧两端加速度必须相同"
       ],
       "answer": 1,
       "skill": "轻绳轻杆弹簧约束",
       "level": "应用",
       "constraint": "绳张紧、杆不伸长、弹簧在弹性限度内",
       "structure": {
-        "objectType": "multi-body",
-        "bodyCount": 2,
+        "objectType": "single-body",
+        "bodyCount": 1,
         "forceTypes": [
-          "applied",
-          "resistance"
+          "spring",
+          "gravity",
+          "normal"
         ],
         "balanceDimension": "one-axis",
         "referenceFrame": "inertial",
@@ -117,11 +118,12 @@ window.M4BExam=Object.freeze({
         "steps": 4
       },
       "review": {
-        "object": "轻绳轻杆弹簧约束",
+        "object": "0.50 kg滑块",
         "frame": "地面近似惯性参考系",
         "forces": [
-          "外加力",
-          "阻力"
+          "弹簧弹力",
+          "重力",
+          "支持力"
         ],
         "axis": "按题干所述运动方向取正",
         "equation": "对象为0.50 kg滑块；地面系向右正；弹簧k=40 N/m伸长0.10 m，真实弹力4.0 N向左；-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内",
@@ -130,23 +132,21 @@ window.M4BExam=Object.freeze({
         "constraint": "绳张紧、杆不伸长、弹簧在弹性限度内",
         "final": "-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内",
         "answerIndex": 1,
-        "unique": "只有选项“-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“对象为0.50 kg滑块；地面系向右正；弹簧k=40 N/m伸长0.10 m，真实弹力4.0 N向左；-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内”只能得到“-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "计算结果：保留负张力",
-            "wrongObjectOrForces": "仍取轻绳轻杆弹簧约束，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“对象为0.50 kg滑块；地面系向右正；弹簧k=40 N/m伸长0.10 m，真实弹力4.0 N向左；-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内”改成与选项1相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“计算结果：保留负张力”",
-            "wrongResult": "计算结果：保留负张力",
-            "conflict": "该结果不满足正确关系或条件：绳张紧、杆不伸长、弹簧在弹性限度内"
+            "option": "保留负张力",
+            "wrongObjectOrForces": "研究对象仍为0.50 kg滑块；真实力应为弹簧弹力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "保留负张力",
+            "conflict": "“保留负张力”与本题正确关系“对象为0.50 kg滑块；地面系向右正；弹簧k=40 N/m伸长0.10 m，真实弹力4.0 N向左；-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内”冲突；满足题设的结果是“-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内”。",
+            "wrongCriterion": "采用判据“保留负张力”而非本题判据“-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内”"
           },
           {
-            "option": "模型判断：把弹簧两端加速度强制相同",
-            "wrongObjectOrForces": "仍取轻绳轻杆弹簧约束，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“对象为0.50 kg滑块；地面系向右正；弹簧k=40 N/m伸长0.10 m，真实弹力4.0 N向左；-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内”改成与选项3相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：把弹簧两端加速度强制相同”",
-            "wrongResult": "模型判断：把弹簧两端加速度强制相同",
-            "conflict": "该结果不满足正确关系或条件：绳张紧、杆不伸长、弹簧在弹性限度内"
+            "option": "弹簧两端加速度必须相同",
+            "wrongObjectOrForces": "研究对象仍为0.50 kg滑块；真实力应为弹簧弹力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "弹簧两端加速度必须相同",
+            "conflict": "“弹簧两端加速度必须相同”与本题正确关系“对象为0.50 kg滑块；地面系向右正；弹簧k=40 N/m伸长0.10 m，真实弹力4.0 N向左；-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内”冲突；满足题设的结果是“-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内”。",
+            "wrongCriterion": "采用判据“弹簧两端加速度必须相同”而非本题判据“-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内”"
           }
         ]
       }
@@ -160,8 +160,8 @@ window.M4BExam=Object.freeze({
       "novel": true,
       "text": "对象为2.0 kg物块；地面系向上正；N-20=2a，候选a=-12 m/s²给N=-4 N不可实现；切换后N=0，物块a=-10 m/s² 该模型的最终结论是什么？",
       "options": [
-        "计算结果：保留负支持力",
-        "模型判断：认为N=0时重力消失",
+        "保留负支持力",
+        "N=0时重力消失",
         "切换后N=0，物块a=-10 m/s²"
       ],
       "answer": 2,
@@ -169,11 +169,11 @@ window.M4BExam=Object.freeze({
       "level": "应用",
       "constraint": "接触面只推不拉，候选N<0必须舍弃",
       "structure": {
-        "objectType": "multi-body",
-        "bodyCount": 2,
+        "objectType": "single-body",
+        "bodyCount": 1,
         "forceTypes": [
-          "applied",
-          "resistance"
+          "gravity",
+          "normal"
         ],
         "balanceDimension": "one-axis",
         "referenceFrame": "inertial",
@@ -185,11 +185,11 @@ window.M4BExam=Object.freeze({
         "steps": 4
       },
       "review": {
-        "object": "临界分离与接触切换",
+        "object": "2.0 kg物块",
         "frame": "地面近似惯性参考系",
         "forces": [
-          "外加力",
-          "阻力"
+          "重力",
+          "支持力"
         ],
         "axis": "按题干所述运动方向取正",
         "equation": "对象为2.0 kg物块；地面系向上正；N-20=2a，候选a=-12 m/s²给N=-4 N不可实现；切换后N=0，物块a=-10 m/s²",
@@ -198,23 +198,22 @@ window.M4BExam=Object.freeze({
         "constraint": "接触面只推不拉，候选N<0必须舍弃",
         "final": "切换后N=0，物块a=-10 m/s²",
         "answerIndex": 2,
-        "unique": "只有选项“切换后N=0，物块a=-10 m/s²”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“对象为2.0 kg物块；地面系向上正；N-20=2a，候选a=-12 m/s²给N=-4 N不可实现；切换后N=0，物块a=-10 m/s²”只能得到“切换后N=0，物块a=-10 m/s²”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "计算结果：保留负支持力",
-            "wrongObjectOrForces": "仍取临界分离与接触切换，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“对象为2.0 kg物块；地面系向上正；N-20=2a，候选a=-12 m/s²给N=-4 N不可实现；切换后N=0，物块a=-10 m/s²”改成与选项1相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“计算结果：保留负支持力”",
-            "wrongResult": "计算结果：保留负支持力",
-            "conflict": "该结果不满足正确关系或条件：接触面只推不拉，候选N<0必须舍弃"
+            "option": "保留负支持力",
+            "wrongObjectOrForces": "研究对象仍为2.0 kg物块；真实力应为重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "保留负支持力",
+            "conflict": "“保留负支持力”与本题正确关系“对象为2.0 kg物块；地面系向上正；N-20=2a，候选a=-12 m/s²给N=-4 N不可实现；切换后N=0，物块a=-10 m/s²”冲突；满足题设的结果是“切换后N=0，物块a=-10 m/s²”。",
+            "wrongCriterion": "采用判据“保留负支持力”而非本题判据“切换后N=0，物块a=-10 m/s²”"
           },
           {
-            "option": "模型判断：认为N=0时重力消失",
-            "wrongObjectOrForces": "仍取临界分离与接触切换，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“对象为2.0 kg物块；地面系向上正；N-20=2a，候选a=-12 m/s²给N=-4 N不可实现；切换后N=0，物块a=-10 m/s²”改成与选项2相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：认为N=0时重力消失”",
-            "wrongResult": "模型判断：认为N=0时重力消失",
-            "conflict": "该结果不满足正确关系或条件：接触面只推不拉，候选N<0必须舍弃"
+            "option": "N=0时重力消失",
+            "wrongObjectOrForces": "研究对象仍为2.0 kg物块；真实力应为重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "N=0时重力消失",
+            "conflict": "“N=0时重力消失”与本题正确关系“对象为2.0 kg物块；地面系向上正；N-20=2a，候选a=-12 m/s²给N=-4 N不可实现；切换后N=0，物块a=-10 m/s²”冲突；满足题设的结果是“切换后N=0，物块a=-10 m/s²”。",
+            "wrongEquation": "按选项建立关系“N=0时重力消失”；该式取代了本题关系“对象为2.0 kg物块；地面系向上正；N-20=2a，候选a=-12 m/s²给N=-4 N不可实现；切换后N=0，物块a=-10 m/s²”",
+            "wrongSubstitution": "在“对象为2.0 kg物块；地面系向上正；N-20=2a，候选a=-12 m/s²给N=-4 N不可实现；切换后N=0，物块a=-10 m/s² 该模型的最终结论是什么？”给定条件下，将本题给定量代入该关系后得到“N=0时重力消失”"
           }
         ]
       }
@@ -229,19 +228,20 @@ window.M4BExam=Object.freeze({
       "text": "对象为1.0 kg箱；地面系向右正；车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动 该模型的最终结论是什么？",
       "options": [
         "车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动",
-        "模型判断：未达上限就写f=μsN",
-        "模型判断：滑后仍用静摩擦"
+        "未达上限就写f=μsN",
+        "滑后仍用静摩擦"
       ],
       "answer": 0,
       "skill": "临界滑动与静摩擦需求",
       "level": "应用",
       "constraint": "未滑时|f需求|≤μsN，滑动后用μkN",
       "structure": {
-        "objectType": "multi-body",
-        "bodyCount": 2,
+        "objectType": "single-body",
+        "bodyCount": 1,
         "forceTypes": [
-          "applied",
-          "resistance"
+          "friction",
+          "gravity",
+          "normal"
         ],
         "balanceDimension": "one-axis",
         "referenceFrame": "inertial",
@@ -253,11 +253,12 @@ window.M4BExam=Object.freeze({
         "steps": 4
       },
       "review": {
-        "object": "临界滑动与静摩擦需求",
+        "object": "1.0 kg箱",
         "frame": "地面近似惯性参考系",
         "forces": [
-          "外加力",
-          "阻力"
+          "静摩擦力",
+          "重力",
+          "支持力"
         ],
         "axis": "按题干所述运动方向取正",
         "equation": "对象为1.0 kg箱；地面系向右正；车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动",
@@ -266,23 +267,22 @@ window.M4BExam=Object.freeze({
         "constraint": "未滑时|f需求|≤μsN，滑动后用μkN",
         "final": "车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动",
         "answerIndex": 0,
-        "unique": "只有选项“车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“对象为1.0 kg箱；地面系向右正；车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动”只能得到“车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "模型判断：未达上限就写f=μsN",
-            "wrongObjectOrForces": "仍取临界滑动与静摩擦需求，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“对象为1.0 kg箱；地面系向右正；车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动”改成与选项2相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：未达上限就写f=μsN”",
-            "wrongResult": "模型判断：未达上限就写f=μsN",
-            "conflict": "该结果不满足正确关系或条件：未滑时|f需求|≤μsN，滑动后用μkN"
+            "option": "未达上限就写f=μsN",
+            "wrongObjectOrForces": "研究对象仍为1.0 kg箱；真实力应为静摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "未达上限就写f=μsN",
+            "conflict": "“未达上限就写f=μsN”与本题正确关系“对象为1.0 kg箱；地面系向右正；车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动”冲突；满足题设的结果是“车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动”。",
+            "wrongEquation": "按选项建立关系“未达上限就写f=μsN”；该式取代了本题关系“对象为1.0 kg箱；地面系向右正；车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动”",
+            "wrongSubstitution": "在“对象为1.0 kg箱；地面系向右正；车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动 该模型的最终结论是什么？”给定条件下，将本题给定量代入该关系后得到“未达上限就写f=μsN”"
           },
           {
-            "option": "模型判断：滑后仍用静摩擦",
-            "wrongObjectOrForces": "仍取临界滑动与静摩擦需求，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“对象为1.0 kg箱；地面系向右正；车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动”改成与选项3相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：滑后仍用静摩擦”",
-            "wrongResult": "模型判断：滑后仍用静摩擦",
-            "conflict": "该结果不满足正确关系或条件：未滑时|f需求|≤μsN，滑动后用μkN"
+            "option": "滑后仍用静摩擦",
+            "wrongObjectOrForces": "研究对象仍为1.0 kg箱；真实力应为静摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "滑后仍用静摩擦",
+            "conflict": "“滑后仍用静摩擦”与本题正确关系“对象为1.0 kg箱；地面系向右正；车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动”冲突；满足题设的结果是“车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动”。",
+            "wrongCriterion": "采用判据“滑后仍用静摩擦”而非本题判据“车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动”"
           }
         ]
       }
@@ -296,20 +296,21 @@ window.M4BExam=Object.freeze({
       "novel": true,
       "text": "对象为2.0 kg包裹；地面系向右正；带速6 m/s、包裹2 m/s，摩擦4 N向右，4=2a得a=2 m/s²；2 s后同速并切换为f=0 该模型的最终结论是什么？",
       "options": [
-        "计算结果：只看对地速度定摩擦",
+        "只看对地速度定摩擦",
         "2 s后同速并切换为f=0",
-        "模型判断：忽略达到带速后的切换"
+        "忽略达到带速后的切换"
       ],
       "answer": 1,
       "skill": "传送带板块分段动力学",
       "level": "应用",
       "constraint": "每段相对速度符号固定，切换时刻由速度相等或越界确定",
       "structure": {
-        "objectType": "multi-body",
-        "bodyCount": 2,
+        "objectType": "single-body",
+        "bodyCount": 1,
         "forceTypes": [
-          "applied",
-          "resistance"
+          "friction",
+          "gravity",
+          "normal"
         ],
         "balanceDimension": "one-axis",
         "referenceFrame": "inertial",
@@ -321,11 +322,12 @@ window.M4BExam=Object.freeze({
         "steps": 4
       },
       "review": {
-        "object": "传送带板块分段动力学",
+        "object": "2.0 kg包裹",
         "frame": "地面近似惯性参考系",
         "forces": [
-          "外加力",
-          "阻力"
+          "滑动摩擦力",
+          "重力",
+          "支持力"
         ],
         "axis": "按题干所述运动方向取正",
         "equation": "对象为2.0 kg包裹；地面系向右正；带速6 m/s、包裹2 m/s，摩擦4 N向右，4=2a得a=2 m/s²；2 s后同速并切换为f=0",
@@ -334,23 +336,21 @@ window.M4BExam=Object.freeze({
         "constraint": "每段相对速度符号固定，切换时刻由速度相等或越界确定",
         "final": "2 s后同速并切换为f=0",
         "answerIndex": 1,
-        "unique": "只有选项“2 s后同速并切换为f=0”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“对象为2.0 kg包裹；地面系向右正；带速6 m/s、包裹2 m/s，摩擦4 N向右，4=2a得a=2 m/s²；2 s后同速并切换为f=0”只能得到“2 s后同速并切换为f=0”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "计算结果：只看对地速度定摩擦",
-            "wrongObjectOrForces": "仍取传送带板块分段动力学，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“对象为2.0 kg包裹；地面系向右正；带速6 m/s、包裹2 m/s，摩擦4 N向右，4=2a得a=2 m/s²；2 s后同速并切换为f=0”改成与选项1相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“计算结果：只看对地速度定摩擦”",
-            "wrongResult": "计算结果：只看对地速度定摩擦",
-            "conflict": "该结果不满足正确关系或条件：每段相对速度符号固定，切换时刻由速度相等或越界确定"
+            "option": "只看对地速度定摩擦",
+            "wrongObjectOrForces": "研究对象仍为2.0 kg包裹；真实力应为滑动摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "只看对地速度定摩擦",
+            "conflict": "“只看对地速度定摩擦”与本题正确关系“对象为2.0 kg包裹；地面系向右正；带速6 m/s、包裹2 m/s，摩擦4 N向右，4=2a得a=2 m/s²；2 s后同速并切换为f=0”冲突；满足题设的结果是“2 s后同速并切换为f=0”。",
+            "wrongCriterion": "采用判据“只看对地速度定摩擦”而非本题判据“2 s后同速并切换为f=0”"
           },
           {
-            "option": "模型判断：忽略达到带速后的切换",
-            "wrongObjectOrForces": "仍取传送带板块分段动力学，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“对象为2.0 kg包裹；地面系向右正；带速6 m/s、包裹2 m/s，摩擦4 N向右，4=2a得a=2 m/s²；2 s后同速并切换为f=0”改成与选项3相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：忽略达到带速后的切换”",
-            "wrongResult": "模型判断：忽略达到带速后的切换",
-            "conflict": "该结果不满足正确关系或条件：每段相对速度符号固定，切换时刻由速度相等或越界确定"
+            "option": "忽略达到带速后的切换",
+            "wrongObjectOrForces": "研究对象仍为2.0 kg包裹，但方程中漏去达到带速后的切换",
+            "wrongResult": "忽略达到带速后的切换",
+            "conflict": "“忽略达到带速后的切换”与本题正确关系“对象为2.0 kg包裹；地面系向右正；带速6 m/s、包裹2 m/s，摩擦4 N向右，4=2a得a=2 m/s²；2 s后同速并切换为f=0”冲突；满足题设的结果是“2 s后同速并切换为f=0”。",
+            "wrongCriterion": "采用判据“忽略达到带速后的切换”而非本题判据“2 s后同速并切换为f=0”"
           }
         ]
       }
@@ -364,8 +364,8 @@ window.M4BExam=Object.freeze({
       "novel": true,
       "text": "对象为小车与砝码整体；地面系沿轨道正；F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点 该模型的最终结论是什么？",
       "options": [
-        "计算结果：把平衡摩擦说成消除摩擦",
-        "模型判断：把截距都当随机误差",
+        "平衡摩擦时消除摩擦",
+        "截距均为随机误差",
         "F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点"
       ],
       "answer": 2,
@@ -374,8 +374,10 @@ window.M4BExam=Object.freeze({
       "constraint": "控制质量或合力，拟合数据对应同一系统边界",
       "structure": {
         "objectType": "multi-body",
-        "bodyCount": 1,
+        "bodyCount": 2,
         "forceTypes": [
+          "tension",
+          "friction",
           "gravity",
           "normal"
         ],
@@ -389,9 +391,11 @@ window.M4BExam=Object.freeze({
         "steps": 4
       },
       "review": {
-        "object": "动力学实验图像与误差",
+        "object": "小车与砝码整体",
         "frame": "地面近似惯性参考系",
         "forces": [
+          "拉力",
+          "摩擦力",
           "重力",
           "支持力"
         ],
@@ -402,23 +406,21 @@ window.M4BExam=Object.freeze({
         "constraint": "控制质量或合力，拟合数据对应同一系统边界",
         "final": "F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点",
         "answerIndex": 2,
-        "unique": "只有选项“F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“对象为小车与砝码整体；地面系沿轨道正；F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点”只能得到“F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "计算结果：把平衡摩擦说成消除摩擦",
-            "wrongObjectOrForces": "仍取动力学实验图像与误差，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“对象为小车与砝码整体；地面系沿轨道正；F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点”改成与选项1相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“计算结果：把平衡摩擦说成消除摩擦”",
-            "wrongResult": "计算结果：把平衡摩擦说成消除摩擦",
-            "conflict": "该结果不满足正确关系或条件：控制质量或合力，拟合数据对应同一系统边界"
+            "option": "平衡摩擦时消除摩擦",
+            "wrongObjectOrForces": "研究对象仍为小车与砝码整体；真实力应为拉力、摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "平衡摩擦时消除摩擦",
+            "conflict": "“平衡摩擦时消除摩擦”与本题正确关系“对象为小车与砝码整体；地面系沿轨道正；F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点”冲突；满足题设的结果是“F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点”。",
+            "wrongCriterion": "采用判据“平衡摩擦时消除摩擦”而非本题判据“F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点”"
           },
           {
-            "option": "模型判断：把截距都当随机误差",
-            "wrongObjectOrForces": "仍取动力学实验图像与误差，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“对象为小车与砝码整体；地面系沿轨道正；F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点”改成与选项2相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：把截距都当随机误差”",
-            "wrongResult": "模型判断：把截距都当随机误差",
-            "conflict": "该结果不满足正确关系或条件：控制质量或合力，拟合数据对应同一系统边界"
+            "option": "截距均为随机误差",
+            "wrongObjectOrForces": "研究对象仍为小车与砝码整体；真实力应为拉力、摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "截距均为随机误差",
+            "conflict": "“截距均为随机误差”与本题正确关系“对象为小车与砝码整体；地面系沿轨道正；F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点”冲突；满足题设的结果是“F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点”。",
+            "wrongCriterion": "采用判据“截距均为随机误差”而非本题判据“F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点”"
           }
         ]
       }
@@ -433,8 +435,8 @@ window.M4BExam=Object.freeze({
       "text": "两箱在水平面上接触并共同加速。求系统加速度时，最简研究对象是？",
       "options": [
         "只隔离后箱",
-        "把两箱作为整体",
-        "把接触力作为研究对象"
+        "两箱作为整体",
+        "接触力作为研究对象"
       ],
       "answer": 1,
       "skill": "整体法与隔离法",
@@ -444,6 +446,7 @@ window.M4BExam=Object.freeze({
         "objectType": "multi-body",
         "bodyCount": 2,
         "forceTypes": [
+          "applied",
           "gravity",
           "normal"
         ],
@@ -457,36 +460,35 @@ window.M4BExam=Object.freeze({
         "steps": 2
       },
       "review": {
-        "object": "相互接触的两箱整体",
+        "object": "两箱在水平面上接触并共同加速",
         "frame": "地面近似惯性参考系",
         "forces": [
+          "外加力",
           "重力",
           "支持力"
         ],
         "axis": "按题干所述运动或装置加速度方向取正",
         "equation": "对整体列ΣF外=(m1+m2)a，接触内力抵消",
         "substitution": "对整体列ΣF外=(m1+m2)a，接触内力抵消",
-        "candidate": "把两箱作为整体",
+        "candidate": "两箱作为整体",
         "constraint": "整体法求共同加速度时内力不进入外力和",
-        "final": "把两箱作为整体",
+        "final": "两箱作为整体",
         "answerIndex": 1,
-        "unique": "只有选项“把两箱作为整体”满足方程和题设边界；另两项与review.distractors记录的错误链对应。",
+        "unique": "由本题关系“对整体列ΣF外=(m1+m2)a，接触内力抵消”只能得到“两箱作为整体”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
             "option": "只隔离后箱",
-            "wrongObjectOrForces": "研究对象仍为相互接触的两箱整体，但误判合力方向、约束或模型边界",
-            "wrongEquation": "错误关系导向“只隔离后箱”，而正确关系为“对整体列ΣF外=(m1+m2)a，接触内力抵消”",
-            "wrongSubstitution": "按错误符号或单位代入后得到“只隔离后箱”",
+            "wrongObjectOrForces": "研究对象仍为两箱在水平面上接触并共同加速；真实力应为外加力、重力、支持力，该选项改变了其中的合力或状态判断",
             "wrongResult": "只隔离后箱",
-            "conflict": "不满足整体法求共同加速度时内力不进入外力和"
+            "conflict": "“只隔离后箱”与本题正确关系“对整体列ΣF外=(m1+m2)a，接触内力抵消”冲突；满足题设的结果是“两箱作为整体”。",
+            "wrongCriterion": "采用判据“只隔离后箱”而非本题判据“两箱作为整体”"
           },
           {
-            "option": "把接触力作为研究对象",
-            "wrongObjectOrForces": "研究对象仍为相互接触的两箱整体，但误判合力方向、约束或模型边界",
-            "wrongEquation": "错误关系导向“把接触力作为研究对象”，而正确关系为“对整体列ΣF外=(m1+m2)a，接触内力抵消”",
-            "wrongSubstitution": "按错误符号或单位代入后得到“把接触力作为研究对象”",
-            "wrongResult": "把接触力作为研究对象",
-            "conflict": "不满足整体法求共同加速度时内力不进入外力和"
+            "option": "接触力作为研究对象",
+            "wrongObjectOrForces": "研究对象仍为两箱在水平面上接触并共同加速；真实力应为外加力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "接触力作为研究对象",
+            "conflict": "“接触力作为研究对象”与本题正确关系“对整体列ΣF外=(m1+m2)a，接触内力抵消”冲突；满足题设的结果是“两箱作为整体”。",
+            "wrongCriterion": "采用判据“接触力作为研究对象”而非本题判据“两箱作为整体”"
           }
         ]
       }
@@ -512,8 +514,9 @@ window.M4BExam=Object.freeze({
         "objectType": "multi-body",
         "bodyCount": 2,
         "forceTypes": [
-          "applied",
-          "resistance"
+          "tension",
+          "gravity",
+          "normal"
         ],
         "balanceDimension": "one-axis",
         "referenceFrame": "inertial",
@@ -525,36 +528,36 @@ window.M4BExam=Object.freeze({
         "steps": 2
       },
       "review": {
-        "object": "轻绳连接的两物块",
+        "object": "两物块由绷紧轻绳连接且绳长不变",
         "frame": "地面近似惯性参考系",
         "forces": [
-          "外加力",
-          "阻力"
+          "张力",
+          "重力",
+          "支持力"
         ],
         "axis": "按题干所述运动或装置加速度方向取正",
         "equation": "绳长二阶导数为零，故两端沿绳加速度分量相等",
-        "substitution": "绳长二阶导数为零，故两端沿绳加速度分量相等",
+        "substitution": "本题为判别题，不作数值代入；使用判据“两端加速度分量相等”",
         "candidate": "两端加速度分量相等",
         "constraint": "轻绳约束运动学关系，不保证合力相等",
         "final": "两端加速度分量相等",
         "answerIndex": 2,
-        "unique": "只有选项“两端加速度分量相等”满足方程和题设边界；另两项与review.distractors记录的错误链对应。",
+        "unique": "由本题关系“绳长二阶导数为零，故两端沿绳加速度分量相等”只能得到“两端加速度分量相等”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
             "option": "张力必等于两物块重力",
-            "wrongObjectOrForces": "研究对象仍为轻绳连接的两物块，但误判合力方向、约束或模型边界",
-            "wrongEquation": "错误关系导向“张力必等于两物块重力”，而正确关系为“绳长二阶导数为零，故两端沿绳加速度分量相等”",
-            "wrongSubstitution": "按错误符号或单位代入后得到“张力必等于两物块重力”",
+            "wrongObjectOrForces": "研究对象仍为两物块由绷紧轻绳连接且绳长不变；真实力应为张力、重力、支持力，该选项改变了其中的合力或状态判断",
             "wrongResult": "张力必等于两物块重力",
-            "conflict": "不满足轻绳约束运动学关系，不保证合力相等"
+            "conflict": "“张力必等于两物块重力”与本题正确关系“绳长二阶导数为零，故两端沿绳加速度分量相等”冲突；满足题设的结果是“两端加速度分量相等”。",
+            "wrongEquation": "按选项建立关系“张力必等于两物块重力”；该式取代了本题关系“绳长二阶导数为零，故两端沿绳加速度分量相等”",
+            "wrongSubstitution": "在“两物块由绷紧轻绳连接且绳长不变，在绳方向上的约束是？”给定条件下，将本题给定量代入该关系后得到“张力必等于两物块重力”"
           },
           {
             "option": "两物块所受合力相等",
-            "wrongObjectOrForces": "研究对象仍为轻绳连接的两物块，但误判合力方向、约束或模型边界",
-            "wrongEquation": "错误关系导向“两物块所受合力相等”，而正确关系为“绳长二阶导数为零，故两端沿绳加速度分量相等”",
-            "wrongSubstitution": "按错误符号或单位代入后得到“两物块所受合力相等”",
+            "wrongObjectOrForces": "研究对象仍为两物块由绷紧轻绳连接且绳长不变；真实力应为张力、重力、支持力，该选项改变了其中的合力或状态判断",
             "wrongResult": "两物块所受合力相等",
-            "conflict": "不满足轻绳约束运动学关系，不保证合力相等"
+            "conflict": "“两物块所受合力相等”与本题正确关系“绳长二阶导数为零，故两端沿绳加速度分量相等”冲突；满足题设的结果是“两端加速度分量相等”。",
+            "wrongCriterion": "采用判据“两物块所受合力相等”而非本题判据“两端加速度分量相等”"
           }
         ]
       }
@@ -577,11 +580,11 @@ window.M4BExam=Object.freeze({
       "level": "基础判别",
       "constraint": "接触面只推不拉，候选N<0必须舍弃",
       "structure": {
-        "objectType": "multi-body",
-        "bodyCount": 2,
+        "objectType": "single-body",
+        "bodyCount": 1,
         "forceTypes": [
-          "applied",
-          "resistance"
+          "gravity",
+          "normal"
         ],
         "balanceDimension": "one-axis",
         "referenceFrame": "inertial",
@@ -593,11 +596,11 @@ window.M4BExam=Object.freeze({
         "steps": 2
       },
       "review": {
-        "object": "平台上的小球",
+        "object": "上方小球与加速平台保持接触的临界条件是",
         "frame": "地面近似惯性参考系",
         "forces": [
-          "外加力",
-          "阻力"
+          "重力",
+          "支持力"
         ],
         "axis": "按题干所述运动或装置加速度方向取正",
         "equation": "接触只能推不能拉；临界分离时N=0",
@@ -606,23 +609,22 @@ window.M4BExam=Object.freeze({
         "constraint": "重力仍存在，负支持力候选必须舍弃",
         "final": "支持力N=0",
         "answerIndex": 0,
-        "unique": "只有选项“支持力N=0”满足方程和题设边界；另两项与review.distractors记录的错误链对应。",
+        "unique": "由本题关系“接触只能推不能拉；临界分离时N=0”只能得到“支持力N=0”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
             "option": "支持力达到最大",
-            "wrongObjectOrForces": "研究对象仍为平台上的小球，但误判合力方向、约束或模型边界",
-            "wrongEquation": "错误关系导向“支持力达到最大”，而正确关系为“接触只能推不能拉；临界分离时N=0”",
-            "wrongSubstitution": "按错误符号或单位代入后得到“支持力达到最大”",
+            "wrongObjectOrForces": "研究对象仍为上方小球与加速平台保持接触的临界条件是；真实力应为重力、支持力，该选项改变了其中的合力或状态判断",
             "wrongResult": "支持力达到最大",
-            "conflict": "不满足重力仍存在，负支持力候选必须舍弃"
+            "conflict": "“支持力达到最大”与本题正确关系“接触只能推不能拉；临界分离时N=0”冲突；满足题设的结果是“支持力N=0”。",
+            "wrongCriterion": "采用判据“支持力达到最大”而非本题判据“支持力N=0”"
           },
           {
             "option": "重力mg=0",
-            "wrongObjectOrForces": "研究对象仍为平台上的小球，但误判合力方向、约束或模型边界",
-            "wrongEquation": "错误关系导向“重力mg=0”，而正确关系为“接触只能推不能拉；临界分离时N=0”",
-            "wrongSubstitution": "按错误符号或单位代入后得到“重力mg=0”",
+            "wrongObjectOrForces": "研究对象仍为上方小球与加速平台保持接触的临界条件是；真实力应为重力、支持力，该选项改变了其中的合力或状态判断",
             "wrongResult": "重力mg=0",
-            "conflict": "不满足重力仍存在，负支持力候选必须舍弃"
+            "conflict": "“重力mg=0”与本题正确关系“接触只能推不能拉；临界分离时N=0”冲突；满足题设的结果是“支持力N=0”。",
+            "wrongEquation": "按选项建立关系“重力mg=0”；该式取代了本题关系“接触只能推不能拉；临界分离时N=0”",
+            "wrongSubstitution": "在“上方小球与加速平台保持接触的临界条件是？”给定条件下，将本题给定量代入该关系后得到“重力mg=0”"
           }
         ]
       }
@@ -645,11 +647,12 @@ window.M4BExam=Object.freeze({
       "level": "基础判别",
       "constraint": "未滑时|f需求|≤μsN，滑动后用μkN",
       "structure": {
-        "objectType": "multi-body",
-        "bodyCount": 2,
+        "objectType": "single-body",
+        "bodyCount": 1,
         "forceTypes": [
-          "applied",
-          "resistance"
+          "friction",
+          "gravity",
+          "normal"
         ],
         "balanceDimension": "one-axis",
         "referenceFrame": "inertial",
@@ -661,36 +664,35 @@ window.M4BExam=Object.freeze({
         "steps": 2
       },
       "review": {
-        "object": "叠放木块",
+        "object": "上层木块随下层板共同加速",
         "frame": "地面近似惯性参考系",
         "forces": [
-          "外加力",
-          "阻力"
+          "静摩擦力",
+          "重力",
+          "支持力"
         ],
         "axis": "按题干所述运动或装置加速度方向取正",
         "equation": "共同运动要求f需=ma，且|f需|≤μsN",
-        "substitution": "共同运动要求f需=ma，且|f需|≤μsN",
+        "substitution": "本题为判别题，不作数值代入；使用判据“所需静摩擦与μsN”",
         "candidate": "所需静摩擦与μsN",
         "constraint": "边界由静摩擦能力而非速度给出",
         "final": "所需静摩擦与μsN",
         "answerIndex": 1,
-        "unique": "只有选项“所需静摩擦与μsN”满足方程和题设边界；另两项与review.distractors记录的错误链对应。",
+        "unique": "由本题关系“共同运动要求f需=ma，且|f需|≤μsN”只能得到“所需静摩擦与μsN”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
             "option": "速度与重力",
-            "wrongObjectOrForces": "研究对象仍为叠放木块，但误判合力方向、约束或模型边界",
-            "wrongEquation": "错误关系导向“速度与重力”，而正确关系为“共同运动要求f需=ma，且|f需|≤μsN”",
-            "wrongSubstitution": "按错误符号或单位代入后得到“速度与重力”",
+            "wrongObjectOrForces": "研究对象仍为上层木块随下层板共同加速；真实力应为静摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
             "wrongResult": "速度与重力",
-            "conflict": "不满足边界由静摩擦能力而非速度给出"
+            "conflict": "“速度与重力”与本题正确关系“共同运动要求f需=ma，且|f需|≤μsN”冲突；满足题设的结果是“所需静摩擦与μsN”。",
+            "wrongCriterion": "采用判据“速度与重力”而非本题判据“所需静摩擦与μsN”"
           },
           {
             "option": "拉力与总质量",
-            "wrongObjectOrForces": "研究对象仍为叠放木块，但误判合力方向、约束或模型边界",
-            "wrongEquation": "错误关系导向“拉力与总质量”，而正确关系为“共同运动要求f需=ma，且|f需|≤μsN”",
-            "wrongSubstitution": "按错误符号或单位代入后得到“拉力与总质量”",
+            "wrongObjectOrForces": "研究对象仍为上层木块随下层板共同加速；真实力应为静摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
             "wrongResult": "拉力与总质量",
-            "conflict": "不满足边界由静摩擦能力而非速度给出"
+            "conflict": "“拉力与总质量”与本题正确关系“共同运动要求f需=ma，且|f需|≤μsN”冲突；满足题设的结果是“所需静摩擦与μsN”。",
+            "wrongCriterion": "采用判据“拉力与总质量”而非本题判据“所需静摩擦与μsN”"
           }
         ]
       }
@@ -713,11 +715,12 @@ window.M4BExam=Object.freeze({
       "level": "基础判别",
       "constraint": "每段相对速度符号固定，切换时刻由速度相等或越界确定",
       "structure": {
-        "objectType": "multi-body",
-        "bodyCount": 2,
+        "objectType": "single-body",
+        "bodyCount": 1,
         "forceTypes": [
-          "applied",
-          "resistance"
+          "friction",
+          "gravity",
+          "normal"
         ],
         "balanceDimension": "one-axis",
         "referenceFrame": "inertial",
@@ -729,11 +732,12 @@ window.M4BExam=Object.freeze({
         "steps": 2
       },
       "review": {
-        "object": "传送带上的物块",
+        "object": "物块进入匀速传送带后先相对滑动再共速",
         "frame": "地面近似惯性参考系",
         "forces": [
-          "外加力",
-          "阻力"
+          "滑动摩擦力",
+          "重力",
+          "支持力"
         ],
         "axis": "按题干所述运动或装置加速度方向取正",
         "equation": "相对速度v物-v带=0时滑动阶段结束",
@@ -742,23 +746,23 @@ window.M4BExam=Object.freeze({
         "constraint": "共速是运动状态切换条件",
         "final": "物块速度等于带速",
         "answerIndex": 2,
-        "unique": "只有选项“物块速度等于带速”满足方程和题设边界；另两项与review.distractors记录的错误链对应。",
+        "unique": "由本题关系“相对速度v物-v带=0时滑动阶段结束”只能得到“物块速度等于带速”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
             "option": "物块位移为零",
-            "wrongObjectOrForces": "研究对象仍为传送带上的物块，但误判合力方向、约束或模型边界",
-            "wrongEquation": "错误关系导向“物块位移为零”，而正确关系为“相对速度v物-v带=0时滑动阶段结束”",
-            "wrongSubstitution": "按错误符号或单位代入后得到“物块位移为零”",
+            "wrongObjectOrForces": "研究对象仍为物块进入匀速传送带后先相对滑动再共速；真实力应为滑动摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
             "wrongResult": "物块位移为零",
-            "conflict": "不满足共速是运动状态切换条件"
+            "conflict": "“物块位移为零”与本题正确关系“相对速度v物-v带=0时滑动阶段结束”冲突；满足题设的结果是“物块速度等于带速”。",
+            "wrongEquation": "按选项建立关系“物块位移为零”；该式取代了本题关系“相对速度v物-v带=0时滑动阶段结束”",
+            "wrongSubstitution": "在“物块进入匀速传送带后先相对滑动再共速。切换判据是？”给定条件下，将本题给定量代入该关系后得到“物块位移为零”"
           },
           {
             "option": "摩擦力等于重力",
-            "wrongObjectOrForces": "研究对象仍为传送带上的物块，但误判合力方向、约束或模型边界",
-            "wrongEquation": "错误关系导向“摩擦力等于重力”，而正确关系为“相对速度v物-v带=0时滑动阶段结束”",
-            "wrongSubstitution": "按错误符号或单位代入后得到“摩擦力等于重力”",
+            "wrongObjectOrForces": "研究对象仍为物块进入匀速传送带后先相对滑动再共速；真实力应为滑动摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
             "wrongResult": "摩擦力等于重力",
-            "conflict": "不满足共速是运动状态切换条件"
+            "conflict": "“摩擦力等于重力”与本题正确关系“相对速度v物-v带=0时滑动阶段结束”冲突；满足题设的结果是“物块速度等于带速”。",
+            "wrongEquation": "按选项建立关系“摩擦力等于重力”；该式取代了本题关系“相对速度v物-v带=0时滑动阶段结束”",
+            "wrongSubstitution": "在“物块进入匀速传送带后先相对滑动再共速。切换判据是？”给定条件下，将本题给定量代入该关系后得到“摩擦力等于重力”"
           }
         ]
       }
@@ -781,9 +785,11 @@ window.M4BExam=Object.freeze({
       "level": "基础判别",
       "constraint": "控制质量或合力，拟合数据对应同一系统边界",
       "structure": {
-        "objectType": "multi-body",
+        "objectType": "single-body",
         "bodyCount": 1,
         "forceTypes": [
+          "tension",
+          "friction",
           "gravity",
           "normal"
         ],
@@ -797,9 +803,11 @@ window.M4BExam=Object.freeze({
         "steps": 2
       },
       "review": {
-        "object": "小车与砝码实验系统",
+        "object": "a与F关系的实验中",
         "frame": "地面近似惯性参考系",
         "forces": [
+          "拉力",
+          "摩擦力",
           "重力",
           "支持力"
         ],
@@ -810,23 +818,22 @@ window.M4BExam=Object.freeze({
         "constraint": "未平衡的近恒定摩擦造成正的力轴截距",
         "final": "在F轴有正截距",
         "answerIndex": 0,
-        "unique": "只有选项“在F轴有正截距”满足方程和题设边界；另两项与review.distractors记录的错误链对应。",
+        "unique": "由本题关系“ma=F-f，故a=(F-f)/m；a=0时F=f>0”只能得到“在F轴有正截距”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
             "option": "仍严格过原点",
-            "wrongObjectOrForces": "研究对象仍为小车与砝码实验系统，但误判合力方向、约束或模型边界",
-            "wrongEquation": "错误关系导向“仍严格过原点”，而正确关系为“ma=F-f，故a=(F-f)/m；a=0时F=f>0”",
-            "wrongSubstitution": "按错误符号或单位代入后得到“仍严格过原点”",
+            "wrongObjectOrForces": "研究对象仍为a与F关系的实验中；真实力应为拉力、摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
             "wrongResult": "仍严格过原点",
-            "conflict": "不满足未平衡的近恒定摩擦造成正的力轴截距"
+            "conflict": "“仍严格过原点”与本题正确关系“ma=F-f，故a=(F-f)/m；a=0时F=f>0”冲突；满足题设的结果是“在F轴有正截距”。",
+            "wrongCriterion": "采用判据“仍严格过原点”而非本题判据“在F轴有正截距”"
           },
           {
             "option": "斜率必为零",
-            "wrongObjectOrForces": "研究对象仍为小车与砝码实验系统，但误判合力方向、约束或模型边界",
-            "wrongEquation": "错误关系导向“斜率必为零”，而正确关系为“ma=F-f，故a=(F-f)/m；a=0时F=f>0”",
-            "wrongSubstitution": "按错误符号或单位代入后得到“斜率必为零”",
+            "wrongObjectOrForces": "研究对象仍为a与F关系的实验中；真实力应为拉力、摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
             "wrongResult": "斜率必为零",
-            "conflict": "不满足未平衡的近恒定摩擦造成正的力轴截距"
+            "conflict": "“斜率必为零”与本题正确关系“ma=F-f，故a=(F-f)/m；a=0时F=f>0”冲突；满足题设的结果是“在F轴有正截距”。",
+            "wrongEquation": "按选项建立关系“斜率必为零”；该式取代了本题关系“ma=F-f，故a=(F-f)/m；a=0时F=f>0”",
+            "wrongSubstitution": "在“验证a与F关系的实验中，未平衡摩擦，a-F图像最可能怎样？”给定条件下，将本题给定量代入该关系后得到“斜率必为零”"
           }
         ]
       }

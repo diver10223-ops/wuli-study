@@ -26,8 +26,8 @@ window.M4CDiagnostic=Object.freeze({
       "text": "什么参考系中可引入-mA以保持牛顿方程形式？",
       "options": [
         "相对惯性系有平动加速度的随动系",
-        "模型判断：在地面系添加惯性力",
-        "模型判断：给惯性力找施力者"
+        "在地面系添加惯性力",
+        "给惯性力找施力者"
       ],
       "answer": 0,
       "skill": "非惯性系与惯性力边界",
@@ -37,6 +37,7 @@ window.M4CDiagnostic=Object.freeze({
         "objectType": "parameter-system",
         "bodyCount": 1,
         "forceTypes": [
+          "friction",
           "gravity",
           "normal"
         ],
@@ -50,36 +51,35 @@ window.M4CDiagnostic=Object.freeze({
         "steps": 2
       },
       "review": {
-        "object": "非惯性系与惯性力边界",
+        "object": "什么参考系中可引入-mA以保持牛顿方程形式",
         "frame": "随装置加速的非惯性参考系（惯性力仅作工具项）",
         "forces": [
+          "静摩擦力",
           "重力",
           "支持力"
         ],
         "axis": "按题干所述运动方向取正",
-        "equation": "先备能力判断",
-        "substitution": "先备能力判断",
+        "equation": "什么参考系中可引入-mA以保持牛顿方程形式；正确判据为“相对惯性系有平动加速度的随动系”",
+        "substitution": "本题为判别题，不作数值代入；使用判据“相对惯性系有平动加速度的随动系”",
         "candidate": "相对惯性系有平动加速度的随动系",
         "constraint": "必须声明非惯性参考系，只处理平动随动系",
         "final": "相对惯性系有平动加速度的随动系",
         "answerIndex": 0,
-        "unique": "只有选项“相对惯性系有平动加速度的随动系”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“什么参考系中可引入-mA以保持牛顿方程形式；正确判据为“相对惯性系有平动加速度的随动系””只能得到“相对惯性系有平动加速度的随动系”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "模型判断：在地面系添加惯性力",
-            "wrongObjectOrForces": "仍取非惯性系与惯性力边界，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“先备能力判断”改成与选项2相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：在地面系添加惯性力”",
-            "wrongResult": "模型判断：在地面系添加惯性力",
-            "conflict": "该结果不满足正确关系或条件：必须声明非惯性参考系，只处理平动随动系"
+            "option": "在地面系添加惯性力",
+            "wrongObjectOrForces": "研究对象仍为什么参考系中可引入-mA以保持牛顿方程形式；真实力应为静摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "在地面系添加惯性力",
+            "conflict": "“在地面系添加惯性力”与本题正确关系“什么参考系中可引入-mA以保持牛顿方程形式；正确判据为“相对惯性系有平动加速度的随动系””冲突；满足题设的结果是“相对惯性系有平动加速度的随动系”。",
+            "wrongCriterion": "采用判据“在地面系添加惯性力”而非本题判据“相对惯性系有平动加速度的随动系”"
           },
           {
-            "option": "模型判断：给惯性力找施力者",
-            "wrongObjectOrForces": "仍取非惯性系与惯性力边界，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“先备能力判断”改成与选项3相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：给惯性力找施力者”",
-            "wrongResult": "模型判断：给惯性力找施力者",
-            "conflict": "该结果不满足正确关系或条件：必须声明非惯性参考系，只处理平动随动系"
+            "option": "给惯性力找施力者",
+            "wrongObjectOrForces": "研究对象仍为什么参考系中可引入-mA以保持牛顿方程形式；真实力应为静摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "给惯性力找施力者",
+            "conflict": "“给惯性力找施力者”与本题正确关系“什么参考系中可引入-mA以保持牛顿方程形式；正确判据为“相对惯性系有平动加速度的随动系””冲突；满足题设的结果是“相对惯性系有平动加速度的随动系”。",
+            "wrongCriterion": "采用判据“给惯性力找施力者”而非本题判据“相对惯性系有平动加速度的随动系”"
           }
         ]
       }
@@ -93,9 +93,9 @@ window.M4CDiagnostic=Object.freeze({
       "novel": false,
       "text": "参数解N=m(g+a)还必须满足什么条件？",
       "options": [
-        "计算结果：只给代数解不写区间",
+        "只给代数解不写区间",
         "m>0且N≥0",
-        "模型判断：保留负接触力"
+        "保留负接触力"
       ],
       "answer": 1,
       "skill": "参数动力学与存在区间",
@@ -105,8 +105,8 @@ window.M4CDiagnostic=Object.freeze({
         "objectType": "parameter-system",
         "bodyCount": 1,
         "forceTypes": [
-          "applied",
-          "resistance"
+          "gravity",
+          "normal"
         ],
         "balanceDimension": "one-axis",
         "referenceFrame": "inertial",
@@ -118,36 +118,34 @@ window.M4CDiagnostic=Object.freeze({
         "steps": 2
       },
       "review": {
-        "object": "参数动力学与存在区间",
+        "object": "参数解N=m(g+a)还必须满足什么条件",
         "frame": "地面近似惯性参考系",
         "forces": [
-          "外加力",
-          "阻力"
+          "重力",
+          "支持力"
         ],
         "axis": "按题干所述运动方向取正",
-        "equation": "先备能力判断",
-        "substitution": "先备能力判断",
+        "equation": "参数解N=m(g+a)还必须满足什么条件；正确判据为“m>0且N≥0”",
+        "substitution": "参数解N=m(g+a)还必须满足什么条件；正确判据为“m>0且N≥0”",
         "candidate": "m>0且N≥0",
         "constraint": "质量为正且所有单侧约束成立",
         "final": "m>0且N≥0",
         "answerIndex": 1,
-        "unique": "只有选项“m>0且N≥0”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“参数解N=m(g+a)还必须满足什么条件；正确判据为“m>0且N≥0””只能得到“m>0且N≥0”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "计算结果：只给代数解不写区间",
-            "wrongObjectOrForces": "仍取参数动力学与存在区间，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“先备能力判断”改成与选项1相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“计算结果：只给代数解不写区间”",
-            "wrongResult": "计算结果：只给代数解不写区间",
-            "conflict": "该结果不满足正确关系或条件：质量为正且所有单侧约束成立"
+            "option": "只给代数解不写区间",
+            "wrongObjectOrForces": "研究对象仍为参数解N=m(g+a)还必须满足什么条件；真实力应为重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "只给代数解不写区间",
+            "conflict": "“只给代数解不写区间”与本题正确关系“参数解N=m(g+a)还必须满足什么条件；正确判据为“m>0且N≥0””冲突；满足题设的结果是“m>0且N≥0”。",
+            "wrongCriterion": "采用判据“只给代数解不写区间”而非本题判据“m>0且N≥0”"
           },
           {
-            "option": "模型判断：保留负接触力",
-            "wrongObjectOrForces": "仍取参数动力学与存在区间，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“先备能力判断”改成与选项3相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：保留负接触力”",
-            "wrongResult": "模型判断：保留负接触力",
-            "conflict": "该结果不满足正确关系或条件：质量为正且所有单侧约束成立"
+            "option": "保留负接触力",
+            "wrongObjectOrForces": "研究对象仍为参数解N=m(g+a)还必须满足什么条件；真实力应为重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "保留负接触力",
+            "conflict": "“保留负接触力”与本题正确关系“参数解N=m(g+a)还必须满足什么条件；正确判据为“m>0且N≥0””冲突；满足题设的结果是“m>0且N≥0”。",
+            "wrongCriterion": "采用判据“保留负接触力”而非本题判据“m>0且N≥0”"
           }
         ]
       }
@@ -161,8 +159,8 @@ window.M4CDiagnostic=Object.freeze({
       "novel": false,
       "text": "线性阻力下速度增大时加速度为何减小？",
       "options": [
-        "计算结果：把阻力当恒力",
-        "模型判断：认为终端速度时重力消失",
+        "阻力当恒力",
+        "终端速度时重力消失",
         "kv增大使mg-kv减小"
       ],
       "answer": 2,
@@ -173,8 +171,8 @@ window.M4CDiagnostic=Object.freeze({
         "objectType": "parameter-system",
         "bodyCount": 1,
         "forceTypes": [
-          "applied",
-          "resistance"
+          "gravity",
+          "drag"
         ],
         "balanceDimension": "one-axis",
         "referenceFrame": "inertial",
@@ -186,36 +184,34 @@ window.M4CDiagnostic=Object.freeze({
         "steps": 2
       },
       "review": {
-        "object": "速度阻力与终端速度",
+        "object": "线性阻力下速度增大时加速度为何减小",
         "frame": "地面近似惯性参考系",
         "forces": [
-          "外加力",
-          "阻力"
+          "重力",
+          "速度相关阻力"
         ],
         "axis": "按题干所述运动方向取正",
-        "equation": "先备能力判断",
-        "substitution": "先备能力判断",
+        "equation": "线性阻力下速度增大时加速度为何减小；正确判据为“kv增大使mg-kv减小”",
+        "substitution": "本题为判别题，不作数值代入；使用判据“kv增大使mg-kv减小”",
         "candidate": "kv增大使mg-kv减小",
         "constraint": "下落取正，k恒定且模型只在给定速度范围内",
         "final": "kv增大使mg-kv减小",
         "answerIndex": 2,
-        "unique": "只有选项“kv增大使mg-kv减小”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“线性阻力下速度增大时加速度为何减小；正确判据为“kv增大使mg-kv减小””只能得到“kv增大使mg-kv减小”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "计算结果：把阻力当恒力",
-            "wrongObjectOrForces": "仍取速度阻力与终端速度，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“先备能力判断”改成与选项1相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“计算结果：把阻力当恒力”",
-            "wrongResult": "计算结果：把阻力当恒力",
-            "conflict": "该结果不满足正确关系或条件：下落取正，k恒定且模型只在给定速度范围内"
+            "option": "阻力当恒力",
+            "wrongObjectOrForces": "研究对象仍为线性阻力下速度增大时加速度为何减小；真实力应为重力、速度相关阻力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "阻力当恒力",
+            "conflict": "“阻力当恒力”与本题正确关系“线性阻力下速度增大时加速度为何减小；正确判据为“kv增大使mg-kv减小””冲突；满足题设的结果是“kv增大使mg-kv减小”。",
+            "wrongCriterion": "采用判据“阻力当恒力”而非本题判据“kv增大使mg-kv减小”"
           },
           {
-            "option": "模型判断：认为终端速度时重力消失",
-            "wrongObjectOrForces": "仍取速度阻力与终端速度，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“先备能力判断”改成与选项2相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：认为终端速度时重力消失”",
-            "wrongResult": "模型判断：认为终端速度时重力消失",
-            "conflict": "该结果不满足正确关系或条件：下落取正，k恒定且模型只在给定速度范围内"
+            "option": "终端速度时重力消失",
+            "wrongObjectOrForces": "研究对象仍为线性阻力下速度增大时加速度为何减小；真实力应为重力、速度相关阻力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "终端速度时重力消失",
+            "conflict": "“终端速度时重力消失”与本题正确关系“线性阻力下速度增大时加速度为何减小；正确判据为“kv增大使mg-kv减小””冲突；满足题设的结果是“kv增大使mg-kv减小”。",
+            "wrongCriterion": "采用判据“终端速度时重力消失”而非本题判据“kv增大使mg-kv减小”"
           }
         ]
       }
@@ -230,8 +226,8 @@ window.M4CDiagnostic=Object.freeze({
       "text": "喷气火箭建模为何先声明系统边界？",
       "options": [
         "跨边界质量携带动量",
-        "模型判断：未计入推力项",
-        "模型判断：把质量变化本身当外力"
+        "推力项为0",
+        "质量变化本身当外力"
       ],
       "answer": 0,
       "skill": "变质量系统与动量流",
@@ -241,8 +237,8 @@ window.M4CDiagnostic=Object.freeze({
         "objectType": "parameter-system",
         "bodyCount": 1,
         "forceTypes": [
-          "applied",
-          "resistance"
+          "thrust",
+          "gravity"
         ],
         "balanceDimension": "one-axis",
         "referenceFrame": "inertial",
@@ -254,36 +250,35 @@ window.M4CDiagnostic=Object.freeze({
         "steps": 2
       },
       "review": {
-        "object": "变质量系统与动量流",
+        "object": "喷气火箭建模为何先声明系统边界",
         "frame": "地面近似惯性参考系",
         "forces": [
-          "外加力",
-          "阻力"
+          "推力",
+          "重力"
         ],
         "axis": "按题干所述运动方向取正",
-        "equation": "先备能力判断",
-        "substitution": "先备能力判断",
+        "equation": "喷气火箭建模为何先声明系统边界；正确判据为“跨边界质量携带动量”",
+        "substitution": "本题为判别题，不作数值代入；使用判据“跨边界质量携带动量”",
         "candidate": "跨边界质量携带动量",
         "constraint": "声明控制体、相对喷射速度和质量变化率符号",
         "final": "跨边界质量携带动量",
         "answerIndex": 0,
-        "unique": "只有选项“跨边界质量携带动量”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“喷气火箭建模为何先声明系统边界；正确判据为“跨边界质量携带动量””只能得到“跨边界质量携带动量”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "模型判断：未计入推力项",
-            "wrongObjectOrForces": "仍取变质量系统与动量流，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“先备能力判断”改成与选项2相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：未计入推力项”",
-            "wrongResult": "模型判断：未计入推力项",
-            "conflict": "该结果不满足正确关系或条件：声明控制体、相对喷射速度和质量变化率符号"
+            "option": "推力项为0",
+            "wrongObjectOrForces": "研究对象仍为喷气火箭建模为何先声明系统边界，但方程中漏去推力项",
+            "wrongResult": "推力项为0",
+            "conflict": "“推力项为0”与本题正确关系“喷气火箭建模为何先声明系统边界；正确判据为“跨边界质量携带动量””冲突；满足题设的结果是“跨边界质量携带动量”。",
+            "wrongEquation": "按选项建立关系“推力项为0”；该式取代了本题关系“喷气火箭建模为何先声明系统边界；正确判据为“跨边界质量携带动量””",
+            "wrongSubstitution": "在“喷气火箭建模为何先声明系统边界？”给定条件下，将本题给定量代入该关系后得到“推力项为0”"
           },
           {
-            "option": "模型判断：把质量变化本身当外力",
-            "wrongObjectOrForces": "仍取变质量系统与动量流，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“先备能力判断”改成与选项3相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：把质量变化本身当外力”",
-            "wrongResult": "模型判断：把质量变化本身当外力",
-            "conflict": "该结果不满足正确关系或条件：声明控制体、相对喷射速度和质量变化率符号"
+            "option": "质量变化本身当外力",
+            "wrongObjectOrForces": "研究对象仍为喷气火箭建模为何先声明系统边界；真实力应为推力、重力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "质量变化本身当外力",
+            "conflict": "“质量变化本身当外力”与本题正确关系“喷气火箭建模为何先声明系统边界；正确判据为“跨边界质量携带动量””冲突；满足题设的结果是“跨边界质量携带动量”。",
+            "wrongCriterion": "采用判据“质量变化本身当外力”而非本题判据“跨边界质量携带动量”"
           }
         ]
       }
@@ -297,9 +292,9 @@ window.M4CDiagnostic=Object.freeze({
       "novel": false,
       "text": "dv/dt=4-2v左边表示什么物理量？",
       "options": [
-        "计算结果：把dv/dt当速度",
+        "dv/dt当速度",
         "速度对时间的瞬时变化率",
-        "模型判断：未计入非齐次驱动力"
+        "非齐次驱动力为0"
       ],
       "answer": 1,
       "skill": "一阶动力学微分方程",
@@ -310,73 +305,7 @@ window.M4CDiagnostic=Object.freeze({
         "bodyCount": 1,
         "forceTypes": [
           "applied",
-          "resistance"
-        ],
-        "balanceDimension": "one-axis",
-        "referenceFrame": "inertial",
-        "target": "prerequisite",
-        "hasParameter": true,
-        "hasCritical": false,
-        "hasStateSwitch": false,
-        "hasExperimentError": false,
-        "steps": 2
-      },
-      "review": {
-        "object": "一阶动力学微分方程",
-        "frame": "地面近似惯性参考系",
-        "forces": [
-          "外加力",
-          "阻力"
-        ],
-        "axis": "按题干所述运动方向取正",
-        "equation": "先备能力判断",
-        "substitution": "先备能力判断",
-        "candidate": "速度对时间的瞬时变化率",
-        "constraint": "质量恒定、惯性系、给定力模型区间与初值",
-        "final": "速度对时间的瞬时变化率",
-        "answerIndex": 1,
-        "unique": "只有选项“速度对时间的瞬时变化率”同时满足方程与约束；其余选项分别来自下列错误链。",
-        "distractors": [
-          {
-            "option": "计算结果：把dv/dt当速度",
-            "wrongObjectOrForces": "仍取一阶动力学微分方程，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“先备能力判断”改成与选项1相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“计算结果：把dv/dt当速度”",
-            "wrongResult": "计算结果：把dv/dt当速度",
-            "conflict": "该结果不满足正确关系或条件：质量恒定、惯性系、给定力模型区间与初值"
-          },
-          {
-            "option": "模型判断：未计入非齐次驱动力",
-            "wrongObjectOrForces": "仍取一阶动力学微分方程，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“先备能力判断”改成与选项3相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：未计入非齐次驱动力”",
-            "wrongResult": "模型判断：未计入非齐次驱动力",
-            "conflict": "该结果不满足正确关系或条件：质量恒定、惯性系、给定力模型区间与初值"
-          }
-        ]
-      }
-    },
-    {
-      "id": "M4CD06",
-      "section": "欧拉法数值动力学",
-      "task": "K06",
-      "node": "M4-CK06",
-      "gate": "",
-      "novel": false,
-      "text": "欧拉更新式为什么不能未计入Δt？",
-      "options": [
-        "计算结果：更新漏乘Δt",
-        "模型判断：用一次大步宣称模型正确",
-        "aΔt才是速度增量"
-      ],
-      "answer": 2,
-      "skill": "欧拉法数值动力学",
-      "level": "先备",
-      "constraint": "每步用当前状态算力，Δt单位为s且足够小",
-      "structure": {
-        "objectType": "parameter-system",
-        "bodyCount": 1,
-        "forceTypes": [
+          "drag",
           "gravity",
           "normal"
         ],
@@ -390,36 +319,103 @@ window.M4CDiagnostic=Object.freeze({
         "steps": 2
       },
       "review": {
-        "object": "欧拉法数值动力学",
+        "object": "dv/dt=4-2v左边表示什么物理量",
         "frame": "地面近似惯性参考系",
         "forces": [
+          "驱动力",
+          "速度相关阻力",
           "重力",
           "支持力"
         ],
         "axis": "按题干所述运动方向取正",
-        "equation": "先备能力判断",
-        "substitution": "先备能力判断",
+        "equation": "dv/dt=4-2v左边表示什么物理量；正确判据为“速度对时间的瞬时变化率”",
+        "substitution": "dv/dt=4-2v左边表示什么物理量；正确判据为“速度对时间的瞬时变化率”",
+        "candidate": "速度对时间的瞬时变化率",
+        "constraint": "质量恒定、惯性系、给定力模型区间与初值",
+        "final": "速度对时间的瞬时变化率",
+        "answerIndex": 1,
+        "unique": "由本题关系“dv/dt=4-2v左边表示什么物理量；正确判据为“速度对时间的瞬时变化率””只能得到“速度对时间的瞬时变化率”；其余选项与该关系或适用条件冲突。",
+        "distractors": [
+          {
+            "option": "dv/dt当速度",
+            "wrongObjectOrForces": "研究对象仍为dv/dt=4-2v左边表示什么物理量；真实力应为驱动力、速度相关阻力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "dv/dt当速度",
+            "conflict": "“dv/dt当速度”与本题正确关系“dv/dt=4-2v左边表示什么物理量；正确判据为“速度对时间的瞬时变化率””冲突；满足题设的结果是“速度对时间的瞬时变化率”。",
+            "wrongCriterion": "采用判据“dv/dt当速度”而非本题判据“速度对时间的瞬时变化率”"
+          },
+          {
+            "option": "非齐次驱动力为0",
+            "wrongObjectOrForces": "研究对象仍为dv/dt=4-2v左边表示什么物理量，但方程中漏去非齐次驱动力",
+            "wrongResult": "非齐次驱动力为0",
+            "conflict": "“非齐次驱动力为0”与本题正确关系“dv/dt=4-2v左边表示什么物理量；正确判据为“速度对时间的瞬时变化率””冲突；满足题设的结果是“速度对时间的瞬时变化率”。",
+            "wrongEquation": "按选项建立关系“非齐次驱动力为0”；该式取代了本题关系“dv/dt=4-2v左边表示什么物理量；正确判据为“速度对时间的瞬时变化率””",
+            "wrongSubstitution": "在“dv/dt=4-2v左边表示什么物理量？”给定条件下，将本题给定量代入该关系后得到“非齐次驱动力为0”"
+          }
+        ]
+      }
+    },
+    {
+      "id": "M4CD06",
+      "section": "欧拉法数值动力学",
+      "task": "K06",
+      "node": "M4-CK06",
+      "gate": "",
+      "novel": false,
+      "text": "欧拉更新式为什么不能未计入Δt？",
+      "options": [
+        "更新漏乘Δt",
+        "用一次大步宣称模型正确",
+        "aΔt才是速度增量"
+      ],
+      "answer": 2,
+      "skill": "欧拉法数值动力学",
+      "level": "先备",
+      "constraint": "每步用当前状态算力，Δt单位为s且足够小",
+      "structure": {
+        "objectType": "parameter-system",
+        "bodyCount": 1,
+        "forceTypes": [
+          "gravity",
+          "drag"
+        ],
+        "balanceDimension": "one-axis",
+        "referenceFrame": "inertial",
+        "target": "prerequisite",
+        "hasParameter": true,
+        "hasCritical": false,
+        "hasStateSwitch": false,
+        "hasExperimentError": false,
+        "steps": 2
+      },
+      "review": {
+        "object": "欧拉更新式为什么不能未计入Δt",
+        "frame": "地面近似惯性参考系",
+        "forces": [
+          "重力",
+          "速度相关阻力"
+        ],
+        "axis": "按题干所述运动方向取正",
+        "equation": "欧拉更新式为什么不能未计入Δt；正确判据为“aΔt才是速度增量”",
+        "substitution": "本题为判别题，不作数值代入；使用判据“aΔt才是速度增量”",
         "candidate": "aΔt才是速度增量",
         "constraint": "每步用当前状态算力，Δt单位为s且足够小",
         "final": "aΔt才是速度增量",
         "answerIndex": 2,
-        "unique": "只有选项“aΔt才是速度增量”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“欧拉更新式为什么不能未计入Δt；正确判据为“aΔt才是速度增量””只能得到“aΔt才是速度增量”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "计算结果：更新漏乘Δt",
-            "wrongObjectOrForces": "仍取欧拉法数值动力学，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“先备能力判断”改成与选项1相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“计算结果：更新漏乘Δt”",
-            "wrongResult": "计算结果：更新漏乘Δt",
-            "conflict": "该结果不满足正确关系或条件：每步用当前状态算力，Δt单位为s且足够小"
+            "option": "更新漏乘Δt",
+            "wrongObjectOrForces": "研究对象仍为欧拉更新式为什么不能未计入Δt，但方程中漏去乘Δt",
+            "wrongResult": "更新漏乘Δt",
+            "conflict": "“更新漏乘Δt”与本题正确关系“欧拉更新式为什么不能未计入Δt；正确判据为“aΔt才是速度增量””冲突；满足题设的结果是“aΔt才是速度增量”。",
+            "wrongCriterion": "采用判据“更新漏乘Δt”而非本题判据“aΔt才是速度增量”"
           },
           {
-            "option": "模型判断：用一次大步宣称模型正确",
-            "wrongObjectOrForces": "仍取欧拉法数值动力学，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“先备能力判断”改成与选项2相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：用一次大步宣称模型正确”",
-            "wrongResult": "模型判断：用一次大步宣称模型正确",
-            "conflict": "该结果不满足正确关系或条件：每步用当前状态算力，Δt单位为s且足够小"
+            "option": "用一次大步宣称模型正确",
+            "wrongObjectOrForces": "研究对象仍为欧拉更新式为什么不能未计入Δt；真实力应为重力、速度相关阻力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "用一次大步宣称模型正确",
+            "conflict": "“用一次大步宣称模型正确”与本题正确关系“欧拉更新式为什么不能未计入Δt；正确判据为“aΔt才是速度增量””冲突；满足题设的结果是“aΔt才是速度增量”。",
+            "wrongCriterion": "采用判据“用一次大步宣称模型正确”而非本题判据“aΔt才是速度增量”"
           }
         ]
       }

@@ -25,8 +25,8 @@ window.M4CCheck=Object.freeze({
       "text": "车厢向右加速2 m/s²，车厢系内1 kg物块受向左惯性力2 N；相对静止需2 N静摩擦向右 由这组数据可得哪项结论？",
       "options": [
         "车厢系内1 kg物块受向左惯性力2 N；相对静止需2 N静摩擦向右",
-        "模型判断：在地面系添加惯性力",
-        "模型判断：给惯性力找施力者"
+        "在地面系添加惯性力",
+        "给惯性力找施力者"
       ],
       "answer": 0,
       "skill": "非惯性系与惯性力边界",
@@ -36,6 +36,7 @@ window.M4CCheck=Object.freeze({
         "objectType": "parameter-system",
         "bodyCount": 1,
         "forceTypes": [
+          "friction",
           "gravity",
           "normal"
         ],
@@ -49,9 +50,10 @@ window.M4CCheck=Object.freeze({
         "steps": 4
       },
       "review": {
-        "object": "非惯性系与惯性力边界",
+        "object": "车厢向右加速2 m/s²",
         "frame": "随装置加速的非惯性参考系（惯性力仅作工具项）",
         "forces": [
+          "静摩擦力",
           "重力",
           "支持力"
         ],
@@ -62,23 +64,21 @@ window.M4CCheck=Object.freeze({
         "constraint": "必须声明非惯性参考系，只处理平动随动系",
         "final": "车厢系内1 kg物块受向左惯性力2 N；相对静止需2 N静摩擦向右",
         "answerIndex": 0,
-        "unique": "只有选项“车厢系内1 kg物块受向左惯性力2 N；相对静止需2 N静摩擦向右”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“车厢向右加速2 m/s²，车厢系内1 kg物块受向左惯性力2 N；相对静止需2 N静摩擦向右”只能得到“车厢系内1 kg物块受向左惯性力2 N；相对静止需2 N静摩擦向右”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "模型判断：在地面系添加惯性力",
-            "wrongObjectOrForces": "仍取非惯性系与惯性力边界，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“车厢向右加速2 m/s²，车厢系内1 kg物块受向左惯性力2 N；相对静止需2 N静摩擦向右”改成与选项2相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：在地面系添加惯性力”",
-            "wrongResult": "模型判断：在地面系添加惯性力",
-            "conflict": "该结果不满足正确关系或条件：必须声明非惯性参考系，只处理平动随动系"
+            "option": "在地面系添加惯性力",
+            "wrongObjectOrForces": "研究对象仍为车厢向右加速2 m/s²；真实力应为静摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "在地面系添加惯性力",
+            "conflict": "“在地面系添加惯性力”与本题正确关系“车厢向右加速2 m/s²，车厢系内1 kg物块受向左惯性力2 N；相对静止需2 N静摩擦向右”冲突；满足题设的结果是“车厢系内1 kg物块受向左惯性力2 N；相对静止需2 N静摩擦向右”。",
+            "wrongCriterion": "采用判据“在地面系添加惯性力”而非本题判据“车厢系内1 kg物块受向左惯性力2 N；相对静止需2 N静摩擦向右”"
           },
           {
-            "option": "模型判断：给惯性力找施力者",
-            "wrongObjectOrForces": "仍取非惯性系与惯性力边界，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“车厢向右加速2 m/s²，车厢系内1 kg物块受向左惯性力2 N；相对静止需2 N静摩擦向右”改成与选项3相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：给惯性力找施力者”",
-            "wrongResult": "模型判断：给惯性力找施力者",
-            "conflict": "该结果不满足正确关系或条件：必须声明非惯性参考系，只处理平动随动系"
+            "option": "给惯性力找施力者",
+            "wrongObjectOrForces": "研究对象仍为车厢向右加速2 m/s²；真实力应为静摩擦力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "给惯性力找施力者",
+            "conflict": "“给惯性力找施力者”与本题正确关系“车厢向右加速2 m/s²，车厢系内1 kg物块受向左惯性力2 N；相对静止需2 N静摩擦向右”冲突；满足题设的结果是“车厢系内1 kg物块受向左惯性力2 N；相对静止需2 N静摩擦向右”。",
+            "wrongCriterion": "采用判据“给惯性力找施力者”而非本题判据“车厢系内1 kg物块受向左惯性力2 N；相对静止需2 N静摩擦向右”"
           }
         ]
       }
@@ -92,9 +92,9 @@ window.M4CCheck=Object.freeze({
       "novel": false,
       "text": "以m=2.0 kg、恒阻力f=3.0 N为例，受参数力P时a=(P-3.0)/2.0 m/s²；向右加速要求P>3.0 N，P=3.0 N为临界 由这组数据可得哪项结论？",
       "options": [
-        "计算结果：只给代数解不写区间",
+        "只给代数解不写区间",
         "P=f为临界",
-        "模型判断：保留负接触力"
+        "保留负接触力"
       ],
       "answer": 1,
       "skill": "参数动力学与存在区间",
@@ -105,7 +105,8 @@ window.M4CCheck=Object.freeze({
         "bodyCount": 1,
         "forceTypes": [
           "applied",
-          "resistance"
+          "gravity",
+          "normal"
         ],
         "balanceDimension": "one-axis",
         "referenceFrame": "inertial",
@@ -117,11 +118,12 @@ window.M4CCheck=Object.freeze({
         "steps": 4
       },
       "review": {
-        "object": "参数动力学与存在区间",
+        "object": "以m=2.0 kg、恒阻力f=3.0 N为例",
         "frame": "地面近似惯性参考系",
         "forces": [
           "外加力",
-          "阻力"
+          "重力",
+          "支持力"
         ],
         "axis": "按题干所述运动方向取正",
         "equation": "以m=2.0 kg、恒阻力f=3.0 N为例，受参数力P时a=(P-3.0)/2.0 m/s²；向右加速要求P>3.0 N，P=3.0 N为临界",
@@ -130,23 +132,21 @@ window.M4CCheck=Object.freeze({
         "constraint": "质量为正且所有单侧约束成立",
         "final": "P=f为临界",
         "answerIndex": 1,
-        "unique": "只有选项“P=f为临界”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“以m=2.0 kg、恒阻力f=3.0 N为例，受参数力P时a=(P-3.0)/2.0 m/s²；向右加速要求P>3.0 N，P=3.0 N为临界”只能得到“P=f为临界”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "计算结果：只给代数解不写区间",
-            "wrongObjectOrForces": "仍取参数动力学与存在区间，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“以m=2.0 kg、恒阻力f=3.0 N为例，受参数力P时a=(P-3.0)/2.0 m/s²；向右加速要求P>3.0 N，P=3.0 N为临界”改成与选项1相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“计算结果：只给代数解不写区间”",
-            "wrongResult": "计算结果：只给代数解不写区间",
-            "conflict": "该结果不满足正确关系或条件：质量为正且所有单侧约束成立"
+            "option": "只给代数解不写区间",
+            "wrongObjectOrForces": "研究对象仍为以m=2.0 kg、恒阻力f=3.0 N为例；真实力应为外加力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "只给代数解不写区间",
+            "conflict": "“只给代数解不写区间”与本题正确关系“以m=2.0 kg、恒阻力f=3.0 N为例，受参数力P时a=(P-3.0)/2.0 m/s²；向右加速要求P>3.0 N，P=3.0 N为临界”冲突；满足题设的结果是“P=f为临界”。",
+            "wrongCriterion": "采用判据“只给代数解不写区间”而非本题判据“P=f为临界”"
           },
           {
-            "option": "模型判断：保留负接触力",
-            "wrongObjectOrForces": "仍取参数动力学与存在区间，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“以m=2.0 kg、恒阻力f=3.0 N为例，受参数力P时a=(P-3.0)/2.0 m/s²；向右加速要求P>3.0 N，P=3.0 N为临界”改成与选项3相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：保留负接触力”",
-            "wrongResult": "模型判断：保留负接触力",
-            "conflict": "该结果不满足正确关系或条件：质量为正且所有单侧约束成立"
+            "option": "保留负接触力",
+            "wrongObjectOrForces": "研究对象仍为以m=2.0 kg、恒阻力f=3.0 N为例；真实力应为外加力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "保留负接触力",
+            "conflict": "“保留负接触力”与本题正确关系“以m=2.0 kg、恒阻力f=3.0 N为例，受参数力P时a=(P-3.0)/2.0 m/s²；向右加速要求P>3.0 N，P=3.0 N为临界”冲突；满足题设的结果是“P=f为临界”。",
+            "wrongCriterion": "采用判据“保留负接触力”而非本题判据“P=f为临界”"
           }
         ]
       }
@@ -160,8 +160,8 @@ window.M4CCheck=Object.freeze({
       "novel": false,
       "text": "m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s² 由这组数据可得哪项结论？",
       "options": [
-        "计算结果：把阻力当恒力",
-        "模型判断：认为终端速度时重力消失",
+        "阻力当恒力",
+        "终端速度时重力消失",
         "m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s²"
       ],
       "answer": 2,
@@ -172,8 +172,8 @@ window.M4CCheck=Object.freeze({
         "objectType": "parameter-system",
         "bodyCount": 1,
         "forceTypes": [
-          "applied",
-          "resistance"
+          "gravity",
+          "drag"
         ],
         "balanceDimension": "one-axis",
         "referenceFrame": "inertial",
@@ -185,11 +185,11 @@ window.M4CCheck=Object.freeze({
         "steps": 4
       },
       "review": {
-        "object": "速度阻力与终端速度",
+        "object": "m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s",
         "frame": "地面近似惯性参考系",
         "forces": [
-          "外加力",
-          "阻力"
+          "重力",
+          "速度相关阻力"
         ],
         "axis": "按题干所述运动方向取正",
         "equation": "m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s²",
@@ -198,23 +198,21 @@ window.M4CCheck=Object.freeze({
         "constraint": "下落取正，k恒定且模型只在给定速度范围内",
         "final": "m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s²",
         "answerIndex": 2,
-        "unique": "只有选项“m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s²”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s²”只能得到“m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s²”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "计算结果：把阻力当恒力",
-            "wrongObjectOrForces": "仍取速度阻力与终端速度，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s²”改成与选项1相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“计算结果：把阻力当恒力”",
-            "wrongResult": "计算结果：把阻力当恒力",
-            "conflict": "该结果不满足正确关系或条件：下落取正，k恒定且模型只在给定速度范围内"
+            "option": "阻力当恒力",
+            "wrongObjectOrForces": "研究对象仍为m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；真实力应为重力、速度相关阻力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "阻力当恒力",
+            "conflict": "“阻力当恒力”与本题正确关系“m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s²”冲突；满足题设的结果是“m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s²”。",
+            "wrongCriterion": "采用判据“阻力当恒力”而非本题判据“m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s²”"
           },
           {
-            "option": "模型判断：认为终端速度时重力消失",
-            "wrongObjectOrForces": "仍取速度阻力与终端速度，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s²”改成与选项2相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：认为终端速度时重力消失”",
-            "wrongResult": "模型判断：认为终端速度时重力消失",
-            "conflict": "该结果不满足正确关系或条件：下落取正，k恒定且模型只在给定速度范围内"
+            "option": "终端速度时重力消失",
+            "wrongObjectOrForces": "研究对象仍为m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；真实力应为重力、速度相关阻力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "终端速度时重力消失",
+            "conflict": "“终端速度时重力消失”与本题正确关系“m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s²”冲突；满足题设的结果是“m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s²”。",
+            "wrongCriterion": "采用判据“终端速度时重力消失”而非本题判据“m=0.20 kg、k=0.50 N·s/m时vt=4.0 m/s；v=2.0 m/s时a=5.0 m/s²”"
           }
         ]
       }
@@ -229,8 +227,8 @@ window.M4CCheck=Object.freeze({
       "text": "火箭向后喷气u=20 m/s，-dm/dt=0.50 kg/s，推力u(-dm/dt)=10 N向前 由这组数据可得哪项结论？",
       "options": [
         "推力u(-dm/dt)=10 N向前",
-        "模型判断：未计入推力项",
-        "模型判断：把质量变化本身当外力"
+        "推力项为0",
+        "质量变化本身当外力"
       ],
       "answer": 0,
       "skill": "变质量系统与动量流",
@@ -240,8 +238,8 @@ window.M4CCheck=Object.freeze({
         "objectType": "parameter-system",
         "bodyCount": 1,
         "forceTypes": [
-          "applied",
-          "resistance"
+          "thrust",
+          "gravity"
         ],
         "balanceDimension": "one-axis",
         "referenceFrame": "inertial",
@@ -253,11 +251,11 @@ window.M4CCheck=Object.freeze({
         "steps": 4
       },
       "review": {
-        "object": "变质量系统与动量流",
+        "object": "火箭向后喷气u=20 m/s",
         "frame": "地面近似惯性参考系",
         "forces": [
-          "外加力",
-          "阻力"
+          "推力",
+          "重力"
         ],
         "axis": "按题干所述运动方向取正",
         "equation": "火箭向后喷气u=20 m/s，-dm/dt=0.50 kg/s，推力u(-dm/dt)=10 N向前",
@@ -266,23 +264,22 @@ window.M4CCheck=Object.freeze({
         "constraint": "声明控制体、相对喷射速度和质量变化率符号",
         "final": "推力u(-dm/dt)=10 N向前",
         "answerIndex": 0,
-        "unique": "只有选项“推力u(-dm/dt)=10 N向前”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“火箭向后喷气u=20 m/s，-dm/dt=0.50 kg/s，推力u(-dm/dt)=10 N向前”只能得到“推力u(-dm/dt)=10 N向前”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "模型判断：未计入推力项",
-            "wrongObjectOrForces": "仍取变质量系统与动量流，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“火箭向后喷气u=20 m/s，-dm/dt=0.50 kg/s，推力u(-dm/dt)=10 N向前”改成与选项2相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：未计入推力项”",
-            "wrongResult": "模型判断：未计入推力项",
-            "conflict": "该结果不满足正确关系或条件：声明控制体、相对喷射速度和质量变化率符号"
+            "option": "推力项为0",
+            "wrongObjectOrForces": "研究对象仍为火箭向后喷气u=20 m/s，但方程中漏去推力项",
+            "wrongResult": "推力项为0",
+            "conflict": "“推力项为0”与本题正确关系“火箭向后喷气u=20 m/s，-dm/dt=0.50 kg/s，推力u(-dm/dt)=10 N向前”冲突；满足题设的结果是“推力u(-dm/dt)=10 N向前”。",
+            "wrongEquation": "按选项建立关系“推力项为0”；该式取代了本题关系“火箭向后喷气u=20 m/s，-dm/dt=0.50 kg/s，推力u(-dm/dt)=10 N向前”",
+            "wrongSubstitution": "在“火箭向后喷气u=20 m/s，-dm/dt=0.50 kg/s，推力u(-dm/dt)=10 N向前 由这组数据可得哪项结论？”给定条件下，将本题给定量代入该关系后得到“推力项为0”"
           },
           {
-            "option": "模型判断：把质量变化本身当外力",
-            "wrongObjectOrForces": "仍取变质量系统与动量流，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“火箭向后喷气u=20 m/s，-dm/dt=0.50 kg/s，推力u(-dm/dt)=10 N向前”改成与选项3相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：把质量变化本身当外力”",
-            "wrongResult": "模型判断：把质量变化本身当外力",
-            "conflict": "该结果不满足正确关系或条件：声明控制体、相对喷射速度和质量变化率符号"
+            "option": "质量变化本身当外力",
+            "wrongObjectOrForces": "研究对象仍为火箭向后喷气u=20 m/s；真实力应为推力、重力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "质量变化本身当外力",
+            "conflict": "“质量变化本身当外力”与本题正确关系“火箭向后喷气u=20 m/s，-dm/dt=0.50 kg/s，推力u(-dm/dt)=10 N向前”冲突；满足题设的结果是“推力u(-dm/dt)=10 N向前”。",
+            "wrongCriterion": "采用判据“质量变化本身当外力”而非本题判据“推力u(-dm/dt)=10 N向前”"
           }
         ]
       }
@@ -296,9 +293,9 @@ window.M4CCheck=Object.freeze({
       "novel": false,
       "text": "dv/dt=4-2v且v0=0时初始a=4 m/s²，平衡速度2 m/s，斜率逐渐减小 由这组数据可得哪项结论？",
       "options": [
-        "计算结果：把dv/dt当速度",
+        "dv/dt当速度",
         "斜率逐渐减小",
-        "模型判断：未计入非齐次驱动力"
+        "非齐次驱动力为0"
       ],
       "answer": 1,
       "skill": "一阶动力学微分方程",
@@ -309,73 +306,7 @@ window.M4CCheck=Object.freeze({
         "bodyCount": 1,
         "forceTypes": [
           "applied",
-          "resistance"
-        ],
-        "balanceDimension": "one-axis",
-        "referenceFrame": "inertial",
-        "target": "calculation",
-        "hasParameter": true,
-        "hasCritical": false,
-        "hasStateSwitch": false,
-        "hasExperimentError": false,
-        "steps": 4
-      },
-      "review": {
-        "object": "一阶动力学微分方程",
-        "frame": "地面近似惯性参考系",
-        "forces": [
-          "外加力",
-          "阻力"
-        ],
-        "axis": "按题干所述运动方向取正",
-        "equation": "dv/dt=4-2v且v0=0时初始a=4 m/s²，平衡速度2 m/s，斜率逐渐减小",
-        "substitution": "dv/dt=4-2v且v0=0时初始a=4 m/s²，平衡速度2 m/s，斜率逐渐减小",
-        "candidate": "斜率逐渐减小",
-        "constraint": "质量恒定、惯性系、给定力模型区间与初值",
-        "final": "斜率逐渐减小",
-        "answerIndex": 1,
-        "unique": "只有选项“斜率逐渐减小”同时满足方程与约束；其余选项分别来自下列错误链。",
-        "distractors": [
-          {
-            "option": "计算结果：把dv/dt当速度",
-            "wrongObjectOrForces": "仍取一阶动力学微分方程，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“dv/dt=4-2v且v0=0时初始a=4 m/s²，平衡速度2 m/s，斜率逐渐减小”改成与选项1相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“计算结果：把dv/dt当速度”",
-            "wrongResult": "计算结果：把dv/dt当速度",
-            "conflict": "该结果不满足正确关系或条件：质量恒定、惯性系、给定力模型区间与初值"
-          },
-          {
-            "option": "模型判断：未计入非齐次驱动力",
-            "wrongObjectOrForces": "仍取一阶动力学微分方程，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“dv/dt=4-2v且v0=0时初始a=4 m/s²，平衡速度2 m/s，斜率逐渐减小”改成与选项3相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：未计入非齐次驱动力”",
-            "wrongResult": "模型判断：未计入非齐次驱动力",
-            "conflict": "该结果不满足正确关系或条件：质量恒定、惯性系、给定力模型区间与初值"
-          }
-        ]
-      }
-    },
-    {
-      "id": "M4CC06",
-      "section": "欧拉法数值动力学",
-      "task": "K06",
-      "node": "M4-CK06",
-      "gate": "",
-      "novel": false,
-      "text": "dv/dt=4-2v、v0=0、Δt=0.10 s，v1=0.40 m/s，v2=0.72 m/s 由这组数据可得哪项结论？",
-      "options": [
-        "计算结果：更新漏乘Δt",
-        "模型判断：用一次大步宣称模型正确",
-        "v2=0.72 m/s"
-      ],
-      "answer": 2,
-      "skill": "欧拉法数值动力学",
-      "level": "理解",
-      "constraint": "每步用当前状态算力，Δt单位为s且足够小",
-      "structure": {
-        "objectType": "parameter-system",
-        "bodyCount": 1,
-        "forceTypes": [
+          "drag",
           "gravity",
           "normal"
         ],
@@ -389,11 +320,80 @@ window.M4CCheck=Object.freeze({
         "steps": 4
       },
       "review": {
-        "object": "欧拉法数值动力学",
+        "object": "dv/dt=4-2v且v0=0时初始a=4 m/s²",
+        "frame": "地面近似惯性参考系",
+        "forces": [
+          "驱动力",
+          "速度相关阻力",
+          "重力",
+          "支持力"
+        ],
+        "axis": "按题干所述运动方向取正",
+        "equation": "dv/dt=4-2v且v0=0时初始a=4 m/s²，平衡速度2 m/s，斜率逐渐减小",
+        "substitution": "dv/dt=4-2v且v0=0时初始a=4 m/s²，平衡速度2 m/s，斜率逐渐减小",
+        "candidate": "斜率逐渐减小",
+        "constraint": "质量恒定、惯性系、给定力模型区间与初值",
+        "final": "斜率逐渐减小",
+        "answerIndex": 1,
+        "unique": "由本题关系“dv/dt=4-2v且v0=0时初始a=4 m/s²，平衡速度2 m/s，斜率逐渐减小”只能得到“斜率逐渐减小”；其余选项与该关系或适用条件冲突。",
+        "distractors": [
+          {
+            "option": "dv/dt当速度",
+            "wrongObjectOrForces": "研究对象仍为dv/dt=4-2v且v0=0时初始a=4 m/s²；真实力应为驱动力、速度相关阻力、重力、支持力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "dv/dt当速度",
+            "conflict": "“dv/dt当速度”与本题正确关系“dv/dt=4-2v且v0=0时初始a=4 m/s²，平衡速度2 m/s，斜率逐渐减小”冲突；满足题设的结果是“斜率逐渐减小”。",
+            "wrongCriterion": "采用判据“dv/dt当速度”而非本题判据“斜率逐渐减小”"
+          },
+          {
+            "option": "非齐次驱动力为0",
+            "wrongObjectOrForces": "研究对象仍为dv/dt=4-2v且v0=0时初始a=4 m/s²，但方程中漏去非齐次驱动力",
+            "wrongResult": "非齐次驱动力为0",
+            "conflict": "“非齐次驱动力为0”与本题正确关系“dv/dt=4-2v且v0=0时初始a=4 m/s²，平衡速度2 m/s，斜率逐渐减小”冲突；满足题设的结果是“斜率逐渐减小”。",
+            "wrongEquation": "按选项建立关系“非齐次驱动力为0”；该式取代了本题关系“dv/dt=4-2v且v0=0时初始a=4 m/s²，平衡速度2 m/s，斜率逐渐减小”",
+            "wrongSubstitution": "在“dv/dt=4-2v且v0=0时初始a=4 m/s²，平衡速度2 m/s，斜率逐渐减小 由这组数据可得哪项结论？”给定条件下，将本题给定量代入该关系后得到“非齐次驱动力为0”"
+          }
+        ]
+      }
+    },
+    {
+      "id": "M4CC06",
+      "section": "欧拉法数值动力学",
+      "task": "K06",
+      "node": "M4-CK06",
+      "gate": "",
+      "novel": false,
+      "text": "dv/dt=4-2v、v0=0、Δt=0.10 s，v1=0.40 m/s，v2=0.72 m/s 由这组数据可得哪项结论？",
+      "options": [
+        "更新漏乘Δt",
+        "用一次大步宣称模型正确",
+        "v2=0.72 m/s"
+      ],
+      "answer": 2,
+      "skill": "欧拉法数值动力学",
+      "level": "理解",
+      "constraint": "每步用当前状态算力，Δt单位为s且足够小",
+      "structure": {
+        "objectType": "parameter-system",
+        "bodyCount": 1,
+        "forceTypes": [
+          "gravity",
+          "drag"
+        ],
+        "balanceDimension": "one-axis",
+        "referenceFrame": "inertial",
+        "target": "calculation",
+        "hasParameter": true,
+        "hasCritical": false,
+        "hasStateSwitch": false,
+        "hasExperimentError": false,
+        "steps": 4
+      },
+      "review": {
+        "object": "dv/dt=4-2v、v0=0、Δt=0.10 s",
         "frame": "地面近似惯性参考系",
         "forces": [
           "重力",
-          "支持力"
+          "速度相关阻力"
         ],
         "axis": "按题干所述运动方向取正",
         "equation": "dv/dt=4-2v、v0=0、Δt=0.10 s，v1=0.40 m/s，v2=0.72 m/s",
@@ -402,23 +402,21 @@ window.M4CCheck=Object.freeze({
         "constraint": "每步用当前状态算力，Δt单位为s且足够小",
         "final": "v2=0.72 m/s",
         "answerIndex": 2,
-        "unique": "只有选项“v2=0.72 m/s”同时满足方程与约束；其余选项分别来自下列错误链。",
+        "unique": "由本题关系“dv/dt=4-2v、v0=0、Δt=0.10 s，v1=0.40 m/s，v2=0.72 m/s”只能得到“v2=0.72 m/s”；其余选项与该关系或适用条件冲突。",
         "distractors": [
           {
-            "option": "计算结果：更新漏乘Δt",
-            "wrongObjectOrForces": "仍取欧拉法数值动力学，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“dv/dt=4-2v、v0=0、Δt=0.10 s，v1=0.40 m/s，v2=0.72 m/s”改成与选项1相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“计算结果：更新漏乘Δt”",
-            "wrongResult": "计算结果：更新漏乘Δt",
-            "conflict": "该结果不满足正确关系或条件：每步用当前状态算力，Δt单位为s且足够小"
+            "option": "更新漏乘Δt",
+            "wrongObjectOrForces": "研究对象仍为dv/dt=4-2v、v0=0、Δt=0.10 s，但方程中漏去乘Δt",
+            "wrongResult": "更新漏乘Δt",
+            "conflict": "“更新漏乘Δt”与本题正确关系“dv/dt=4-2v、v0=0、Δt=0.10 s，v1=0.40 m/s，v2=0.72 m/s”冲突；满足题设的结果是“v2=0.72 m/s”。",
+            "wrongCriterion": "采用判据“更新漏乘Δt”而非本题判据“v2=0.72 m/s”"
           },
           {
-            "option": "模型判断：用一次大步宣称模型正确",
-            "wrongObjectOrForces": "仍取欧拉法数值动力学，但遗漏方向、力项或模型边界",
-            "wrongEquation": "把正确关系“dv/dt=4-2v、v0=0、Δt=0.10 s，v1=0.40 m/s，v2=0.72 m/s”改成与选项2相符的错误关系",
-            "wrongSubstitution": "将题干量按错误符号或错误单位代入，导向“模型判断：用一次大步宣称模型正确”",
-            "wrongResult": "模型判断：用一次大步宣称模型正确",
-            "conflict": "该结果不满足正确关系或条件：每步用当前状态算力，Δt单位为s且足够小"
+            "option": "用一次大步宣称模型正确",
+            "wrongObjectOrForces": "研究对象仍为dv/dt=4-2v、v0=0、Δt=0.10 s；真实力应为重力、速度相关阻力，该选项改变了其中的合力或状态判断",
+            "wrongResult": "用一次大步宣称模型正确",
+            "conflict": "“用一次大步宣称模型正确”与本题正确关系“dv/dt=4-2v、v0=0、Δt=0.10 s，v1=0.40 m/s，v2=0.72 m/s”冲突；满足题设的结果是“v2=0.72 m/s”。",
+            "wrongCriterion": "采用判据“用一次大步宣称模型正确”而非本题判据“v2=0.72 m/s”"
           }
         ]
       }
