@@ -66,7 +66,7 @@ window.M3ARetest = Object.freeze({
       novel: true,
       skill: "friction-state",
       level: "迁移复核",
-      structure: {"objectType":"block","contactCount":0,"forceTypes":["gravity","friction","tension","applied-force"],"balanceDimension":"one-axis-force","takesMoment":false,"target":"friction-or-state","hasParameter":false,"hasCritical":false,"hasStateSwitch":false,"hasExperimentError":false,"steps":2},
+      structure: {"objectType":"block","contactCount":1,"forceTypes":["gravity","normal","friction","tension"],"balanceDimension":"one-axis-force","takesMoment":false,"target":"friction-or-state","hasParameter":false,"hasCritical":false,"hasStateSwitch":false,"hasExperimentError":false,"steps":2},
       constraint: "核对受力对象、方向、平衡方程与单位",
       text: "重30 N工具箱在水平传送台上保持静止，受到水平7 N向左的绳拉力，μs=0.40。摩擦力为？",
       options: ["7 N向右", "7 N向左", "12 N向右"],

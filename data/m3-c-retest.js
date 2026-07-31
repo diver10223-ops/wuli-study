@@ -66,7 +66,7 @@ window.M3CRetest = Object.freeze({
       novel: true,
       skill: "vector-geometry",
       level: "迁移复核",
-      structure: {"objectType":"joint","contactCount":0,"forceTypes":["tension"],"balanceDimension":"one-axis-force","takesMoment":false,"target":"force-polygon","hasParameter":false,"hasCritical":false,"hasStateSwitch":false,"hasExperimentError":false,"steps":2},
+      structure: {"objectType":"joint","contactCount":0,"forceTypes":["tension"],"balanceDimension":"planar-force","takesMoment":false,"target":"force-polygon","hasParameter":false,"hasCritical":false,"hasStateSwitch":false,"hasExperimentError":false,"steps":2},
       constraint: "核对受力对象、方向、平衡方程与单位",
       text: "三条缆绳汇于结点，其中两张力互相垂直、大小5 N和12 N。平衡所需第三张力的大小和方向是？",
       options: [
@@ -84,7 +84,7 @@ window.M3CRetest = Object.freeze({
       novel: true,
       skill: "parameter-friction-limit",
       level: "迁移复核",
-      structure: {"objectType":"block","contactCount":1,"forceTypes":["gravity","normal"],"balanceDimension":"planar-force","takesMoment":false,"target":"equilibrium-range","hasParameter":false,"hasCritical":false,"hasStateSwitch":false,"hasExperimentError":false,"steps":2},
+      structure: {"objectType":"block","contactCount":1,"forceTypes":["gravity","normal","friction"],"balanceDimension":"planar-force","takesMoment":false,"target":"equilibrium-range","hasParameter":false,"hasCritical":false,"hasStateSwitch":false,"hasExperimentError":false,"steps":2},
       constraint: "候选解后核对接触、非负性与适用条件",
       text: "重20 N小盒在可调斜板上，μs=0.50。倾角由20°增大到30°时状态如何判断？",
       options: [
@@ -102,7 +102,7 @@ window.M3CRetest = Object.freeze({
       novel: true,
       skill: "planar-moment-equilibrium",
       level: "迁移复核",
-      structure: {"objectType":"rod","contactCount":0,"forceTypes":["gravity","tension","rod-force","hinge-reaction"],"balanceDimension":"planar-force-and-moment","takesMoment":true,"target":"reaction-or-moment","hasParameter":false,"hasCritical":false,"hasStateSwitch":false,"hasExperimentError":false,"steps":3},
+      structure: {"objectType":"rod","contactCount":0,"forceTypes":["gravity","tension","hinge-reaction"],"balanceDimension":"planar-force-and-moment","takesMoment":true,"target":"reaction-or-moment","hasParameter":false,"hasCritical":false,"hasStateSwitch":false,"hasExperimentError":false,"steps":3},
       constraint: "候选解后核对接触、非负性与适用条件",
       text: "长2.0 m水平广告杆左端铰接，杆重20 N作用在中点，右端竖直绳张力15 N。关于静力候选解应判定？",
       options: [

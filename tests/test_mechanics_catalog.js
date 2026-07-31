@@ -151,6 +151,16 @@ if (modules.includes("m3")) {
   const allowedBalanceDimensions = new Set([
     "one-axis-force", "planar-force", "planar-force-and-moment",
   ]);
+  const allowedTargets = new Set([
+    "constraint-existence", "constraint-force", "contact-force",
+    "contact-or-friction-state", "corrected-friction", "equilibrium-range",
+    "equivalence-criterion", "equivalent-resultant",
+    "experimental-result-or-error", "force-identification", "force-polygon",
+    "friction-or-state", "gravity-or-center", "internal-or-external-force",
+    "reaction-or-moment", "resultant-or-component",
+    "spring-deformation-or-force", "static-model-validity",
+    "tension-or-rod-force", "zero-offset-direction",
+  ]);
   const booleanStructureKeys = [
     "takesMoment", "hasParameter", "hasCritical", "hasStateSwitch",
     "hasExperimentError",
@@ -340,11 +350,17 @@ if (modules.includes("m3")) {
             throw new Error(`${file}: ${item.id} has empty, duplicate, or invalid forceTypes`);
           if (booleanStructureKeys.some((key) => typeof item.structure[key] !== "boolean"))
             throw new Error(`${file}: ${item.id} has a non-boolean structure flag`);
-          if (typeof item.structure.target !== "string" || !item.structure.target.trim())
-            throw new Error(`${file}: ${item.id} has no physical target`);
+          if (!allowedTargets.has(item.structure.target))
+            throw new Error(`${file}: ${item.id} has an unmapped physical target`);
           if (item.structure.takesMoment !==
             (item.structure.balanceDimension === "planar-force-and-moment"))
             throw new Error(`${file}: ${item.id} has inconsistent moment metadata`);
+          if (item.structure.forceTypes.includes("distributed-load") &&
+            item.structure.objectType !== "beam")
+            throw new Error(`${file}: ${item.id} hides a loaded beam behind another objectType`);
+          if (item.structure.contactCount > 0 &&
+            !item.structure.forceTypes.some((type) => ["normal", "friction"].includes(type)))
+            throw new Error(`${file}: ${item.id} counts contact without a contact force`);
           if (["diagnostic", "check", "exam", "retest"].includes(stage))
             assessmentPrompts.push({
               track,
@@ -471,6 +487,8 @@ if (modules.includes("m3")) {
     signatureGroups.get(signature).push(`${prompt.track}-${prompt.stage}-${prompt.id}`);
   });
   const repeatedSignatureGroups = [...signatureGroups.values()].filter((ids) => ids.length > 1);
+  repeatedSignatureGroups.forEach((ids, index) =>
+    console.log(`REPORT: M3 same-signature group ${index + 1}: ${ids.join(" / ")}`));
   const seen = new Map();
   assessmentPrompts.forEach((prompt) => {
     const key = normalize(prompt.text);
@@ -501,9 +519,9 @@ if (modules.includes("m3")) {
       }
     }
   console.log(
-    `OK: M3 signature report found ${repeatedSignatureGroups.length} cross-stage/cross-track same-signature groups; none also crossed the near-text threshold without an ID-and-reason whitelist`,
+    `OK: M3 structural report found ${repeatedSignatureGroups.length} same-signature groups and printed every ID; the separate textual-near-duplicate gate found no unhandled pair`,
   );
   console.log(
-    "OK: M3 content audit found balanced answers, physical signatures, contrasting exam pairs, valid ids/options, prerequisites, and distinct prompts",
+    "OK: M3 automated audit found balanced answers, typed metadata, contrasting declared exam structures, valid ids/options, prerequisites, and distinct prompts; it does not prove physical correctness",
   );
 }

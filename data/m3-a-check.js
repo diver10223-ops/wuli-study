@@ -54,7 +54,7 @@ window.M3ACheck = Object.freeze({
       node: "M3-AK04",
       skill: "friction-state",
       level: "即时应用",
-      structure: {"objectType":"block","contactCount":0,"forceTypes":["gravity","friction","applied-force"],"balanceDimension":"one-axis-force","takesMoment":false,"target":"friction-or-state","hasParameter":false,"hasCritical":false,"hasStateSwitch":false,"hasExperimentError":false,"steps":2},
+      structure: {"objectType":"block","contactCount":1,"forceTypes":["gravity","normal","friction","applied-force"],"balanceDimension":"one-axis-force","takesMoment":false,"target":"friction-or-state","hasParameter":false,"hasCritical":false,"hasStateSwitch":false,"hasExperimentError":false,"steps":2},
       constraint: "核对受力对象、方向、平衡方程与单位",
       text: "重20 N木块受水平4 N拉力仍静止，μs=0.5。静摩擦力为？",
       options: ["0 N", "10 N向左", "4 N向左"],
