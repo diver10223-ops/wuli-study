@@ -541,6 +541,12 @@ if (modules.includes("m4")) {
   const pseudoSubstitution = /将本题给定量代入该关系/;
   const pseudoCriterion = /采用判据“.*”而非本题判据“.*”/;
   const pseudoForces = /该选项改变了其中的合力或状态判断/;
+  const fifthRoundPseudoEquation = /令所求量\s*[XY]|(?:^|[；，。])\s*[XY]\s*=/i;
+  const fifthRoundPseudoSubstitution = /把本题数值|按该错误关系计算|(?:^|[：；，])\s*[XY]\s*=|(?:0\s*\+|1\s*[×*])\s*-?\d/;
+  const fifthRoundGenericForces = /实际方向或作用对象组成合力/;
+  const fifthRoundGenericConflict = /不满足该对象的受力方程、方向或约束条件/;
+  const boundaryDenial = /不存在单侧接触切换/;
+  const boundaryEvidence = /N\s*[≥=]\s*0|T\s*[≥=]\s*0|分离|松弛|离地|静摩擦上限|切换/;
   const repeatedChainWhitelist = new Map([
     ["M4AD03/M4AC03", "同一单位换算误区在诊断与检查中复测，但题干数据和教学阶段不同"],
     ["M4AC03/M4AE03", "同一单位换算误区进入正式卷第一层，保留用于证据链纵向比较"],
@@ -559,6 +565,7 @@ if (modules.includes("m4")) {
   ]);
   const forceMap = new Map([["重力","gravity"],["支持力","normal"],["水平外加力","applied"],["外加力","applied"],["拉力","tension"],["推力","thrust"],["驱动力","applied"],["水平阻力","resistance"],["阻力","resistance"],["摩擦力","friction"],["静摩擦力","friction"],["滑动摩擦力","friction"],["张力","tension"],["弹簧弹力","spring"],["速度相关阻力","drag"],["题设合外力","resultant"]]);
   const normalize = text => text.replace(/\d+(?:\.\d+)?/g,"#").replace(/[甲乙小车物块物体箱子滑块包裹乘客雪橇]/g,"对象").replace(/kg|N·s\/m|N|m\/s²|m\/s|s/g,"单位").replace(/[，。；：、“”‘’（）()\s]/g,"");
+  const chainSimilarity = (a,b) => {const A=new Set(a),B=new Set(b),common=[...A].filter(x=>B.has(x)).length;return common/Math.max(A.size,B.size,1);};
   const signature = q => structureKeys.map(k => Array.isArray(q.structure[k]) ? [...q.structure[k]].sort().join('+') : String(q.structure[k])).join('|');
   const maxRun = a => a.reduce((s,v,i)=>{const run=i&&a[i-1]===v?s.run+1:1;return {run,max:Math.max(s.max,run)}},{run:0,max:0}).max;
   const ids=new Set(), exports=new Set(), keys=new Set(), prompts=[];
@@ -590,12 +597,14 @@ if (modules.includes("m4")) {
           const wrong=item.options.filter((_,i)=>i!==item.answer); for(const d of r.distractors) {
             if(!wrong.includes(d.option)||!(d.wrongEquation||d.wrongCriterion)||!d.wrongResult||!d.conflict) throw new Error(`${file}: ${item.id} distractor is not option-bound`);
             if(d.option!==d.wrongResult) throw new Error(`${file}: ${item.id} wrongResult differs from its option`);
-            if(pseudoEquation.test(d.wrongEquation||"")||pseudoSubstitution.test(d.wrongSubstitution||"")||pseudoCriterion.test(d.wrongCriterion||"")||pseudoForces.test(d.wrongObjectOrForces||"")) throw new Error(`${file}: ${item.id} retains a pseudo-specific error chain`);
+            if(pseudoEquation.test(d.wrongEquation||"")||pseudoSubstitution.test(d.wrongSubstitution||"")||pseudoCriterion.test(d.wrongCriterion||"")||pseudoForces.test(d.wrongObjectOrForces||"")||fifthRoundPseudoEquation.test(d.wrongEquation||"")||fifthRoundPseudoSubstitution.test(d.wrongSubstitution||"")||fifthRoundGenericForces.test(d.wrongObjectOrForces||"")||fifthRoundGenericConflict.test(d.conflict||"")) throw new Error(`${file}: ${item.id} retains a fifth-round pseudo error chain`);
             if(d.wrongEquation&&d.wrongEquation.trim()===d.wrongResult.trim()) throw new Error(`${file}: ${item.id} wrongEquation only repeats wrongResult`);
             if(d.wrongCriterion&&!/(错误地|依据|认为|检验|比较|判定)/.test(d.wrongCriterion)) throw new Error(`${file}: ${item.id} wrongCriterion lacks a decision basis`);
+            if(d.wrongCriterion&&chainSimilarity(normalize(d.wrongCriterion),normalize(d.option))>0.9&&!/(因为|只看|未检验|忽略|依据).*(方向|量纲|约束|合力|导数|边界|对象|参考系)/.test(d.wrongCriterion)) throw new Error(`${file}: ${item.id} wrongCriterion merely repeats option`);
             if(d.wrongSubstitution){
               const resultNumbers=d.wrongResult.match(/-?\d+(?:\.\d+)?/g)||[];
-              if(!/[=+\-×÷*/]/.test(d.wrongSubstitution)||!/(\d)/.test(d.wrongSubstitution)||resultNumbers.some(n=>!d.wrongSubstitution.includes(n))) throw new Error(`${file}: ${item.id} wrongSubstitution is not reproducible`);
+              const resultUnit=(d.wrongResult.match(/(?:kg|N(?:·s\/m)?|m\/s²|m\/s|s)(?![\p{L}])/u)||[])[0];
+              if(!/=/.test(d.wrongSubstitution)||!/[+\-×÷*/]/.test(d.wrongSubstitution)||!/(\d)/.test(d.wrongSubstitution)||resultNumbers.some(n=>!d.wrongSubstitution.includes(n))||(resultUnit&&!d.wrongSubstitution.includes(resultUnit))) throw new Error(`${file}: ${item.id} wrongSubstitution is not reproducible`);
             }
             if(d.wrongEquation&&genericWrongEquation.test(d.wrongEquation)||d.wrongSubstitution&&genericWrongSubstitution.test(d.wrongSubstitution)||genericConflict.test(d.conflict)) throw new Error(`${file}: ${item.id} retains a generic distractor chain`);
             if(!d.wrongSubstitution&&!d.wrongCriterion) throw new Error(`${file}: ${item.id} distractor lacks a concrete substitution or criterion`);
@@ -609,13 +618,16 @@ if (modules.includes("m4")) {
     for(const node of matrices[track]){const pair=exam.filter(q=>q.node===node);if(pair.length!==2||pair[0].level===pair[1].level||pair[0].answer===pair[1].answer||signature(pair[0])===signature(pair[1]))throw new Error(`M4 ${track} ${node} lacks two contrasting exam layers`);if(pair[0].review.object===pair[1].review.object&&pair[0].review.equation===pair[1].review.equation)throw new Error(`M4 ${track} ${node} differs only in declared metadata`);}
     for(const stage of ["check","exam","retest"]){const a=configs[stage].questions.map(q=>q.answer), counts=[0,1,2].map(v=>a.filter(x=>x===v).length), expected=a.length/3;if(counts.some(x=>x!==expected)||maxRun(a)>2)throw new Error(`M4 ${track} ${stage} answer distribution ${counts}`);}
     const learning=new Set(configs.learning.items.map(x=>normalize(x.example))), models=new Set(configs.models.items.map(x=>normalize(x.example)));
+    for(const model of configs.models.items){const joined=`${model.conditions} ${model.example} ${model.check}`;if(boundaryDenial.test(joined)&&boundaryEvidence.test(joined))throw new Error(`M4 ${model.id} contradicts a one-sided boundary`);}
     if(configs.check.questions.some(q=>learning.has(normalize(q.text))))throw new Error(`M4 ${track} check repeats learning example`);
     if(exam.some(q=>models.has(normalize(q.text))))throw new Error(`M4 ${track} exam repeats model example`);
     if(track!=="a"&&configs.diagnostic.prerequisites[0]?.key!==`physics-mechanics-m4-${track==="b"?"a":"b"}-exam-v1`)throw new Error(`M4 ${track} wrong prerequisite`);
     if(configs.exam.prerequisites[0]?.key!==`physics-mechanics-m4-${track}-check-v1`||configs.retest.prerequisites[0]?.key!==`physics-mechanics-m4-${track}-exam-v1`)throw new Error(`M4 ${track} broken evidence chain`);
   }
   for(let i=0;i<prompts.length;i++)for(let j=i+1;j<prompts.length;j++)if(prompts[i].text===prompts[j].text||prompts[i].n===prompts[j].n)throw new Error(`M4 duplicate/number-only prompts: ${prompts[i].id}/${prompts[j].id}`);
-  for(const field of ["equation","wrongEquation","wrongSubstitution","conflict"]){const groups=new Map();for(const p of prompts){const values=field==="equation"?[p.item?.review?.equation]:p.item?.review?.distractors?.map(d=>d[field]);for(const value of values||[])if(value)groups.set(value,[...(groups.get(value)||[]),p.id]);}for(const [value,group] of groups)if(group.length>1){for(let i=0;i<group.length-1;i++){const key=`${group[i]}/${group[i+1]}`, reason=repeatedChainWhitelist.get(key);if(!reason||reason.length<12)throw new Error(`M4 unregistered repeated chain ${key}`);}console.log(`REPORT: M4 whitelisted repeated review.${field}: ${group.join("/")} :: ${value}`);}}
-  for(const key of repeatedChainWhitelist.keys()){const pair=key.split("/");if(pair.length!==2||pair.some(id=>!ids.has(id)))throw new Error(`M4 invalid repeated-chain whitelist key ${key}`);}
+  const whitelistHits=new Set();
+  for(const field of ["equation","wrongEquation","wrongSubstitution","wrongObjectOrForces","conflict"]){const groups=new Map();for(const p of prompts){const values=field==="equation"?[p.item?.review?.equation]:p.item?.review?.distractors?.map(d=>d[field]);for(const value of values||[])if(value)groups.set(value,[...(groups.get(value)||[]),p.id]);}for(const [value,group] of groups)if(group.length>1){for(let i=0;i<group.length-1;i++){const key=`${group[i]}/${group[i+1]}`, reason=repeatedChainWhitelist.get(key);if(!reason||reason.length<12)throw new Error(`M4 unregistered repeated chain ${key}`);whitelistHits.add(key);}console.log(`REPORT: M4 whitelisted repeated review.${field}: ${group.join("/")} :: ${value}`);}}
+  for(const field of ["wrongObjectOrForces","conflict"]){const seen=[];let near=0;for(const p of prompts)for(const d of p.item.review.distractors){const value=normalize(d[field]||"");for(const prior of seen)if(value&&chainSimilarity(value,prior.value)>=0.98&&value!==prior.value)near++;seen.push({id:p.id,value});}console.log(`REPORT: M4 normalized near-duplicate scan ${field}: ${near}`);}
+  for(const [key,reason] of repeatedChainWhitelist){const pair=key.split("/");if(pair.length!==2||pair.some(id=>!ids.has(id))||reason.length<12)throw new Error(`M4 invalid repeated-chain whitelist entry ${key}`);if(!whitelistHits.has(key))throw new Error(`M4 unused repeated-chain whitelist entry ${key}`);}
   console.log("OK: M4 audit proves typed fields, 12-item/two-layer exams, mapping, answer distribution, evidence chains, option/review hygiene and text-distinctness; it cannot prove physical correctness or uniqueness, replace author per-question recalculation, or substitute for teacher review or real-student validation; teacher review and real-student validation were not performed in this round");
 }
