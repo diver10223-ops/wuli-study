@@ -1,1 +1,70 @@
-window.M4BModels=Object.freeze({version:1,module:'M4',track:'B',storageKey:'physics-mechanics-m4-b-models-v1',diagnosticKey:'physics-mechanics-m4-b-diagnostic-v1',completePlan:'<strong>完成：</strong>进入下一阶段。',items:[{id:'M01',node:'M4-BK01',title:'连接体',summary:'围绕连接体建立对象—过程—条件—规律—检验链。',conditions:'明确适用范围、方向、单位和阶段。',misconception:'不能用孤立口诀替代条件判断。',example:'完成一个正例、一个反例和一道迁移任务。',check:'我能解释条件并独立建模'},{id:'M02',node:'M4-BK02',title:'临界分离',summary:'围绕临界分离建立对象—过程—条件—规律—检验链。',conditions:'明确适用范围、方向、单位和阶段。',misconception:'不能用孤立口诀替代条件判断。',example:'完成一个正例、一个反例和一道迁移任务。',check:'我能解释条件并独立建模'},{id:'M03',node:'M4-BK03',title:'临界滑动',summary:'围绕临界滑动建立对象—过程—条件—规律—检验链。',conditions:'明确适用范围、方向、单位和阶段。',misconception:'不能用孤立口诀替代条件判断。',example:'完成一个正例、一个反例和一道迁移任务。',check:'我能解释条件并独立建模'},{id:'M04',node:'M4-BK04',title:'传送带',summary:'围绕传送带建立对象—过程—条件—规律—检验链。',conditions:'明确适用范围、方向、单位和阶段。',misconception:'不能用孤立口诀替代条件判断。',example:'完成一个正例、一个反例和一道迁移任务。',check:'我能解释条件并独立建模'},{id:'M05',node:'M4-BK05',title:'板块模型',summary:'围绕板块模型建立对象—过程—条件—规律—检验链。',conditions:'明确适用范围、方向、单位和阶段。',misconception:'不能用孤立口诀替代条件判断。',example:'完成一个正例、一个反例和一道迁移任务。',check:'我能解释条件并独立建模'},{id:'M06',node:'M4-BK06',title:'多过程动力学',summary:'围绕多过程动力学建立对象—过程—条件—规律—检验链。',conditions:'明确适用范围、方向、单位和阶段。',misconception:'不能用孤立口诀替代条件判断。',example:'完成一个正例、一个反例和一道迁移任务。',check:'我能解释条件并独立建模'}]});
+window.M4BModels=Object.freeze({
+  "version": 1,
+  "module": "M4",
+  "track": "B",
+  "storageKey": "physics-mechanics-m4-b-models-v1",
+  "diagnosticKey": "physics-mechanics-m4-b-diagnostic-v1",
+  "completePlan": "完成后进入下一阶段。",
+  "items": [
+    {
+      "id": "M4BM01",
+      "node": "M4-BK01",
+      "title": "整体法与隔离法",
+      "summary": "整体法消去内力求共同加速度，隔离单体求接触力；本模型用数值方程检验“物体保持共同加速度；整体只列外力”。",
+      "conditions": "物体保持共同加速度；整体只列外力",
+      "misconception": "把内力列入整体式，或求内力时不隔离",
+      "example": "先取1 kg+3 kg整体；地面系向右正；外力12 N，12=4a得a=3 m/s²；隔离3 kg得N=3a=9 N，N≥0故接触成立",
+      "check": "画或写出整体法与隔离法的对象、正方向与真实力，列方程复算数值并代回约束。"
+    },
+    {
+      "id": "M4BM02",
+      "node": "M4-BK02",
+      "title": "轻绳轻杆弹簧约束",
+      "summary": "绷直轻绳限制沿绳运动且T≥0；轻杆可推拉，弹簧力取决于形变量；本模型用数值方程检验“绳张紧、杆不伸长、弹簧在弹性限度内”。",
+      "conditions": "绳张紧、杆不伸长、弹簧在弹性限度内",
+      "misconception": "保留负张力，或把弹簧两端加速度强制相同",
+      "example": "对象为0.50 kg滑块；地面系向右正；弹簧k=40 N/m伸长0.10 m，真实弹力4.0 N向左；-4.0=0.50a，候选a=-8.0 m/s²，形变量在弹性限度内",
+      "check": "画或写出轻绳轻杆弹簧约束的对象、正方向与真实力，列方程复算数值并代回约束。"
+    },
+    {
+      "id": "M4BM03",
+      "node": "M4-BK03",
+      "title": "临界分离与接触切换",
+      "summary": "单侧接触力只能非负；令N=0求临界，越界后切换模型；本模型用数值方程检验“接触面只推不拉，候选N<0必须舍弃”。",
+      "conditions": "接触面只推不拉，候选N<0必须舍弃",
+      "misconception": "保留负支持力，或认为N=0时重力消失",
+      "example": "对象为2.0 kg物块；地面系向上正；N-20=2a，候选a=-12 m/s²给N=-4 N不可实现；切换后N=0，物块a=-10 m/s²",
+      "check": "画或写出临界分离与接触切换的对象、正方向与真实力，列方程复算数值并代回约束。"
+    },
+    {
+      "id": "M4BM04",
+      "node": "M4-BK04",
+      "title": "临界滑动与静摩擦需求",
+      "summary": "先求共同运动所需静摩擦并与μsN比较，超过才滑动；本模型用数值方程检验“未滑时|f需求|≤μsN，滑动后用μkN”。",
+      "conditions": "未滑时|f需求|≤μsN，滑动后用μkN",
+      "misconception": "未达上限就写f=μsN，或滑后仍用静摩擦",
+      "example": "对象为1.0 kg箱；地面系向右正；车加速度4.0 m/s²需f=4.0 N，但μsN=0.25×10=2.5 N，候选不相容，须切换为滑动",
+      "check": "画或写出临界滑动与静摩擦需求的对象、正方向与真实力，列方程复算数值并代回约束。"
+    },
+    {
+      "id": "M4BM05",
+      "node": "M4-BK05",
+      "title": "传送带板块分段动力学",
+      "summary": "摩擦由相对运动决定；达到带速或边界时重建下一段方程；本模型用数值方程检验“每段相对速度符号固定，切换时刻由速度相等或越界确定”。",
+      "conditions": "每段相对速度符号固定，切换时刻由速度相等或越界确定",
+      "misconception": "只看对地速度定摩擦，或忽略达到带速后的切换",
+      "example": "对象为2.0 kg包裹；地面系向右正；带速6 m/s、包裹2 m/s，摩擦4 N向右，4=2a得a=2 m/s²；2 s后同速并切换为f=0",
+      "check": "画或写出传送带板块分段动力学的对象、正方向与真实力，列方程复算数值并代回约束。"
+    },
+    {
+      "id": "M4BM06",
+      "node": "M4-BK06",
+      "title": "动力学实验图像与误差",
+      "summary": "a-F图斜率反映1/m，截距可检验残余阻力和系统质量遗漏；本模型用数值方程检验“控制质量或合力，拟合数据对应同一系统边界”。",
+      "conditions": "控制质量或合力，拟合数据对应同一系统边界",
+      "misconception": "把平衡摩擦说成消除摩擦，或把截距都当随机误差",
+      "example": "对象为小车与砝码整体；地面系沿轨道正；F=1.0 N时a=1.6 m/s²、总质量0.50 kg，F-f=ma得f=0.20 N，应修正残余阻力而非强迫过原点",
+      "check": "画或写出动力学实验图像与误差的对象、正方向与真实力，列方程复算数值并代回约束。"
+    }
+  ]
+});
